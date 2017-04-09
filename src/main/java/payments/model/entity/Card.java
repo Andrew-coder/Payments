@@ -6,8 +6,9 @@ public class Card extends BaseEntity {
     private String cardNumber;
     private Date expireDate;
     private User user;
+    private String pin;
+    private String cvv;
     private BancAccount account;
-
 
     public String getCardNumber() {
         return cardNumber;
@@ -41,7 +42,20 @@ public class Card extends BaseEntity {
         this.account = account;
     }
 
-    public Card() {
+    public String getPin() {
+        return pin;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
+    }
+
+    public String getCvv() {
+        return cvv;
+    }
+
+    public void setCvv(String cvv) {
+        this.cvv = cvv;
     }
 
     public static class Builder{
@@ -64,6 +78,16 @@ public class Card extends BaseEntity {
 
         public Builder setUser(User user){
             instance.user = user;
+            return this;
+        }
+
+        public Builder setPin(String pin){
+            instance.pin=pin;
+            return this;
+        }
+
+        public Builder setCvv(String cvv){
+            instance.cvv=cvv;
             return this;
         }
 

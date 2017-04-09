@@ -20,9 +20,6 @@ public class BancAccount extends BaseEntity {
         this.balance = balance;
     }
 
-    public BancAccount() {
-    }
-
     public static class Builder{
         BancAccount instance = new BancAccount();
 

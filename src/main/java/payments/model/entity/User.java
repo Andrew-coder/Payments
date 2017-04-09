@@ -10,9 +10,6 @@ public class User extends BaseEntity{
     private Date birthDate;
     private RoleType role;
 
-    public User() {
-    }
-
     public String getName() {
         return name;
     }
