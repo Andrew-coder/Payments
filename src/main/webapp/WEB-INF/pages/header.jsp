@@ -17,21 +17,17 @@
             </div>
         </div>
         <nav id="mainmenu" class="mainmenu">
-
-
-            <div id="exTab2" class="container">
-                <ul class="nav nav-tabs">
+                <ul>
                     <li class="active">
-                        <a  href="#1" data-toggle="tab">Overview</a>
+                        <a href="/home">Home</a>
                     </li>
-                    <li><a href="#2" data-toggle="tab">Without clearfix</a>
+                    <li>
+                        <a href="/cards">cards</a>
                     </li>
-                    <li><a href="#3" data-toggle="tab">Solution</a>
+                    <li>
+                        <a href="/payments">payments</a>
                     </li>
                 </ul>
-            </div>
-
-
         </nav>
     </div>
 </div>

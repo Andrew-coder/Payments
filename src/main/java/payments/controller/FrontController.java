@@ -1,10 +1,7 @@
 package payments.controller;
 
 
-import payments.controller.commands.Command;
-import payments.controller.commands.HomeCommand;
-import payments.controller.commands.LoginCommand;
-import payments.controller.commands.PageNotFoundCommand;
+import payments.controller.commands.*;
 import payments.utils.constants.PagesPath;
 
 import javax.servlet.ServletException;
@@ -27,7 +24,7 @@ public class FrontController extends HttpServlet{
     }
 
     @Override
-    protected void qdoPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doPost(req, resp);
     }
 
@@ -43,5 +40,10 @@ public class FrontController extends HttpServlet{
     public void init() throws ServletException {
         commands.put("GET:/home", new HomeCommand());
         commands.put("GET:/login", new LoginCommand());
+        commands.put("GET:/cards", new CardsCommand());
+        commands.put("GET:/cards/id", new CardsManagmentCommand());
+        commands.put("GET:/admin", new AdminHomeCommand());
+        commands.put("GET:/payments", new PaymentsCommand());
+        commands.put("GET:/payments/id", new PaymentsInfoCommand());
     }
 }
