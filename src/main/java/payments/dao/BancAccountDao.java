@@ -1,7 +1,6 @@
 package payments.dao;
 
-/**
- * Created by andrew on 01.04.17.
- */
-public interface BancAccountDao {
+import payments.model.entity.BancAccount;
+
+public interface BancAccountDao extends CommonDao<BancAccount> {
 }
