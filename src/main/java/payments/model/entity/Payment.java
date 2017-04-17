@@ -3,27 +3,27 @@ package payments.model.entity;
 import java.util.Date;
 
 public class Payment extends BaseEntity {
-    private BancAccount sender;
-    private BancAccount recipient;
+    private BankAccount sender;
+    private BankAccount recipient;
     private long sum;
     private Date date;
     private String mfo;
     private String usreou;
     private PaymentType type;
 
-    public BancAccount getSender() {
+    public BankAccount getSender() {
         return sender;
     }
 
-    public void setSender(BancAccount sender) {
+    public void setSender(BankAccount sender) {
         this.sender = sender;
     }
 
-    public BancAccount getRecipient() {
+    public BankAccount getRecipient() {
         return recipient;
     }
 
-    public void setRecipient(BancAccount recipient) {
+    public void setRecipient(BankAccount recipient) {
         this.recipient = recipient;
     }
 
@@ -75,12 +75,12 @@ public class Payment extends BaseEntity {
             return this;
         }
 
-        public Builder setSeder(BancAccount sender){
+        public Builder setSeder(BankAccount sender){
             instance.sender=sender;
             return this;
         }
 
-        public Builder setRecipient(BancAccount recipient){
+        public Builder setRecipient(BankAccount recipient){
             instance.recipient=recipient;
             return this;
         }

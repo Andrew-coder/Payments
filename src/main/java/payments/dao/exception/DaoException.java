@@ -1,4 +1,4 @@
-package payments.dao;
+package payments.dao.exception;
 
 public class DaoException extends RuntimeException{
     public DaoException(String message) {

@@ -28,7 +28,7 @@ public class FrontController extends HttpServlet{
         super.doPost(req, resp);
     }
 
-    public String processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    public String processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException{
         String method = request.getMethod().toUpperCase();
         String path = request.getRequestURI();
         String key = method+":"+path;

@@ -1,6 +1,6 @@
 package payments.model.entity;
 
-public class BancAccount extends BaseEntity {
+public class BankAccount extends BaseEntity {
     private String accountNumber;
     private long balance;
 
@@ -21,7 +21,7 @@ public class BancAccount extends BaseEntity {
     }
 
     public static class Builder{
-        BancAccount instance = new BancAccount();
+        BankAccount instance = new BankAccount();
 
         public Builder setId(int id){
             instance.setId(id);
@@ -38,7 +38,7 @@ public class BancAccount extends BaseEntity {
             return this;
         }
 
-        public BancAccount build(){
+        public BankAccount build(){
             return instance;
         }
     }

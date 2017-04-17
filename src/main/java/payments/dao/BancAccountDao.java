@@ -1,6 +1,9 @@
 package payments.dao;
 
-import payments.model.entity.BancAccount;
+import payments.model.entity.BankAccount;
 
-public interface BancAccountDao extends CommonDao<BancAccount> {
+import java.util.Optional;
+
+public interface BancAccountDao extends CommonDao<BankAccount> {
+    Optional<BankAccount> findBankAccountByCard(int id);
 }

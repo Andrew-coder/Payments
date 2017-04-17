@@ -2,7 +2,7 @@ package payments.dao.jdbc;
 
 import org.apache.log4j.Logger;
 import payments.dao.ConnectionWrapper;
-import payments.dao.DaoException;
+import payments.dao.exception.DaoException;
 
 import java.sql.Connection;
 import java.sql.SQLException;
