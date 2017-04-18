@@ -1,4 +1,4 @@
-package payments.model.entity;
+package payments.model.entity.user;
 
 public enum RoleType {
     USER("user"),

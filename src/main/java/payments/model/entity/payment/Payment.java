@@ -1,4 +1,7 @@
-package payments.model.entity;
+package payments.model.entity.payment;
+
+import payments.model.entity.BankAccount;
+import payments.model.entity.BaseEntity;
 
 import java.util.Date;
 
@@ -9,7 +12,7 @@ public class Payment extends BaseEntity {
     private Date date;
     private String mfo;
     private String usreou;
-    private PaymentType type;
+    private PaymentTariff tariff;
 
     public BankAccount getSender() {
         return sender;
@@ -59,12 +62,12 @@ public class Payment extends BaseEntity {
         this.usreou = usreou;
     }
 
-    public PaymentType getType() {
-        return type;
+    public PaymentTariff getTariff() {
+        return tariff;
     }
 
-    public void setType(PaymentType type) {
-        this.type = type;
+    public void setTariff(PaymentTariff tariff) {
+        this.tariff = tariff;
     }
 
     public static class Builder{
@@ -105,8 +108,8 @@ public class Payment extends BaseEntity {
             return this;
         }
 
-        public Builder setType(PaymentType type){
-            instance.type=type;
+        public Builder setTariff(PaymentTariff tariff){
+            instance.tariff=tariff;
             return this;
         }
 

@@ -1,6 +1,6 @@
 package payments.dao;
 
-import payments.model.entity.User;
+import payments.model.entity.user.User;
 
 import java.util.Optional;
 

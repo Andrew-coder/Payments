@@ -1,14 +1,14 @@
 package payments.utils.extractors.impl;
 
-import payments.model.entity.user.User;
+import payments.model.entity.payment.Payment;
 import payments.utils.extractors.ResultSetExtactor;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserResultSetExtractor implements ResultSetExtactor<User>{
+public class PaymentResultSetExtractor implements ResultSetExtactor<Payment> {
     @Override
-    public User extract(ResultSet set) throws SQLException {
+    public Payment extract(ResultSet set) throws SQLException {
         return null;
     }
 }

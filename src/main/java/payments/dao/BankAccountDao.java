@@ -4,6 +4,6 @@ import payments.model.entity.BankAccount;
 
 import java.util.Optional;
 
-public interface BancAccountDao extends CommonDao<BankAccount> {
+public interface BankAccountDao extends CommonDao<BankAccount> {
     Optional<BankAccount> findBankAccountByCard(int id);
 }

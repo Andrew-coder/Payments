@@ -3,7 +3,7 @@ package payments.dao.jdbc;
 import org.apache.log4j.Logger;
 import payments.dao.exception.DaoException;
 import payments.dao.UserDao;
-import payments.model.entity.User;
+import payments.model.entity.user.User;
 import payments.utils.extractors.impl.UserResultSetExtractor;
 
 import java.sql.*;
@@ -49,10 +49,10 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findById(int id) {
+    public Optional<User> findById(long id) {
         Optional<User> result = Optional.empty();
         try(PreparedStatement statement = connection.prepareStatement(GET_ALL_USERS+ FILTER_BY_ID)){
-            statement.setInt(1,id);
+            statement.setLong(1,id);
             ResultSet set = statement.executeQuery();
             if(set.next()){
                 User user = extractor.extract(set);
@@ -118,9 +118,9 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(long id) {
         try(PreparedStatement statement = connection.prepareStatement(DELETE_USER+FILTER_BY_ID)){
-            statement.setInt(1,id);
+            statement.setLong(1,id);
             statement.executeUpdate();
         }
         catch (SQLException ex){

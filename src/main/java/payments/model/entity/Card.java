@@ -1,5 +1,7 @@
 package payments.model.entity;
 
+import payments.model.entity.user.User;
+
 import java.util.Date;
 
 public class Card extends BaseEntity {

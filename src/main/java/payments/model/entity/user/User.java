@@ -1,8 +1,10 @@
-package payments.model.entity;
+package payments.model.entity.user;
+
+import payments.model.entity.BaseEntity;
 
 import java.util.Date;
 
-public class User extends BaseEntity{
+public class User extends BaseEntity {
     private String name;
     private String surname;
     private String email;
