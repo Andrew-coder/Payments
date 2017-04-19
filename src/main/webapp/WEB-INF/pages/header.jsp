@@ -1,9 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
+
 <div class="mainmenu-wrapper">
     <div class="container">
         <div class="menuextras">
@@ -18,7 +14,7 @@
         </div>
         <nav id="mainmenu" class="mainmenu">
                 <ul>
-                    <li class="active">
+                    <li>
                         <a href="/home">Home</a>
                     </li>
                     <li>
@@ -31,5 +27,3 @@
         </nav>
     </div>
 </div>
-</body>
-</html>

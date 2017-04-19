@@ -1,11 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Title</title>
-</head>
-<body>
 <!-- Footer -->
-<div class="footer">
+<div class="footer" style="position:absolute; bottom:0; left:0; right: 0;">
     <div class="container">
 
         <div class="row">
@@ -15,5 +10,3 @@
         </div>
     </div>
 </div>
-</body>
-</html>
