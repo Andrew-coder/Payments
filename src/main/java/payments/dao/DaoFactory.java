@@ -31,4 +31,11 @@ public abstract class DaoFactory {
         }
         return factory;
     }
+
+    public abstract ConnectionWrapper getConnection();
+    public abstract UserDao getUserDao(ConnectionWrapper wrapper);
+    public abstract PaymentTariffDao getPaymentTariffDao(ConnectionWrapper wrapper);
+    public abstract PaymentDao getPaymentDao(ConnectionWrapper wrapper);
+    public abstract CardDao getCardDao(ConnectionWrapper wrapper);
+    public abstract BankAccountDao getBankAccountDao(ConnectionWrapper wrapper);
 }
