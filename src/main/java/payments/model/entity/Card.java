@@ -63,7 +63,7 @@ public class Card extends BaseEntity {
     public static class Builder{
         Card instance = new Card();
 
-        public Builder setId(int id){
+        public Builder setId(long id){
             instance.setId(id);
             return this;
         }

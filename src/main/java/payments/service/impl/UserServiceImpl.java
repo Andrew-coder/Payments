@@ -4,9 +4,14 @@ import org.apache.log4j.Logger;
 import payments.dao.ConnectionWrapper;
 import payments.dao.DaoFactory;
 import payments.dao.UserDao;
+import payments.dao.exception.DaoException;
+import payments.model.dto.RegisterData;
 import payments.model.entity.user.RoleType;
 import payments.model.entity.user.User;
 import payments.service.UserService;
+import payments.service.exception.ServiceException;
+import payments.utils.constants.Attributes;
+import payments.utils.constants.ErrorMessages;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,8 +45,10 @@ public class UserServiceImpl implements UserService{
     public Optional<User> login(String email, String password) {
         try(ConnectionWrapper wrapper = daoFactory.getConnection()){
             UserDao userDao = daoFactory.getUserDao(wrapper);
-            return userDao.findUserByEmail(email)
-                    .filter( person-> password.equals(person.getPassword()));
+            User user = userDao.findUserByEmail(email)
+                    .filter( person-> password.equals(person.getPassword()))
+                    .orElseThrow(()->new ServiceException(ErrorMessages.WRONG_LOGIN_DATA));
+            return Optional.of(user);
         }
     }
 
@@ -54,22 +61,23 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> findUsersByRole(RoleType roleType) {
-        return null;
-    }
-
-    @Override
     public void create(User user) {
-
-    }
-
-    @Override
-    public void update(User user) {
-
+        try(ConnectionWrapper wrapper = daoFactory.getConnection()){
+            UserDao userDao = daoFactory.getUserDao(wrapper);
+            checkIsUserRegistered(user.getEmail(), userDao);
+            userDao.create(user);
+        }
     }
 
     @Override
     public void delete(int id) {
 
+    }
+
+    private void checkIsUserRegistered(String email, UserDao userDao){
+        if(userDao.findUserByEmail(email).isPresent()){
+            logger.error(ErrorMessages.USER_ALREADY_EXISTS);
+            throw new ServiceException(ErrorMessages.USER_ALREADY_EXISTS);
+        }
     }
 }

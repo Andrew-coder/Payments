@@ -33,7 +33,7 @@ public class FrontController extends HttpServlet{
             response.sendRedirect(path);
     }
 
-    public String processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException{
+    public String processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         String method = request.getMethod().toUpperCase();
         String path = request.getRequestURI();
         String key = method+":"+path;

@@ -14,9 +14,11 @@
         <servlet-name>MainController</servlet-name>
         <url-pattern>/home/*</url-pattern>
         <url-pattern>/login/*</url-pattern>
+        <url-pattern>/logout</url-pattern>
         <url-pattern>/cards/*</url-pattern>
         <url-pattern>/payments/*</url-pattern>
         <url-pattern>/admin/*</url-pattern>
+        <url-pattern>/register</url-pattern>
     </servlet-mapping>
     
     <filter>

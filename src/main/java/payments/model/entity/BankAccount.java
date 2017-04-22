@@ -23,7 +23,7 @@ public class BankAccount extends BaseEntity {
     public static class Builder{
         BankAccount instance = new BankAccount();
 
-        public Builder setId(int id){
+        public Builder setId(long id){
             instance.setId(id);
             return this;
         }

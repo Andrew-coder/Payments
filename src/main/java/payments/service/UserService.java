@@ -10,8 +10,6 @@ public interface UserService {
     Optional<User> findById(int id);
     Optional<User> login (String email , String password);
     List<User> findAll();
-    List<User> findUsersByRole(RoleType roleType);
     void create(User user);
-    void update(User user);
     void delete(int id);
 }

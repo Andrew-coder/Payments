@@ -34,7 +34,7 @@ public class PaymentTariff extends BaseEntity {
     public static class Builder{
         PaymentTariff instance = new PaymentTariff();
 
-        public Builder setId(int id){
+        public Builder setId(long id){
             instance.setId(id);
             return this;
         }

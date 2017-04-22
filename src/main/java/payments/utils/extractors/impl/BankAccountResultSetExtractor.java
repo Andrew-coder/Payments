@@ -9,6 +9,10 @@ import java.sql.SQLException;
 public class BankAccountResultSetExtractor implements ResultSetExtactor<BankAccount>{
     @Override
     public BankAccount extract(ResultSet set) throws SQLException {
-        return null;
+        BankAccount.Builder builder = new BankAccount.Builder()
+                .setId(set.getLong("account_id"))
+                .setAccountNumber(set.getString("account_number"))
+                .setBalance(set.getLong("balance"));
+        return builder.build();
     }
 }

@@ -26,7 +26,7 @@
             <div class="container">
 
                 <div class="radio">
-                    <a href="#" class="active" id="card-transfer"><label><input id="card" type="radio" class="radio" name="optradio">Card transfer</label></a>
+                    <a href="#" class="active" id="card-transfer"><label><input id="card" type="radio" class="radio" name="optradio" checked="checked">Card transfer</label></a>
                 </div>
                 <div class="radio">
                     <a href="#" id="account-transfer"><label><input id="account" type="radio" class="radio" name="optradio">Account transfer</label></a>

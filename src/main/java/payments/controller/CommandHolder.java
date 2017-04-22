@@ -1,20 +1,15 @@
 package payments.controller;
 
-import payments.controller.commands.AdminHomeCommand;
-import payments.controller.commands.Command;
-import payments.controller.commands.HomeCommand;
-import payments.controller.commands.PageNotFoundCommand;
+import payments.controller.commands.*;
 import payments.controller.commands.login.LoginCommand;
 import payments.controller.commands.login.LoginSubmitCommand;
-import payments.controller.commands.user.CardsCommand;
-import payments.controller.commands.user.CardsManagmentCommand;
-import payments.controller.commands.user.PaymentsCommand;
-import payments.controller.commands.user.PaymentsInfoCommand;
+import payments.controller.commands.user.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommandHolder {
+    public static final String NUMBER_BETWEEN_SLASHES_PATTERN = "/\\d+(?=/|$)";
     private Map<String, Command> commands = new HashMap<>();
 
     public CommandHolder() {
@@ -30,6 +25,8 @@ public class CommandHolder {
         commands.put("GET:/home", new HomeCommand());
         commands.put("GET:/login", new LoginCommand());
         commands.put("POST:/login", new LoginSubmitCommand());
+        commands.put("GET:/logout", new LogoutCommand());
+        commands.put("POST:/register", new RegisterSubmitCommand());
         commands.put("GET:/cards", new CardsCommand());
         commands.put("GET:/cards/id", new CardsManagmentCommand());
         commands.put("GET:/admin", new AdminHomeCommand());
@@ -38,7 +35,6 @@ public class CommandHolder {
     }
 
     private String removeAllNumbersFromUrl(String url){
-        url = url.replaceAll("/\\d+(?=/|$)", "/id");
-        return url;
+        return url.replaceAll(NUMBER_BETWEEN_SLASHES_PATTERN, "/id");
     }
 }

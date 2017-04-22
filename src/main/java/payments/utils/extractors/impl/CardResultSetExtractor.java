@@ -9,6 +9,16 @@ import java.sql.SQLException;
 public class CardResultSetExtractor implements ResultSetExtactor<Card>{
     @Override
     public Card extract(ResultSet set) throws SQLException {
-        return null;
+        UserResultSetExtractor userExtractor = new UserResultSetExtractor();
+        BankAccountResultSetExtractor accountExtractor = new BankAccountResultSetExtractor();
+        Card.Builder builder = new Card.Builder()
+                .setId(set.getLong("card_id"))
+                .setCardNumber(set.getString("card_number"))
+                .setCvv(set.getString("pin"))
+                .setExpireDate(set.getDate("expire_date"))
+                .setPin(set.getString("pin"))
+                .setAccount(accountExtractor.extract(set))
+                .setUser(userExtractor.extract(set));
+        return builder.build();
     }
 }

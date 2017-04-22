@@ -38,7 +38,7 @@
 <script src="js/jquery.fitvids.js"></script>
 <script src="js/jquery.sequence-min.js"></script>
 <script src="js/jquery.bxslider.js"></script>
-<script src="js/main-menu.js"></script>
+<%--<script src="js/main-menu.js"></script>--%>
 <script src="js/template.js"></script>
 
 </body>

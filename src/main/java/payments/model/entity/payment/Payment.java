@@ -13,6 +13,7 @@ public class Payment extends BaseEntity {
     private String mfo;
     private String usreou;
     private PaymentTariff tariff;
+    private String paymentPurpose;
 
     public BankAccount getSender() {
         return sender;
@@ -70,15 +71,23 @@ public class Payment extends BaseEntity {
         this.tariff = tariff;
     }
 
+    public String getPaymentPurpose() {
+        return paymentPurpose;
+    }
+
+    public void setPaymentPurpose(String paymentPurpose) {
+        this.paymentPurpose = paymentPurpose;
+    }
+
     public static class Builder{
         Payment instance = new Payment();
 
-        public Builder setId(int id){
+        public Builder setId(long id){
             instance.setId(id);
             return this;
         }
 
-        public Builder setSeder(BankAccount sender){
+        public Builder setSender(BankAccount sender){
             instance.sender=sender;
             return this;
         }
@@ -110,6 +119,11 @@ public class Payment extends BaseEntity {
 
         public Builder setTariff(PaymentTariff tariff){
             instance.tariff=tariff;
+            return this;
+        }
+
+        public Builder setPaymentPurpose(String paymentPurpose){
+            instance.paymentPurpose=paymentPurpose;
             return this;
         }
 
