@@ -10,6 +10,7 @@ public final class PagesPath {
     public static final String ADMIN = "/admin";
     public static final String LOGIN = "/login";
     public static final String REGISTER = "/register";
+    public static final String CARDS_MANAGE = "/cards";
 
     public static final String HOME_PAGE = VIEW_JSP_CLASSPATH + "index.jsp";
     public static final String ADMIN_HOME_PAGE = VIEW_JSP_CLASSPATH + "admin.jsp";
@@ -19,4 +20,5 @@ public final class PagesPath {
     public static final String ERROR_PAGE = VIEW_JSP_CLASSPATH + "error.jsp";
     public static final String SUCCESSFUL_REGISTER_PAGE = VIEW_JSP_CLASSPATH + "registerComplete.jsp";
     public static final String ACCESS_DENIED_PAGE = VIEW_JSP_CLASSPATH + "accessDenied.jsp";
+    public static final String REFILL_CARD_PAGE = VIEW_JSP_CLASSPATH + "cardRefill.jsp";
 }

@@ -16,7 +16,6 @@ import java.util.Map;
 
 public class AuthFilter implements Filter{
     private static final Logger logger = Logger.getLogger(AuthFilter.class);
-    private static final String ACCESS_DENIED = "Access denied for user %d";
     private static final String USER_NOT_AUTHORIZED = "User isn't authorized";
 
     private Map<RoleType, Authorizer> authorizeByRole = new HashMap<RoleType, Authorizer>() {{
@@ -31,7 +30,7 @@ public class AuthFilter implements Filter{
         String uri = req.getRequestURI();
         User user = (User)session.getAttribute(Attributes.USER);
         if(!checkUserPermissions(uri, user)){
-            req.getRequestDispatcher(PagesPath.LOGIN_PAGE).forward(request, response);
+            req.getRequestDispatcher(PagesPath.LOGIN).forward(request, response);
             logger.info(String.format(USER_NOT_AUTHORIZED));
             return;
         }
@@ -69,6 +68,8 @@ public class AuthFilter implements Filter{
 
     private class AnonymAuthorizer implements Authorizer {
         public boolean check(String uri, User user){
+            if(uri.endsWith(".css")||uri.endsWith(".js")||uri.endsWith(".png"))
+                return true;
             return  uri.startsWith(PagesPath.LOGIN)||
                     uri.startsWith(PagesPath.REGISTER);
         }

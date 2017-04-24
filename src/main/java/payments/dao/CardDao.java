@@ -7,4 +7,7 @@ import java.util.List;
 
 public interface CardDao extends CommonDao<Card> {
     List<Card> findCardsByUser(long id);
+    List<Card> findAllBlockedCards();
+    void blockCard(long id);
+    void unblockCard(long id);
 }

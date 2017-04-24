@@ -44,7 +44,6 @@ public class RegisterSubmitCommand extends CommandExecutor {
         User user = extractUserFromRegisterData(registerData);
         userService.create(user);
         logger.info(String.format("User %s %s was successfully registered",registerData.getName(), registerData.getSurname()));
-        //clearRegisterDataFromRequest(request);
         request.getRequestDispatcher(PagesPath.SUCCESSFUL_REGISTER_PAGE).forward(request, response);
         return PagesPath.FORWARD;
     }

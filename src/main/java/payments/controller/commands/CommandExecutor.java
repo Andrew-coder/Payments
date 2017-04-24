@@ -1,7 +1,9 @@
 package payments.controller.commands;
 
 import org.apache.log4j.Logger;
+import payments.controller.exception.ControllerException;
 import payments.controller.validators.Errors;
+import payments.dao.exception.DaoException;
 import payments.service.exception.ServiceException;
 import payments.utils.constants.Attributes;
 import payments.utils.constants.ErrorMessages;
@@ -31,7 +33,7 @@ public abstract class CommandExecutor implements Command {
             putErrorMessageInRequest(request, exception.getMessage());
             request.getRequestDispatcher(nextPage).forward(request, response);
         }
-        catch (Exception exception){
+        catch (DaoException|ControllerException exception){
             logger.error(exception.getMessage());
             putErrorMessageInRequest(request, ErrorMessages.UNKNOWN_ERROR_OCCURED);
             request.getRequestDispatcher(PagesPath.ERROR_PAGE).forward(request,response);

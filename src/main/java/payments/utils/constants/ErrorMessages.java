@@ -10,4 +10,6 @@ public final class ErrorMessages {
     public static final String WRONG_USER_EMAIL = "Wrong user email";
     public static final String WRONG_USER_DATE = "Wrong user date! Date format (yyyy-mm-dd)";
     public static final String WRONG_LOGIN_DATA = "Wrong user login or password";
+
+    public static final String WRONG_QUERY_PARAMETER = "Wrong query parameter";
 }

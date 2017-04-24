@@ -9,7 +9,7 @@
     <title>Title</title>
     <link rel="stylesheet" href="/css/login.css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="/js/jquery-3.2.1.min.js"></script>
     <script src="/js/login.js"></script>
     <script src="/js/form-initializer.js"></script>
 </head>

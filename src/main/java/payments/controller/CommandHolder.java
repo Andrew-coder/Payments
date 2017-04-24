@@ -4,6 +4,9 @@ import payments.controller.commands.*;
 import payments.controller.commands.login.LoginCommand;
 import payments.controller.commands.login.LoginSubmitCommand;
 import payments.controller.commands.user.*;
+import payments.controller.commands.user.card.BlockCardCommand;
+import payments.controller.commands.user.card.CardsCommand;
+import payments.controller.commands.user.card.RefillCardCommand;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +31,8 @@ public class CommandHolder {
         commands.put("GET:/logout", new LogoutCommand());
         commands.put("POST:/register", new RegisterSubmitCommand());
         commands.put("GET:/cards", new CardsCommand());
-        commands.put("GET:/cards/id", new CardsManagmentCommand());
+        commands.put("GET:/cards/refill/id", new RefillCardCommand());
+        commands.put("POST:/cards/block", new BlockCardCommand());
         commands.put("GET:/admin", new AdminHomeCommand());
         commands.put("GET:/payments", new PaymentsCommand());
         commands.put("GET:/payments/id", new PaymentsInfoCommand());

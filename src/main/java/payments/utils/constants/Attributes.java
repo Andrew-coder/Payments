@@ -6,6 +6,9 @@ public final class Attributes {
     public static final String ERRORS = "errors";
     public static final String TAB = "tab";
     public static final String REGISTER_TAB = "register";
+    public static final String CARDS = "cards";
+    public static final String CARD = "card";
+    public static final String CARD_ID = "cardID";
 
     public static final String USER_EMAIL = "userEmail";
     public static final String USER_PASSWORD = "userPassword";

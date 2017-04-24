@@ -28,6 +28,9 @@ public class CardDaoImpl implements CardDao {
             "`pin`, `cvv`, `expire_date`, `account_id`, `user_id`) VALUES (?, ?, ?, ?, ?, ?);";
     private static final String UPDATE_CARD = "UPDATE `Payment`.`Cards` SET `card_number`=?, " +
             "`pin`=?, `cvv`=?, `expire_date`=? WHERE `card_id`=?;";
+    private static final String BLOCK_CARD = "INSERT INTO `Payment`.`BlockCards` (`card_id`) VALUES (?);";
+    private static final String UNBLOCK_CARD = "delete from BlockCards where card_id=?";
+    public static final String GET_ALL_BLOCKED_CARDS = GET_ALL_CARDS + "join BlockCards using(card_id);";
 
     private Connection connection;
     private CardResultSetExtractor extractor;
@@ -50,7 +53,7 @@ public class CardDaoImpl implements CardDao {
             return result;
         }
         catch(SQLException ex){
-            throw new DaoException("dao exception occured when retrieving card by id", ex);
+            throw new DaoException("dao exception occurred when retrieving card by id", ex);
         }
     }
 
@@ -66,7 +69,7 @@ public class CardDaoImpl implements CardDao {
             return cards;
         }
         catch (SQLException ex){
-            throw new DaoException("dao exception occured when retrieving card by user", ex);
+            throw new DaoException("dao exception occurred when retrieving card by user", ex);
         }
     }
 
@@ -81,7 +84,7 @@ public class CardDaoImpl implements CardDao {
             return cards;
         }
         catch(SQLException ex){
-            throw new DaoException("dao exception occured when retrieving all cards", ex);
+            throw new DaoException("dao exception occurred when retrieving all cards", ex);
         }
     }
 
@@ -99,7 +102,7 @@ public class CardDaoImpl implements CardDao {
             statement.executeUpdate();
         }
         catch (SQLException ex){
-            throw new DaoException("Error occured when creating new card!", ex);
+            throw new DaoException("Error occurred when creating new card!", ex);
         }
     }
 
@@ -115,7 +118,44 @@ public class CardDaoImpl implements CardDao {
             statement.executeUpdate();
         }
         catch (SQLException ex){
-            throw new DaoException("Error occured when updating card!", ex);
+            throw new DaoException("Error occurred when updating card!", ex);
+        }
+    }
+
+    @Override
+    public void blockCard(long id) {
+        try(PreparedStatement statement = connection.prepareStatement(BLOCK_CARD)){
+            statement.setLong(1, id);
+            statement.executeUpdate();
+        }
+        catch (SQLException ex){
+            throw new DaoException("Error occurred when blocking card!", ex);
+        }
+    }
+
+    @Override
+    public void unblockCard(long id) {
+        try(PreparedStatement statement = connection.prepareStatement(UNBLOCK_CARD)){
+            statement.setLong(1, id);
+            statement.executeUpdate();
+        }
+        catch (SQLException ex){
+            throw new DaoException("Error occurred when unblocking card!", ex);
+        }
+    }
+
+    @Override
+    public List<Card> findAllBlockedCards() {
+        try(Statement statement = connection.createStatement();
+            ResultSet set = statement.executeQuery(GET_ALL_BLOCKED_CARDS)){
+            List<Card> cards = new ArrayList<>();
+            while(set.next()){
+                cards.add(extractor.extract(set));
+            }
+            return cards;
+        }
+        catch(SQLException ex){
+            throw new DaoException("dao exception occurred when retrieving all blocked cards", ex);
         }
     }
 
