@@ -1,5 +1,7 @@
 package payments.service;
 
+import payments.model.dto.payment.CardTransferData;
+import payments.model.dto.payment.RefillData;
 import payments.model.entity.Card;
 
 import java.util.List;
@@ -10,5 +12,7 @@ public interface CardService {
     List<Card> findAll();
     void create(Card card);
     void block(long id);
+    void refillCard(RefillData data);
+    void transferBetweenCards(CardTransferData ransferData);
     boolean isCardBlocked(long id);
 }

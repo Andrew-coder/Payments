@@ -13,7 +13,7 @@
     <a href="/home">Home</a>
 </div>
 <div class="login-page">
-    <p>Congratulations! You was succesfully registered!</p>
+    <p>${confirmMessage}</p>
 </div>
 </body>
 </html>

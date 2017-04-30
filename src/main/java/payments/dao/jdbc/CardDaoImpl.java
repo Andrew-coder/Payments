@@ -23,6 +23,7 @@ public class CardDaoImpl implements CardDao {
             ") using(user_id)) ";
     private static final String FILTER_BY_ID = " where card_id = ?;";
     public static final String FILTER_BY_USER = " where user_id = ?;";
+    public static final String FILTER_BY_CARD_NUMBER = " where card_number=?";
     private static final String DELETE_CARD = "delete from Cards ";
     private static final String CREATE_CARD = "insert into `Payment`.`Cards` (`card_number`, " +
             "`pin`, `cvv`, `expire_date`, `account_id`, `user_id`) VALUES (?, ?, ?, ?, ?, ?);";
@@ -54,6 +55,23 @@ public class CardDaoImpl implements CardDao {
         }
         catch(SQLException ex){
             throw new DaoException("dao exception occurred when retrieving card by id", ex);
+        }
+    }
+
+    @Override
+    public Optional<Card> findCardByNumber(String number) {
+        Optional<Card> result = Optional.empty();
+        try(PreparedStatement statement = connection.prepareStatement(GET_ALL_CARDS+ FILTER_BY_CARD_NUMBER)){
+            statement.setString(1, number);
+            ResultSet set = statement.executeQuery();
+            if(set.next()){
+                Card card = extractor.extract(set);
+                result = Optional.of(card);
+            }
+            return result;
+        }
+        catch(SQLException ex){
+            throw new DaoException("dao exception occurred when retrieving card by number", ex);
         }
     }
 

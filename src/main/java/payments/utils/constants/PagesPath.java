@@ -18,7 +18,7 @@ public final class PagesPath {
     public static final String CARDS_PAGE = VIEW_JSP_CLASSPATH + "cardsManagment.jsp";
     public static final String PAYMENTS_PAGE = VIEW_JSP_CLASSPATH + "paymentsManagment.jsp";
     public static final String ERROR_PAGE = VIEW_JSP_CLASSPATH + "error.jsp";
-    public static final String SUCCESSFUL_REGISTER_PAGE = VIEW_JSP_CLASSPATH + "registerComplete.jsp";
+    public static final String CONFIRMATION_PAGE = VIEW_JSP_CLASSPATH + "confirmation.jsp";
     public static final String ACCESS_DENIED_PAGE = VIEW_JSP_CLASSPATH + "accessDenied.jsp";
     public static final String REFILL_CARD_PAGE = VIEW_JSP_CLASSPATH + "cardRefill.jsp";
 }

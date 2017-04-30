@@ -10,6 +10,7 @@ import payments.model.entity.user.User;
 import payments.service.UserService;
 import payments.service.impl.UserServiceImpl;
 import payments.utils.constants.Attributes;
+import payments.utils.constants.LoggerMessages;
 import payments.utils.constants.PagesPath;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +45,8 @@ public class RegisterSubmitCommand extends CommandExecutor {
         User user = extractUserFromRegisterData(registerData);
         userService.create(user);
         logger.info(String.format("User %s %s was successfully registered",registerData.getName(), registerData.getSurname()));
-        request.getRequestDispatcher(PagesPath.SUCCESSFUL_REGISTER_PAGE).forward(request, response);
+        request.setAttribute(Attributes.CONFIRM_MESSAGE, LoggerMessages.SUCCESSFUL_REGISTER);
+        request.getRequestDispatcher(PagesPath.CONFIRMATION_PAGE).forward(request, response);
         return PagesPath.FORWARD;
     }
 

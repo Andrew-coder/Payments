@@ -1,8 +1,10 @@
 package payments.model.entity;
 
+import java.math.BigDecimal;
+
 public class BankAccount extends BaseEntity {
     private String accountNumber;
-    private long balance;
+    private BigDecimal balance;
 
     public String getAccountNumber() {
         return accountNumber;
@@ -12,11 +14,11 @@ public class BankAccount extends BaseEntity {
         this.accountNumber = accountNumber;
     }
 
-    public long getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(long balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 
@@ -33,7 +35,7 @@ public class BankAccount extends BaseEntity {
             return this;
         }
 
-        public Builder setBalance(long balance){
+        public Builder setBalance(BigDecimal balance){
             instance.balance = balance;
             return this;
         }

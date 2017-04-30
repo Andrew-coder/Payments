@@ -3,12 +3,13 @@ package payments.model.entity.payment;
 import payments.model.entity.BankAccount;
 import payments.model.entity.BaseEntity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Payment extends BaseEntity {
     private BankAccount sender;
     private BankAccount recipient;
-    private long sum;
+    private BigDecimal sum;
     private Date date;
     private String mfo;
     private String usreou;
@@ -31,11 +32,11 @@ public class Payment extends BaseEntity {
         this.recipient = recipient;
     }
 
-    public long getSum() {
+    public BigDecimal getSum() {
         return sum;
     }
 
-    public void setSum(long sum) {
+    public void setSum(BigDecimal sum) {
         this.sum = sum;
     }
 
@@ -97,7 +98,7 @@ public class Payment extends BaseEntity {
             return this;
         }
 
-        public Builder setSum(long sum){
+        public Builder setSum(BigDecimal sum){
             instance.sum=sum;
             return this;
         }

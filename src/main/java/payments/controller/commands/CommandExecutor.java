@@ -35,7 +35,7 @@ public abstract class CommandExecutor implements Command {
         }
         catch (DaoException|ControllerException exception){
             logger.error(exception.getMessage());
-            putErrorMessageInRequest(request, ErrorMessages.UNKNOWN_ERROR_OCCURED);
+            putErrorMessageInRequest(request, exception.getMessage());
             request.getRequestDispatcher(PagesPath.ERROR_PAGE).forward(request,response);
         }
         return PagesPath.FORWARD;

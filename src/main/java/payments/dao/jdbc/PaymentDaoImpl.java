@@ -69,7 +69,7 @@ public class PaymentDaoImpl implements PaymentDao {
         try(PreparedStatement statement = connection.prepareStatement(CREATE_PAYMENT)){
             statement.setLong(1, payment.getSender().getId());
             statement.setLong(2, payment.getRecipient().getId());
-            statement.setLong(3, payment.getSum());
+            statement.setBigDecimal(3, payment.getSum());
             statement.setTimestamp(4, convertToTimestamp(payment.getDate()));
             statement.setLong(5, payment.getTariff().getId());
             statement.setString(6, payment.getMfo());

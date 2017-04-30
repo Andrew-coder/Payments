@@ -12,7 +12,7 @@ public class BankAccountResultSetExtractor implements ResultSetExtactor<BankAcco
         BankAccount.Builder builder = new BankAccount.Builder()
                 .setId(set.getLong("account_id"))
                 .setAccountNumber(set.getString("account_number"))
-                .setBalance(set.getLong("balance"));
+                .setBalance(set.getBigDecimal("balance"));
         return builder.build();
     }
 }

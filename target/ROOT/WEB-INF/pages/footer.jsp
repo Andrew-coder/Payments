@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!-- Footer -->
-<div class="footer" style="position:absolute; bottom:0; left:0; right: 0;">
+<div class="footer" style="position:absolute; bottom:0; width: 100%; position: fixed;">
     <div class="container">
 
         <div class="row">

@@ -14,7 +14,7 @@ public class CardResultSetExtractor implements ResultSetExtactor<Card>{
         Card.Builder builder = new Card.Builder()
                 .setId(set.getLong("card_id"))
                 .setCardNumber(set.getString("card_number"))
-                .setCvv(set.getString("pin"))
+                .setCvv(set.getString("cvv"))
                 .setExpireDate(set.getDate("expire_date"))
                 .setPin(set.getString("pin"))
                 .setAccount(accountExtractor.extract(set))

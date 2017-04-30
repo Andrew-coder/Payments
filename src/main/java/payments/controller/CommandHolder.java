@@ -7,6 +7,10 @@ import payments.controller.commands.user.*;
 import payments.controller.commands.user.card.BlockCardCommand;
 import payments.controller.commands.user.card.CardsCommand;
 import payments.controller.commands.user.card.RefillCardCommand;
+import payments.controller.commands.user.card.RefillCardSubmitCommand;
+import payments.controller.commands.user.payments.AccountPaymentsCommand;
+import payments.controller.commands.user.payments.CardPaymentsCommand;
+import payments.controller.commands.user.payments.PaymentsCommand;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,12 +34,14 @@ public class CommandHolder {
         commands.put("POST:/login", new LoginSubmitCommand());
         commands.put("GET:/logout", new LogoutCommand());
         commands.put("POST:/register", new RegisterSubmitCommand());
+        commands.put("GET:/payments", new PaymentsCommand());
+        commands.put("POST:/payments/card", new CardPaymentsCommand());
+        commands.put("POST:/payments/account", new AccountPaymentsCommand());
         commands.put("GET:/cards", new CardsCommand());
         commands.put("GET:/cards/refill/id", new RefillCardCommand());
+        commands.put("POST:/cards/refill", new RefillCardSubmitCommand());
         commands.put("POST:/cards/block", new BlockCardCommand());
         commands.put("GET:/admin", new AdminHomeCommand());
-        commands.put("GET:/payments", new PaymentsCommand());
-        commands.put("GET:/payments/id", new PaymentsInfoCommand());
     }
 
     private String removeAllNumbersFromUrl(String url){

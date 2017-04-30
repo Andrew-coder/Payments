@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <script src="/js/jquery-3.2.1.min.js"></script>
     <script src="/js/login.js"></script>
-    <script src="/js/form-initializer.js"></script>
+    <script src="/js/login-form-initializer.js"></script>
 </head>
 <body>
 <div class="container">

@@ -17,6 +17,13 @@
     <div class="row">
         <div class="container">
             <div class="container">
+                <div>
+                    <c:if test="${requestScope.errors!=null and requestScope.errors.hasErrors()}">
+                        <c:forEach items="${requestScope.errors.getErrorsAttributes()}" var="value">
+                            <p1 class="has-error">${requestScope.errors.getErrors().get(value)}</p1><br>
+                        </c:forEach>
+                    </c:if>
+                </div>
 
                 <div class="radio">
                     <a href="#" class="active" id="card-transfer"><label><input id="card" type="radio" class="radio" name="optradio" checked="checked">Card transfer</label></a>
@@ -25,11 +32,12 @@
                     <a href="#" id="account-transfer"><label><input id="account" type="radio" class="radio" name="optradio">Account transfer</label></a>
                 </div>
 
+                <input id="tab" type="hidden" value="${requestScope.tab}">
 
                 <div class="panel panel-body">
                     <div class="row">
 
-                            <form id="card-pay-form" action="" method="post" role="form" >
+                            <form id="card-pay-form" action="/payments/card" method="post" role="form" >
                                 <div class="form-group row">
                                     <label class="col-2 col-form-label">From card</label>
                                     <div class="col-10">
@@ -38,7 +46,7 @@
                                                 <option>You have no any cards</option>
                                             </c:if>
                                             <c:forEach items="${cards}" var="card">
-                                                <option value="${card.getCardNumber()}"></option>
+                                                <option value="${card.cardNumber}">${card.cardNumber}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -46,19 +54,19 @@
                                 <div class="form-group row">
                                     <label class="col-2 col-form-label">On the card</label>
                                     <div class="col-10">
-                                        <input type="text" name="target_card" id="target_card" class="form-control" placeholder="recipient's card">
+                                        <input type="text" name="target_card" id="target_card" class="form-control" placeholder="recipient's card" value="${requestScope.previousTargetCard}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-2 col-form-label">Sum</label>
                                     <div class="col-10">
-                                        <input type="text" name="sum" class="form-control">
+                                        <input type="text" name="sum" class="form-control" value="${requestScope.previousSum}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-2 col-form-label">Purpose of payment</label>
                                     <div class="col-10">
-                                        <input type="text" name="purpose" class="form-control">
+                                        <input type="text" name="purpose" class="form-control" value="${requestScope.previousPurpose}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -73,6 +81,19 @@
 
 
                             <form id="account-form-pay" action="" method="post" role="form" style="display: none;">
+                                <div class="form-group row">
+                                    <label class="col-2 col-form-label">From card</label>
+                                    <div class="col-10">
+                                        <select name="cards" class="form-control">
+                                            <c:if test="${cards==null || cards.isEmpty()}">
+                                                <option>You have no any cards</option>
+                                            </c:if>
+                                            <c:forEach items="${cards}" var="card">
+                                                <option value="${card.cardNumber}">${card.cardNumber}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="form-group row">
                                     <label class="col-2 col-form-label">mfo</label>
                                     <div class="col-10">

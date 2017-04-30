@@ -18,7 +18,7 @@ public class PaymentResultSetExtractor implements ResultSetExtactor<Payment> {
                 .setMfo(set.getString("mfo"))
                 .setPaymentPurpose(set.getString("payment_purpose"))
                 .setSender(accountExtractor.extract(set))
-                .setSum(set.getLong("sum"))
+                .setSum(set.getBigDecimal("sum"))
                 .setTariff(tarrifExtractor.extract(set))
                 .setUsreou(set.getString("usreou"));
         BankAccount bankAccount = new BankAccount.Builder()

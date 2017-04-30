@@ -19,7 +19,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper{
     @Override
     public void beginTransaction() {
         try{
-            connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
             connection.setAutoCommit(false);
             inTransaction=true;
         }catch (Exception ex) {

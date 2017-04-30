@@ -12,4 +12,15 @@ public final class ErrorMessages {
     public static final String WRONG_LOGIN_DATA = "Wrong user login or password";
 
     public static final String WRONG_QUERY_PARAMETER = "Wrong query parameter";
+    public static final String WRONG_PARAMETER = "Wrong parameter";
+
+    public static final String WRONG_USREOU = "Wrong usreou";
+    public static final String WRONG_MFO = "Wrong mfo";
+    public static final String WRONG_SENDER_CARD = "Wrong sender's card number";
+    public static final String WRONG_RECIPIENT_CARD = "Wrong recipient's card number";
+    public static final String WRONG_SUM = "Wrong sum";
+    public static final String WRONG_ACCOUNT_NUMBER = "Wrong bank account number";
+
+    public static final String CARD_NOT_EXIST = "Card with such id doesn't exist";
+    public static final String WRONG_CARD_DATA = "Wrong card data!";
 }

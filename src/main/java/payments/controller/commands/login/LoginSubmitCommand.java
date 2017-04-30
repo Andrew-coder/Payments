@@ -14,8 +14,8 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class LoginSubmitCommand extends CommandExecutor {
-    public static final String PARAM_EMAIL = "login_name";
-    public static final String PARAM_PASSWORD ="login_password";
+    private static final String PARAM_EMAIL = "login_name";
+    private static final String PARAM_PASSWORD ="login_password";
 
     private UserService userService = UserServiceImpl.getInstance();
 

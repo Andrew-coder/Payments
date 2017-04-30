@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -8,36 +9,43 @@
 </head>
 <body>
     <div class="container">
+        <div>
+            <c:if test="${requestScope.errors!=null and requestScope.errors.hasErrors()}">
+                <c:forEach items="${requestScope.errors.getErrorsAttributes()}" var="value">
+                    <p1 class="has-error">${requestScope.errors.getErrors().get(value)}</p1><br>
+                </c:forEach>
+            </c:if>
+        </div>
         <form action="/cards/refill" method="post">
             <input name="id" type="hidden" value="${requestScope.card}">
             <div class="form-group row">
                 <label class="col-2 col-form-label">Card number</label>
                 <div class="col-10">
-                    <input type="text" name="card_number" id="card_number" class="form-control" placeholder="card number">
+                    <input type="text" name="card_number" id="card_number" class="form-control" placeholder="card number" value="${requestScope.previousCardNumber}">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-2 col-form-label">pin</label>
                 <div class="col-10">
-                    <input type="text" name="card_pin" id="card_pin" class="form-control" placeholder="pin">
+                    <input type="text" name="card_pin" id="card_pin" class="form-control" placeholder="pin" value="${requestScope.previousPin}">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-2 col-form-label">cvv</label>
                 <div class="col-10">
-                    <input type="text" name="card_cvv" id="card_cvv" class="form-control" placeholder="cvv">
+                    <input type="text" name="card_cvv" id="card_cvv" class="form-control" placeholder="cvv" value="${requestScope.previousCvv}">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-2 col-form-label">expire date</label>
                 <div class="col-10">
-                    <input type="date" name="card_expire" id="card_expire" class="form-control" placeholder="expire date">
+                    <input type="date" name="card_expire" id="card_expire" class="form-control" placeholder="expire date" value="${requestScope.previousExpireDate}">
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-2 col-form-label">sum</label>
                 <div class="col-10">
-                    <input type="text" name="sum" id="sum" class="form-control" placeholder="sum">
+                    <input type="text" name="sum" id="sum" class="form-control" placeholder="sum" value="${requestScope.previousSum}">
                 </div>
             </div>
 
