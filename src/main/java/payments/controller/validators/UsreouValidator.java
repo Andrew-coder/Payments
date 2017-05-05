@@ -15,7 +15,9 @@ public class UsreouValidator implements Validator<String>{
     private int MAX_RANGE_VALUE = 60000000;
     private int DIVIDER = 11;
 
-    private Map<Integer, Integer> firstRangeWeightFactors = new HashMap<Integer, Integer>(){{
+    private final Map<Integer, Integer> firstRangeWeightFactors = new HashMap<Integer, Integer>();
+    private final Map<Integer, Integer> secondRangeWeightFactors = new HashMap<Integer, Integer>();
+    {
         firstRangeWeightFactors.put(1,1);
         firstRangeWeightFactors.put(2,2);
         firstRangeWeightFactors.put(3,3);
@@ -23,9 +25,7 @@ public class UsreouValidator implements Validator<String>{
         firstRangeWeightFactors.put(5,5);
         firstRangeWeightFactors.put(6,6);
         firstRangeWeightFactors.put(7,7);
-    }};
 
-    private Map<Integer, Integer> secondRangeWeightFactors = new HashMap<Integer, Integer>(){{
         secondRangeWeightFactors.put(1,7);
         secondRangeWeightFactors.put(2,1);
         secondRangeWeightFactors.put(3,2);
@@ -33,7 +33,7 @@ public class UsreouValidator implements Validator<String>{
         secondRangeWeightFactors.put(5,4);
         secondRangeWeightFactors.put(6,5);
         secondRangeWeightFactors.put(7,6);
-    }};
+    }
 
     @Override
     public Errors validate(String s) {
@@ -67,13 +67,13 @@ public class UsreouValidator implements Validator<String>{
     }
 
     private long calculateControlSum(Map<Integer, Integer> weightFactors, int[] digits){
-        return IntStream.range(0, digits.length)
-                .map(i -> i*weightFactors.get(i)).sum();
+        return IntStream.range(0, digits.length-1)
+                .map(i -> digits[i]*weightFactors.get(i+1)).sum();
     }
 
     private long recalculateControlSum(Map<Integer, Integer> weightFactors, int[] digits){
-        return IntStream.range(0, digits.length)
-                .map(i -> i*(weightFactors.get(i)+2)).sum();
+        return IntStream.range(0, digits.length-1)
+                .map(i -> digits[i]*(weightFactors.get(i+1)+2)).sum();
     }
 
     private boolean validateUsreouCodeByRegex(String usreou){

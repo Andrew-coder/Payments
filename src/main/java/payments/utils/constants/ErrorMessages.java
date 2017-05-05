@@ -22,5 +22,8 @@ public final class ErrorMessages {
     public static final String WRONG_ACCOUNT_NUMBER = "Wrong bank account number";
 
     public static final String CARD_NOT_EXIST = "Card with such id doesn't exist";
+    public static final String ACCOUNT_NOT_EXIST = "Bank account with such number doesn't exist";
     public static final String WRONG_CARD_DATA = "Wrong card data!";
+
+    public static final String NOT_ENOUGH_MONEY = "Not enough money for payment!";
 }

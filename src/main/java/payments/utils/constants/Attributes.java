@@ -6,6 +6,7 @@ public final class Attributes {
     public static final String ERRORS = "errors";
     public static final String TAB = "tab";
     public static final String REGISTER_TAB = "register";
+    public static final String ACCOUNT_TAB = "account";
     public static final String CARDS = "cards";
     public static final String CARD = "card";
     public static final String CARD_ID = "cardID";
@@ -37,6 +38,9 @@ public final class Attributes {
     public static final String PREVIOUS_EXPIRE_DATE = "previousExpireDate";
     public static final String PREVIOUS_SUM = "previousSum";
     public static final String PREVIOUS_PURPOSE = "previousPurpose";
+    public static final String PREVIOUS_MFO = "previousMfo";
+    public static final String PREVIOUS_USREOU = "previousUsreou";
+    public static final String PREVIOUS_ACCOUNT_NUMBER = "previousAccount";
 
     public static final String USREOU = "usreou";
     public static final String MFO = "mfo";

@@ -5,8 +5,13 @@ import payments.controller.commands.CommandExecutor;
 import payments.controller.validators.CardTransferValidator;
 import payments.controller.validators.Errors;
 import payments.model.dto.payment.CardTransferData;
+import payments.model.entity.payment.Payment;
+import payments.model.entity.payment.PaymentTariff;
+import payments.model.entity.payment.PaymentType;
 import payments.service.CardService;
+import payments.service.PaymentService;
 import payments.service.impl.CardServiceImpl;
+import payments.service.impl.PaymentServiceImpl;
 import payments.utils.constants.Attributes;
 import payments.utils.constants.LoggerMessages;
 import payments.utils.constants.PagesPath;
@@ -16,10 +21,12 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 
 public class CardPaymentsCommand extends CommandExecutor {
     private static final Logger logger = Logger.getLogger(CardPaymentsCommand.class);
     private CardService cardService = CardServiceImpl.getInstance();
+    private PaymentService paymentService = PaymentServiceImpl.getInstance();
     private CardTransferValidator cardValidator;
     private RequestParamExtractor paramExtractor;
 
@@ -32,16 +39,19 @@ public class CardPaymentsCommand extends CommandExecutor {
     @Override
     public String performExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Errors errors = new Errors();
+        saveCardTransferDataToRequest(request);
         CardTransferData cardData = extractCardTransferDataFromRequest(request);
         errors.addErrors(cardValidator.validate(cardData).getErrors());
         if(errors.hasErrors()){
-            saveCardTransferDataToRequest(request);
             processErrors(request, errors);
             request.getRequestDispatcher(PagesPath.PAYMENTS_PAGE).forward(request, response);
             return PagesPath.FORWARD;
         }
         cardService.transferBetweenCards(cardData);
+        Payment payment = extractPaymentFromCardTransferData(cardData);
+        paymentService.saveCardTransfer(payment, cardData);
         logger.info(String.format(LoggerMessages.SUCCESSFULL_CARD_TRANSFER));
+        clearCardTransferDataFromRequest(request);
         request.setAttribute(Attributes.CONFIRM_MESSAGE, LoggerMessages.SUCCESSFULL_CARD_TRANSFER);
         request.getRequestDispatcher(PagesPath.CONFIRMATION_PAGE).forward(request, response);
         return PagesPath.FORWARD;
@@ -56,11 +66,26 @@ public class CardPaymentsCommand extends CommandExecutor {
         return builder.build();
     }
 
+    private Payment extractPaymentFromCardTransferData(CardTransferData data){
+        return new Payment.Builder()
+                .setSum(new BigDecimal(data.getSum()))
+                .setCurrentDate()
+                .setPaymentPurpose(data.getPaymentPurpose())
+                .build();
+    }
+
     private void saveCardTransferDataToRequest(HttpServletRequest request){
         request.setAttribute(Attributes.PREVIOUS_CARD_NUMBER, request.getParameter("cards"));
         request.setAttribute(Attributes.PREVIOUS_TARGET_CARD, request.getParameter("target_card"));
         request.setAttribute(Attributes.PREVIOUS_PURPOSE, request.getParameter("purpose"));
         request.setAttribute(Attributes.PREVIOUS_SUM, request.getParameter("sum"));
+    }
+
+    private void clearCardTransferDataFromRequest(HttpServletRequest request){
+        request.removeAttribute(Attributes.PREVIOUS_CARD_NUMBER);
+        request.removeAttribute(Attributes.PREVIOUS_TARGET_CARD);
+        request.removeAttribute(Attributes.PREVIOUS_PURPOSE);
+        request.removeAttribute(Attributes.PREVIOUS_SUM);
     }
 
     private void processErrors(HttpServletRequest request, Errors errors){

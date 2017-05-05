@@ -13,7 +13,7 @@ public class PaymentTariffResultSetExtractor implements ResultSetExtactor<Paymen
         PaymentTariff.Builder builder = new PaymentTariff.Builder()
                 .setId(set.getLong("id"))
                 .setPaymentRate(set.getDouble("payment_rate"))
-                .setFixedRate(set.getLong("fixed_rate"))
+                .setFixedRate(set.getBigDecimal("fixed_rate"))
                 .setType(PaymentType.getType(set.getString("payment_name")));
         return builder.build();
     }

@@ -25,11 +25,11 @@ public class LoginSubmitCommand extends CommandExecutor {
 
     @Override
     public String performExecute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        saveLoginDataToRequest(request);
         String pageToGo = PagesPath.LOGIN;
         String email = request.getParameter(PARAM_EMAIL);
         String password = request.getParameter(PARAM_PASSWORD);
         if( email != null && password != null ){
-            saveLoginDataToRequest(request);
             Optional<User> user = userService.login(email, password);
             if( user.isPresent() ){
                 User person = user.get();
@@ -37,6 +37,7 @@ public class LoginSubmitCommand extends CommandExecutor {
                 request.getSession().setAttribute(Attributes.USER, person);
             }
         }
+        clearLoginDataFromRequest(request);
         return pageToGo;
     }
 
@@ -51,5 +52,10 @@ public class LoginSubmitCommand extends CommandExecutor {
     private void saveLoginDataToRequest(HttpServletRequest request){
         request.setAttribute(Attributes.PREVIOUS_LOGIN_EMAIL, request.getParameter(PARAM_EMAIL));
         request.setAttribute(Attributes.PREVIOUS_LOGIN_PASSWORD, request.getParameter(PARAM_PASSWORD));
+    }
+
+    private void clearLoginDataFromRequest(HttpServletRequest request){
+        request.removeAttribute(Attributes.PREVIOUS_LOGIN_EMAIL);
+        request.removeAttribute(Attributes.PREVIOUS_LOGIN_PASSWORD);
     }
 }

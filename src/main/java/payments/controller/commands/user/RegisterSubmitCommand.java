@@ -12,6 +12,8 @@ import payments.service.impl.UserServiceImpl;
 import payments.utils.constants.Attributes;
 import payments.utils.constants.LoggerMessages;
 import payments.utils.constants.PagesPath;
+import payments.utils.extractors.RequestParamExtractor;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,20 +26,22 @@ public class RegisterSubmitCommand extends CommandExecutor {
     private static final Logger logger = Logger.getLogger(RegisterSubmitCommand.class);
     private UserService userService = UserServiceImpl.getInstance();
     private UserValidator userValidator;
+    private RequestParamExtractor paramExtractor;
 
     public RegisterSubmitCommand() {
         super(PagesPath.LOGIN_PAGE);
         userValidator = new UserValidator();
+        paramExtractor = new RequestParamExtractor();
     }
 
     @Override
     public String performExecute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException,IOException {
         Errors errors = new Errors();
+        saveRegisterDataToRequest(request);
         RegisterData registerData = extractRegisterData(request);
         errors.addErrors(userValidator.validate(registerData).getErrors());
         if(errors.hasErrors()){
-            saveRegisterDataToRequest(request);
             processErrors(request, errors);
             request.getRequestDispatcher(PagesPath.LOGIN_PAGE).forward(request, response);
             return PagesPath.FORWARD;
@@ -45,6 +49,7 @@ public class RegisterSubmitCommand extends CommandExecutor {
         User user = extractUserFromRegisterData(registerData);
         userService.create(user);
         logger.info(String.format("User %s %s was successfully registered",registerData.getName(), registerData.getSurname()));
+        clearRegisterDataFromRequest(request);
         request.setAttribute(Attributes.CONFIRM_MESSAGE, LoggerMessages.SUCCESSFUL_REGISTER);
         request.getRequestDispatcher(PagesPath.CONFIRMATION_PAGE).forward(request, response);
         return PagesPath.FORWARD;
@@ -74,6 +79,13 @@ public class RegisterSubmitCommand extends CommandExecutor {
         request.setAttribute(Attributes.PREVIOUS_USER_PASSWORD, request.getParameter("password"));
     }
 
+    private void clearRegisterDataFromRequest(HttpServletRequest request){
+        request.removeAttribute(Attributes.PREVIOUS_USER_NAME);
+        request.removeAttribute(Attributes.PREVIOUS_USER_SURNAME);
+        request.removeAttribute(Attributes.PREVIOUS_USER_EMAIL);
+        request.removeAttribute(Attributes.PREVIOUS_USER_DATE);
+        request.removeAttribute(Attributes.PREVIOUS_USER_PASSWORD);
+    }
 
     private User extractUserFromRegisterData(RegisterData registerData){
         User.Builder builder = new User.Builder()
@@ -81,13 +93,8 @@ public class RegisterSubmitCommand extends CommandExecutor {
                 .setSurname(registerData.getSurname())
                 .setEmail(registerData.getEmail())
                 .setPassword(registerData.getPassword())
-                .setRole(RoleType.USER);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            Date convertedDate = sdf.parse(registerData.getBirthDate());
-            builder.setBirthDate(convertedDate);
-        }
-        catch (ParseException ex){}
+                .setRole(RoleType.USER)
+                .setBirthDate(paramExtractor.extractDate(registerData.getBirthDate()));
         return builder.build();
     }
 }

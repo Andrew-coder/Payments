@@ -123,6 +123,11 @@ public class Payment extends BaseEntity {
             return this;
         }
 
+        public Builder setCurrentDate(){
+            instance.date = new Date();
+            return this;
+        }
+
         public Builder setPaymentPurpose(String paymentPurpose){
             instance.paymentPurpose=paymentPurpose;
             return this;

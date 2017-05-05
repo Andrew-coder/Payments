@@ -2,10 +2,12 @@ package payments.model.entity.payment;
 
 import payments.model.entity.BaseEntity;
 
+import java.math.BigDecimal;
+
 public class PaymentTariff extends BaseEntity {
     private PaymentType type;
     private double paymentRate;
-    private long fixedRate;
+    private BigDecimal fixedRate;
 
     public PaymentType getType() {
         return type;
@@ -23,11 +25,11 @@ public class PaymentTariff extends BaseEntity {
         this.paymentRate = paymentRate;
     }
 
-    public long getFixedRate() {
+    public BigDecimal getFixedRate() {
         return fixedRate;
     }
 
-    public void setFixedRate(long fixedRate) {
+    public void setFixedRate(BigDecimal fixedRate) {
         this.fixedRate = fixedRate;
     }
 
@@ -49,7 +51,7 @@ public class PaymentTariff extends BaseEntity {
             return this;
         }
 
-        public Builder setFixedRate(long fixedRate){
+        public Builder setFixedRate(BigDecimal fixedRate){
             instance.fixedRate=fixedRate;
             return this;
         }

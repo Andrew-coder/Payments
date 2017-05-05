@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import payments.dao.PaymentTariffDao;
 import payments.dao.exception.DaoException;
 import payments.model.entity.payment.PaymentTariff;
+import payments.model.entity.payment.PaymentType;
 import payments.utils.extractors.impl.PaymentTariffResultSetExtractor;
 
 import java.sql.*;
@@ -16,7 +17,8 @@ public class PaymentTariffDaoImpl implements PaymentTariffDao{
     private static final Logger logger = Logger.getLogger(PaymentTariffDaoImpl.class);
     private static final String GET_ALL_TARIFFS = "select id, payment_name, payment_rate, fixed_rate from PaymentsTypes";
     private static final String FILTER_BY_ID = " where id = ?;";
-    public static final String UPDATE_TARIFF = "update `Payment`.`PaymentsTypes` set `payment_rate`=?, `fixed_rate`=? ";
+    private static final String FILTER_BY_PAYMENT_TYPE = " where payment_name = ?;";
+    private static final String UPDATE_TARIFF = "update `Payment`.`PaymentsTypes` set `payment_rate`=?, `fixed_rate`=? ";
     private Connection connection;
     private PaymentTariffResultSetExtractor extractor;
 
@@ -39,6 +41,23 @@ public class PaymentTariffDaoImpl implements PaymentTariffDao{
         }
         catch(SQLException ex){
             throw new DaoException("dao exception occurred when retrieving payment tariff by id", ex);
+        }
+    }
+
+    @Override
+    public Optional<PaymentTariff> findByPaymentType(PaymentType type) {
+        Optional<PaymentTariff> result = Optional.empty();
+        try(PreparedStatement statement = connection.prepareStatement(GET_ALL_TARIFFS+FILTER_BY_PAYMENT_TYPE)){
+            statement.setString(1, type.getTypeName());
+            ResultSet set = statement.executeQuery();
+            if(set.next()){
+                PaymentTariff tariff = extractor.extract(set);
+                result = Optional.of(tariff);
+            }
+            return result;
+        }
+        catch (SQLException ex){
+            throw new DaoException("dao exception occurred when retrieving payment tariff by payment type", ex);
         }
     }
 
@@ -67,7 +86,7 @@ public class PaymentTariffDaoImpl implements PaymentTariffDao{
         Objects.requireNonNull(tariff, "Error! Wrong payment tariff object...");
         try(PreparedStatement statement = connection.prepareStatement(UPDATE_TARIFF + FILTER_BY_ID)){
             statement.setDouble(1, tariff.getPaymentRate());
-            statement.setLong(2, tariff.getFixedRate());
+            statement.setBigDecimal(2, tariff.getFixedRate());
             statement.executeUpdate();
         }
         catch (SQLException ex){

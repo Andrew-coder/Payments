@@ -23,7 +23,7 @@ public class BlockCardCommand extends CommandExecutor {
     @Override
     public String performExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         long cardId = requestExtractor.extractLong(request, Attributes.CARD_ID);
-        cardService.block(cardId);
+        cardService.blockCard(cardId);
         return PagesPath.CARDS_MANAGE;
     }
 }

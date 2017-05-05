@@ -64,5 +64,9 @@ public class AccountTransferData {
             instance.paymentPurpose=paymentPurpose;
             return this;
         }
+
+        public AccountTransferData build(){
+            return instance;
+        }
     }
 }

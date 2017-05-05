@@ -6,4 +6,5 @@ import java.util.Optional;
 
 public interface BankAccountDao extends CommonDao<BankAccount> {
     Optional<BankAccount> findBankAccountByCard(int id);
+    Optional<BankAccount> findBankAccountByNumber(String number);
 }

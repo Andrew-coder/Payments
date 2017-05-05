@@ -1,14 +1,14 @@
 package payments.service.impl;
 
 import org.apache.log4j.Logger;
-import payments.dao.BankAccountDao;
-import payments.dao.CardDao;
-import payments.dao.ConnectionWrapper;
-import payments.dao.DaoFactory;
+import payments.dao.*;
+import payments.model.dto.payment.AccountTransferData;
 import payments.model.dto.payment.CardTransferData;
 import payments.model.dto.payment.RefillData;
 import payments.model.entity.BankAccount;
 import payments.model.entity.Card;
+import payments.model.entity.payment.PaymentTariff;
+import payments.model.entity.payment.PaymentType;
 import payments.service.CardService;
 import payments.service.exception.ServiceException;
 import payments.utils.constants.ErrorMessages;
@@ -23,7 +23,7 @@ import java.util.Optional;
 
 public class CardServiceImpl implements CardService{
     private static final Logger logger = Logger.getLogger(CardServiceImpl.class);
-
+    private static final double ZERO = 0.0;
     private DaoFactory daoFactory = DaoFactory.getInstance();
 
     private CardServiceImpl(DaoFactory daoFactory) {
@@ -47,6 +47,14 @@ public class CardServiceImpl implements CardService{
     }
 
     @Override
+    public List<Card> findCardsByUser(long id) {
+        try (ConnectionWrapper wrapper = daoFactory.getConnection()){
+            CardDao cardDao = daoFactory.getCardDao(wrapper);
+            return cardDao.findCardsByUser(id);
+        }
+    }
+
+    @Override
     public List<Card> findAll() {
         try(ConnectionWrapper wrapper = daoFactory.getConnection()){
             CardDao cardDao = daoFactory.getCardDao(wrapper);
@@ -56,11 +64,14 @@ public class CardServiceImpl implements CardService{
 
     @Override
     public void create(Card card) {
-
+        try(ConnectionWrapper wrapper = daoFactory.getConnection()){
+            CardDao cardDao = daoFactory.getCardDao(wrapper);
+            cardDao.create(card);
+        }
     }
 
     @Override
-    public void block(long id) {
+    public void blockCard(long id) {
         try(ConnectionWrapper wrapper = daoFactory.getConnection()){
             CardDao cardDao = daoFactory.getCardDao(wrapper);
             if(!isCardBlocked(id)){
@@ -70,22 +81,32 @@ public class CardServiceImpl implements CardService{
     }
 
     @Override
+    public void unblockCard(long id) {
+        try(ConnectionWrapper wrapper = daoFactory.getConnection()){
+            CardDao cardDao = daoFactory.getCardDao(wrapper);
+            if(!isCardBlocked(id)){
+                cardDao.unblockCard(id);
+            }
+        }
+    }
+
+    @Override
     public void refillCard(RefillData data) {
         try(ConnectionWrapper wrapper = daoFactory.getConnection()){
             CardDao cardDao = daoFactory.getCardDao(wrapper);
             BankAccountDao accountDao = daoFactory.getBankAccountDao(wrapper);
+            PaymentTariffDao tariffDao = daoFactory.getPaymentTariffDao(wrapper);
             Card card = findCardByIdOrThrowException(data.getIdRefilledCard(), cardDao);
             Optional<Card> sourceCard = cardDao.findCardByNumber(data.getCardNumber());
             if(sourceCard.isPresent()){
                 checkCardInfo(sourceCard, data);
                 BankAccount recipientAccount = card.getAccount();
                 BankAccount senderAccount  = sourceCard.get().getAccount();
-                senderAccount.setBalance(decreaseAccountBalance(senderAccount, data.getSum()));
+                BigDecimal senderBalance = calculateBalanceByTariff(senderAccount, data.getSum(),
+                        tariffDao, PaymentType.REFILL);
+                senderAccount.setBalance(senderBalance);
                 recipientAccount.setBalance(increaseAccountBalance(recipientAccount, data.getSum()));
-                wrapper.beginTransaction();
-                accountDao.update(senderAccount);
-                accountDao.update(recipientAccount);
-                wrapper.commitTransaction();
+                performTransaction(senderAccount, recipientAccount, wrapper, accountDao);
             }
             else {
                 BankAccount account = card.getAccount();
@@ -97,20 +118,40 @@ public class CardServiceImpl implements CardService{
     }
 
     @Override
-    public void transferBetweenCards(CardTransferData transferData) {
+    public void transferBetweenCards(CardTransferData data) {
         try(ConnectionWrapper wrapper = daoFactory.getConnection()){
             CardDao cardDao = daoFactory.getCardDao(wrapper);
             BankAccountDao accountDao = daoFactory.getBankAccountDao(wrapper);
-            Card senderCard = findCardByNumberOrThrowException(transferData.getSenderCard(), cardDao);
-            Card recipientCard = findCardByNumberOrThrowException(transferData.getRecipientCard(), cardDao);
+            PaymentTariffDao tariffDao = daoFactory.getPaymentTariffDao(wrapper);
+            Card senderCard =
+                    findCardByNumberOrThrowException(data.getSenderCard(), cardDao);
+            Card recipientCard =
+                    findCardByNumberOrThrowException(data.getRecipientCard(), cardDao);
             BankAccount senderAccount = senderCard.getAccount();
             BankAccount recipientAccount  = recipientCard.getAccount();
-            senderAccount.setBalance(decreaseAccountBalance(senderAccount, transferData.getSum()));
-            recipientAccount.setBalance(increaseAccountBalance(recipientAccount, transferData.getSum()));
-            wrapper.beginTransaction();
-            accountDao.update(senderAccount);
-            accountDao.update(recipientAccount);
-            wrapper.commitTransaction();
+            BigDecimal senderBalance = calculateBalanceByTariff(senderAccount, data.getSum(),
+                    tariffDao, PaymentType.TRANSFER_WITHIN_THIS_BANK);
+            senderAccount.setBalance(senderBalance);
+            recipientAccount.setBalance(increaseAccountBalance(recipientAccount, data.getSum()));
+            performTransaction(senderAccount, recipientAccount, wrapper, accountDao);
+        }
+    }
+
+    @Override
+    public void accountTransfer(AccountTransferData data) {
+        try(ConnectionWrapper wrapper = daoFactory.getConnection()){
+            CardDao cardDao = daoFactory.getCardDao(wrapper);
+            BankAccountDao accountDao = daoFactory.getBankAccountDao(wrapper);
+            PaymentTariffDao tariffDao = daoFactory.getPaymentTariffDao(wrapper);
+            Card senderCard = findCardByNumberOrThrowException(data.getSenderCard(), cardDao);
+            BankAccount senderAccount = senderCard.getAccount();
+            BankAccount recipientAccount =
+                    findAccountByNumberOrThrowException(data.getAccountNumber(), accountDao);
+            BigDecimal senderBalance = calculateBalanceByTariff(senderAccount, data.getSum(),
+                    tariffDao, PaymentType.TRANSFER_WITHIN_THIS_BANK);
+            senderAccount.setBalance(senderBalance);
+            recipientAccount.setBalance(increaseAccountBalance(recipientAccount, data.getSum()));
+            performTransaction(senderAccount, recipientAccount, wrapper, accountDao);
         }
     }
 
@@ -124,6 +165,32 @@ public class CardServiceImpl implements CardService{
                     .anyMatch(cardId -> cardId==id);
             return result;
         }
+    }
+
+    private void performTransaction(BankAccount sender, BankAccount recipient,
+                                    ConnectionWrapper wrapper, BankAccountDao accountDao){
+        wrapper.beginTransaction();
+        accountDao.update(sender);
+        accountDao.update(recipient);
+        wrapper.commitTransaction();
+    }
+
+    private BigDecimal calculateBalanceByTariff(BankAccount account, double sum,
+                                             PaymentTariffDao tariffDao, PaymentType type){
+        PaymentTariff tariff = tariffDao.findByPaymentType(type)
+                .orElseThrow(ServiceException::new);
+        BigDecimal fixedRate = tariff.getFixedRate();
+        BigDecimal currentBalance = account.getBalance();
+        BigDecimal paymentRateValue = new BigDecimal(tariff.getPaymentRate())
+                .multiply(new BigDecimal(sum));
+        BigDecimal remainder = currentBalance
+                .subtract(fixedRate)
+                .subtract(paymentRateValue)
+                .subtract(new BigDecimal(sum));
+        if(remainder.doubleValue()<ZERO){
+            throw new ServiceException(ErrorMessages.NOT_ENOUGH_MONEY);
+        }
+        return remainder;
     }
 
     private Card findCardByIdOrThrowException(long id, CardDao cardDao){
@@ -144,6 +211,15 @@ public class CardServiceImpl implements CardService{
         return card.get();
     }
 
+    private BankAccount findAccountByNumberOrThrowException(String number, BankAccountDao accountDao){
+        Optional<BankAccount> account = accountDao.findBankAccountByNumber(number);
+        if(!account.isPresent()){
+            logger.error(ErrorMessages.ACCOUNT_NOT_EXIST);
+            throw new ServiceException(ErrorMessages.ACCOUNT_NOT_EXIST);
+        }
+        return account.get();
+    }
+
     private void checkCardInfo(Optional<Card> card, RefillData data){
         card.filter(c -> c.getPin().equals(data.getPin()))
                 .filter(c -> c.getCvv().equals(data.getCvv()))
@@ -161,7 +237,6 @@ public class CardServiceImpl implements CardService{
             cal1.setTime(date1);
             cal2.setTime(date2);
             return cal1.equals(cal2);
-            //return date1.compareTo(date2)==0;
         }
         catch (ParseException ex){}
         return false;
@@ -169,9 +244,5 @@ public class CardServiceImpl implements CardService{
 
     private BigDecimal increaseAccountBalance(BankAccount account, double sum){
         return account.getBalance().add(new BigDecimal(sum));
-    }
-
-    private BigDecimal decreaseAccountBalance(BankAccount account, double sum){
-        return account.getBalance().subtract(new BigDecimal(sum));
     }
 }

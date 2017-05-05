@@ -4,7 +4,10 @@ import payments.controller.exception.ControllerException;
 import payments.utils.constants.ErrorMessages;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,6 +51,16 @@ public class RequestParamExtractor {
             params.add(param);
         }
         return params;
+    }
+
+    public Date extractDate(String date){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date convertedDate = null;
+        try {
+            convertedDate = sdf.parse(date);
+        }
+        catch (ParseException ex){}
+        return convertedDate;
     }
 
     private long extractLongFromString(String str){

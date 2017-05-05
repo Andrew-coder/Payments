@@ -21,7 +21,7 @@ public class PaymentDaoImpl implements PaymentDao {
             "join BankAccounts recipient on recipient.account_id=p.recipient" +
             "join PaymentsTypes pt on pt.id=p.payment_type ";
     private static final String FILTER_BY_ID = " where payment_id = ?;";
-    public static final String CREATE_PAYMENT = "insert into `Payment`.`Payments` (`sender`, `recipient`, `sum`, `payment_time`, `payment_type`, `mfo`, `usreou`) VALUES (?, ?, ?, ?, ?, ?, ?);";
+    public static final String CREATE_PAYMENT = "insert into `Payment`.`Payments` (`sender`, `recipient`, `sum`, `payment_time`, `payment_type`, `mfo`, `usreou`, `payment_purpose`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
     private Connection connection;
     private PaymentResultSetExtractor extractor;
@@ -74,6 +74,7 @@ public class PaymentDaoImpl implements PaymentDao {
             statement.setLong(5, payment.getTariff().getId());
             statement.setString(6, payment.getMfo());
             statement.setString(7, payment.getUsreou());
+            statement.setString(8, payment.getPaymentPurpose());
             statement.executeUpdate();
         }
         catch (SQLException ex){

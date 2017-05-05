@@ -20,6 +20,7 @@ public class BankAccountDaoImpl implements BankAccountDao{
     public static final String UPDATE_ACCOUNT = "update `Payment`.`BankAccounts` set `account_number`=?, `balance`=? ";
     public static final String UPDATE_ACCOUNT_BALANCE = "update `Payment`.`BankAccounts` set `balance`=? ";
     public static final String FILTER_BY_CARD = "join Cards using(account_id) where Cards.card_id=?";
+    public static final String FILTER_BY_NUMBER = "where account_number=?; ";
 
     private Connection connection;
     private BankAccountResultSetExtractor extractor;
@@ -43,6 +44,23 @@ public class BankAccountDaoImpl implements BankAccountDao{
         }
         catch(SQLException ex){
             throw new DaoException("dao exception occurred when retrieving bank account by id", ex);
+        }
+    }
+
+    @Override
+    public Optional<BankAccount> findBankAccountByNumber(String number) {
+        Optional<BankAccount> result = Optional.empty();
+        try(PreparedStatement statement = connection.prepareStatement(GET_ALL_ACCOUNTS+ FILTER_BY_NUMBER)){
+            statement.setString(1,number);
+            ResultSet set = statement.executeQuery();
+            if(set.next()){
+                BankAccount account = extractor.extract(set);
+                result = Optional.of(account);
+            }
+            return result;
+        }
+        catch(SQLException ex){
+            throw new DaoException("dao exception occurred when retrieving bank account by account number", ex);
         }
     }
 
