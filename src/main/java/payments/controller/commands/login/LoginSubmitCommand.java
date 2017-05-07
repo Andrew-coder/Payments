@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 public class LoginSubmitCommand extends CommandExecutor {
-    private static final String PARAM_EMAIL = "login_name";
+    private static final String PARAM_CELLPHONE = "login_name";
     private static final String PARAM_PASSWORD ="login_password";
 
     private UserService userService = UserServiceImpl.getInstance();
@@ -27,7 +27,7 @@ public class LoginSubmitCommand extends CommandExecutor {
     public String performExecute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         saveLoginDataToRequest(request);
         String pageToGo = PagesPath.LOGIN;
-        String email = request.getParameter(PARAM_EMAIL);
+        String email = request.getParameter(PARAM_CELLPHONE);
         String password = request.getParameter(PARAM_PASSWORD);
         if( email != null && password != null ){
             Optional<User> user = userService.login(email, password);
@@ -50,12 +50,12 @@ public class LoginSubmitCommand extends CommandExecutor {
     }
 
     private void saveLoginDataToRequest(HttpServletRequest request){
-        request.setAttribute(Attributes.PREVIOUS_LOGIN_EMAIL, request.getParameter(PARAM_EMAIL));
+        request.setAttribute(Attributes.PREVIOUS_LOGIN_CELLPHONE, request.getParameter(PARAM_CELLPHONE));
         request.setAttribute(Attributes.PREVIOUS_LOGIN_PASSWORD, request.getParameter(PARAM_PASSWORD));
     }
 
     private void clearLoginDataFromRequest(HttpServletRequest request){
-        request.removeAttribute(Attributes.PREVIOUS_LOGIN_EMAIL);
+        request.removeAttribute(Attributes.PREVIOUS_LOGIN_CELLPHONE);
         request.removeAttribute(Attributes.PREVIOUS_LOGIN_PASSWORD);
     }
 }

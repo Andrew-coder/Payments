@@ -56,7 +56,7 @@ public class RegisterSubmitCommand extends CommandExecutor {
         RegisterData.Builder builder = new RegisterData.Builder()
                 .setName(request.getParameter("name").toString())
                 .setSurname(request.getParameter("surname").toString())
-                .setEmail(request.getParameter("email").toString())
+                .setCellphone(request.getParameter("cellphone").toString())
                 .setPassword(request.getParameter("password").toString())
                 .setBirthDate(request.getParameter("birthDate").toString());
         return builder.build();
@@ -70,7 +70,7 @@ public class RegisterSubmitCommand extends CommandExecutor {
     private void saveRegisterDataToRequest(HttpServletRequest request){
         request.setAttribute(Attributes.PREVIOUS_USER_NAME, request.getParameter("name"));
         request.setAttribute(Attributes.PREVIOUS_USER_SURNAME, request.getParameter("surname"));
-        request.setAttribute(Attributes.PREVIOUS_USER_EMAIL, request.getParameter("email"));
+        request.setAttribute(Attributes.PREVIOUS_USER_CELLPHONE, request.getParameter("cellphone"));
         request.setAttribute(Attributes.PREVIOUS_USER_DATE, request.getParameter("birthDate"));
         request.setAttribute(Attributes.PREVIOUS_USER_PASSWORD, request.getParameter("password"));
         request.setAttribute(Attributes.TAB, Attributes.REGISTER_TAB);
@@ -79,7 +79,7 @@ public class RegisterSubmitCommand extends CommandExecutor {
     private void clearRegisterDataFromRequest(HttpServletRequest request){
         request.removeAttribute(Attributes.PREVIOUS_USER_NAME);
         request.removeAttribute(Attributes.PREVIOUS_USER_SURNAME);
-        request.removeAttribute(Attributes.PREVIOUS_USER_EMAIL);
+        request.removeAttribute(Attributes.PREVIOUS_USER_CELLPHONE);
         request.removeAttribute(Attributes.PREVIOUS_USER_DATE);
         request.removeAttribute(Attributes.PREVIOUS_USER_PASSWORD);
         request.removeAttribute(Attributes.TAB);
@@ -89,7 +89,7 @@ public class RegisterSubmitCommand extends CommandExecutor {
         User.Builder builder = new User.Builder()
                 .setName(registerData.getName())
                 .setSurname(registerData.getSurname())
-                .setEmail(registerData.getEmail())
+                .setCellphone(registerData.getCellphone())
                 .setPassword(registerData.getPassword())
                 .setRole(RoleType.USER)
                 .setBirthDate(paramExtractor.extractDate(registerData.getBirthDate()));

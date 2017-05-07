@@ -1,11 +1,11 @@
 package payments.model.dto;
 
 public class LoginData {
-    protected String email;
+    protected String cellphone;
     protected String password;
 
-    public String getEmail() {
-        return email;
+    public String getCellphone() {
+        return cellphone;
     }
 
     public String getPassword() {
@@ -14,8 +14,8 @@ public class LoginData {
 
     public LoginData() {}
 
-    public LoginData(String email, String password) {
-        this.email = email;
+    public LoginData(String cellphone, String password) {
+        this.cellphone = cellphone;
         this.password = password;
     }
 }

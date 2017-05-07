@@ -15,13 +15,13 @@ import java.util.Optional;
 
 public class UserDaoImpl implements UserDao {
     private static final Logger logger = Logger.getLogger(UserDaoImpl.class);
-    private static final String GET_ALL_USERS = "select user_id, name, surname, email, password, birthDate,  role from Users ";
+    private static final String GET_ALL_USERS = "select user_id, name, surname, cellphone, password, birthDate,  role from Users ";
     private static final String FILTER_BY_ID = " where user_id = ?;";
-    private static final String FILTER_BY_EMAIL = " where email=?;";
+    private static final String FILTER_BY_CELLPHONE = " where cellphone=?;";
     private static final String FILTER_BY_ROLE = " where role=?;";
     private static final String DELETE_USER = "delete from Users ";
-    private static final String CREATE_USER = "insert into Users (`name`, `surname`, `email`, `password`, `birthDate`, `role`) VALUES (?,?,?,?,?,?);";
-    private static final String UPDATE_USER = "update `Payment`.`Users` set `name`=?, `surname`=?, `email`=?, `password`=?, `birthDate`=?, `role`=? ";
+    private static final String CREATE_USER = "insert into Users (`name`, `surname`, `cellphone`, `password`, `birthDate`, `role`) VALUES (?,?,?,?,?,?);";
+    private static final String UPDATE_USER = "update `Payment`.`Users` set `name`=?, `surname`=?, `cellphone`=?, `password`=?, `birthDate`=?, `role`=? ";
 
     private Connection connection;
     private UserResultSetExtractor extractor;
@@ -32,10 +32,10 @@ public class UserDaoImpl implements UserDao {
     }
 
         @Override
-    public Optional<User> findUserByEmail(String email) {
+    public Optional<User> findUserByCellphone(String cellphone) {
             Optional<User> result = Optional.empty();
-            try(PreparedStatement statement = connection.prepareStatement(GET_ALL_USERS+ FILTER_BY_EMAIL)){
-                statement.setString(1,email);
+            try(PreparedStatement statement = connection.prepareStatement(GET_ALL_USERS+ FILTER_BY_CELLPHONE)){
+                statement.setString(1,cellphone);
                 ResultSet set = statement.executeQuery();
                 if(set.next()){
                     User user = extractor.extract(set);
@@ -44,7 +44,7 @@ public class UserDaoImpl implements UserDao {
                 return result;
             }
             catch(SQLException ex){
-                throw new DaoException("dao exception occured when retrieving user by email", ex);
+                throw new DaoException("dao exception occurred when retrieving user by email", ex);
             }
     }
 
@@ -61,7 +61,7 @@ public class UserDaoImpl implements UserDao {
             return result;
         }
         catch(SQLException ex){
-            throw new DaoException("dao exception occured when retrieving user by id", ex);
+            throw new DaoException("dao exception occurred when retrieving user by id", ex);
         }
     }
 
@@ -76,7 +76,7 @@ public class UserDaoImpl implements UserDao {
             return users;
         }
         catch(SQLException ex){
-            throw new DaoException("dao exception occured when retrieving all users", ex);
+            throw new DaoException("dao exception occurred when retrieving all users", ex);
         }
     }
 
@@ -86,7 +86,7 @@ public class UserDaoImpl implements UserDao {
         try(PreparedStatement statement = connection.prepareStatement(CREATE_USER)){
             statement.setString(1, user.getName());
             statement.setString(2, user.getSurname());
-            statement.setString(3, user.getEmail());
+            statement.setString(3, user.getCellphone());
             statement.setString(4, user.getPassword());
             statement.setDate(5, java.sql.Date.valueOf(user.getBirthDate().
                     toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
@@ -94,7 +94,7 @@ public class UserDaoImpl implements UserDao {
             statement.executeUpdate();
         }
         catch (SQLException ex){
-            throw new DaoException("Error occured when creating new user!", ex);
+            throw new DaoException("Error occurred when creating new user!", ex);
         }
     }
 
@@ -104,7 +104,7 @@ public class UserDaoImpl implements UserDao {
         try(PreparedStatement statement = connection.prepareStatement(UPDATE_USER + FILTER_BY_ID)){
             statement.setString(1, user.getName());
             statement.setString(2, user.getSurname());
-            statement.setString(3, user.getEmail());
+            statement.setString(3, user.getCellphone());
             statement.setString(4, user.getPassword());
             statement.setDate(5, java.sql.Date.valueOf(user.getBirthDate().
                     toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
@@ -113,7 +113,7 @@ public class UserDaoImpl implements UserDao {
             statement.executeUpdate();
         }
         catch (SQLException ex){
-            throw new DaoException("Error occured when updating user!", ex);
+            throw new DaoException("Error occurred when updating user!", ex);
         }
     }
 
@@ -124,7 +124,7 @@ public class UserDaoImpl implements UserDao {
             statement.executeUpdate();
         }
         catch (SQLException ex){
-            throw new DaoException("Error occured when deleting user!", ex);
+            throw new DaoException("Error occurred when deleting user!", ex);
         }
     }
 }

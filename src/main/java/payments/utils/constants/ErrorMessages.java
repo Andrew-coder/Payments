@@ -7,7 +7,7 @@ public final class ErrorMessages {
     public static final String WRONG_USER_NAME = "Wrong user name";
     public static final String WRONG_USER_SURNAME = "Wrong user surname";
     public static final String WRONG_USER_PASSWORD = "Wrong user password (at least 4 characters)";
-    public static final String WRONG_USER_EMAIL = "Wrong user email";
+    public static final String WRONG_USER_CELLPHONE = "Wrong user cellphone";
     public static final String WRONG_USER_DATE = "Wrong user date! Date format (yyyy-mm-dd)";
     public static final String WRONG_LOGIN_DATA = "Wrong user login or password";
 
@@ -28,4 +28,6 @@ public final class ErrorMessages {
     public static final String NOT_ENOUGH_MONEY = "Not enough money for payment!";
     public static final String CARD_IS_BLOCKED = "This card is currently blocked. To unblock it connect with admin";
     public static final String TRANSFER_TO_THE_SAME_ACCOUNT = "It is not possible to transfer money to the same account";
+    public static final String CARD_VALIDITY_EXPIRED = "Card validity date was expired. Contact with admin to get new one";
+    public static final String URL_NOT_FOUND = "Oops! Requested url doesn't found";
 }

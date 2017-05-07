@@ -29,8 +29,8 @@ public class RegisterData extends LoginData {
             return this;
         }
 
-        public Builder setEmail(String email){
-            instance.email = email;
+        public Builder setCellphone(String cellphone){
+            instance.cellphone = cellphone;
             return this;
         }
 

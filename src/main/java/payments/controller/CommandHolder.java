@@ -1,6 +1,7 @@
 package payments.controller;
 
 import payments.controller.commands.*;
+import payments.controller.commands.admin.AdminUnblockCardCommand;
 import payments.controller.commands.admin.CardsAdministrationCommand;
 import payments.controller.commands.admin.PaymentsAdministrationCommand;
 import payments.controller.commands.login.LoginCommand;
@@ -46,6 +47,7 @@ public class CommandHolder {
         commands.put("GET:/admin", new AdminHomeCommand());
         commands.put("GET:/admin/cards", new CardsAdministrationCommand());
         commands.put("GET:/admin/payments", new PaymentsAdministrationCommand());
+        commands.put("POST:/admin/cards/unblock", new AdminUnblockCardCommand());
     }
 
     private String removeAllNumbersFromUrl(String url){

@@ -12,22 +12,42 @@
 <body>
     <jsp:include page="header.jsp"></jsp:include>
 
-    <a href="cards/add" class="btn btn-default active"><i class="glyphicon glyphicon-plus"></i> Add card</a>
-
     <table class="table borderless">
         <c:forEach items="${cards}" var="card">
             <tr>
                 <td>${card.getCardNumber()}</td>
                 <c:if test="${requestScope.get(card.id.toString())}">
-                    <td><a href="/admin/cards/block/${value.id}"><button class="btn-danger">unblock</button></a></td>
+                    <td><button class="btn-primary" id="${card.id}_button" name="${card.id}_button">unblock</button></td>
                 </c:if>
-                <c:if test="${not requestScope.get(card.id.toString())}">
-                    <td><a href="/admin/cards/unblock/${value.id}"><button class="btn-primary">block</button></a></td>
-                </c:if>
+                <%--<c:if test="${not requestScope.get(card.id.toString())}">
+                    <td><a href="/admin/cards/unblock/${value.id}"><button class="btn-danger" id="${card.id}_button" name="${card.id}_button">block</button></a></td>
+                </c:if>--%>
             </tr>
         </c:forEach>
     </table>
 
     <jsp:include page="footer.jsp"></jsp:include>
+
+    <script type="text/javascript">
+        $(document).on("click", ".btn-primary", function(){
+            var but=$(this).attr('id').split('_')[0];
+
+            $.ajax({
+                type: "POST",
+                url: "/admin/cards/unblock",
+                data: {
+                    cardID:but
+                },
+                success: function(){
+                    var selector = "#"+but + "_button";
+                    $(selector).hide();
+                    alert('Card was successfully unblocked');
+                },
+                error:function () {
+                    alert("Can't block card");
+                }
+            });
+        });
+    </script>
 </body>
 </html>

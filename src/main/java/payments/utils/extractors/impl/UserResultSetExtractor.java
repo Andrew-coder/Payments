@@ -14,7 +14,7 @@ public class UserResultSetExtractor implements ResultSetExtactor<User>{
                 .setId(set.getLong("user_id"))
                 .setName(set.getString("name"))
                 .setSurname(set.getString("surname"))
-                .setEmail(set.getString("email"))
+                .setCellphone(set.getString("cellphone"))
                 .setPassword(set.getString("password"))
                 .setBirthDate(set.getDate("birthDate"))
                 .setRole(RoleType.getRole(set.getString("role")));

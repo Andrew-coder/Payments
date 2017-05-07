@@ -42,7 +42,7 @@
                         <div class="col-lg-12">
                             <form id="login-form" action="/login" method="post" role="form" style="display: block;">
                                 <div class="form-group">
-                                    <input type="text" name="login_name" id="login_name" tabindex="1" class="form-control" placeholder="login" value="${requestScope.previousLoginEmail}" required>
+                                    <input type="text" name="login_name" id="login_name" tabindex="1" class="form-control" placeholder="login" value="${requestScope.previousLoginCellphone}" required>
                                 </div>
                                 <div class="form-group">
                                     <input type="password" name="login_password" id="login_password" tabindex="2" class="form-control" placeholder="Password" value="${requestScope.previousLoginPassword}" required>
@@ -68,7 +68,7 @@
                                     <input type="date" name="birthDate" id="birthDate" tabindex="1" class="form-control" placeholder="Birth Date yyyy-mm-dd" value="${requestScope.previousUserDate}" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="${requestScope.previousUserEmail}" required>
+                                    <input type="text" name="cellphone" id="cellphone" tabindex="1" class="form-control" placeholder="cellphone" value="${requestScope.previousUserCellphone}" required>
                                 </div>
                                 <div class="form-group">
                                     <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Password" value="${requestScope.previousUserPassword}" required>

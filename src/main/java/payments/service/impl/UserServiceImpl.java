@@ -42,10 +42,10 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Optional<User> login(String email, String password) {
+    public Optional<User> login(String cellphone, String password) {
         try(ConnectionWrapper wrapper = daoFactory.getConnection()){
             UserDao userDao = daoFactory.getUserDao(wrapper);
-            User user = userDao.findUserByEmail(email)
+            User user = userDao.findUserByCellphone(cellphone)
                     .filter( person-> password.equals(person.getPassword()))
                     .orElseThrow(()->new ServiceException(ErrorMessages.WRONG_LOGIN_DATA));
             return Optional.of(user);
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService{
     public void create(User user) {
         try(ConnectionWrapper wrapper = daoFactory.getConnection()){
             UserDao userDao = daoFactory.getUserDao(wrapper);
-            checkIsUserRegistered(user.getEmail(), userDao);
+            checkIsUserRegistered(user.getCellphone(), userDao);
             userDao.create(user);
         }
     }
@@ -74,8 +74,8 @@ public class UserServiceImpl implements UserService{
 
     }
 
-    private void checkIsUserRegistered(String email, UserDao userDao){
-        if(userDao.findUserByEmail(email).isPresent()){
+    private void checkIsUserRegistered(String cellphone, UserDao userDao){
+        if(userDao.findUserByCellphone(cellphone).isPresent()){
             logger.error(ErrorMessages.USER_ALREADY_EXISTS);
             throw new ServiceException(ErrorMessages.USER_ALREADY_EXISTS);
         }

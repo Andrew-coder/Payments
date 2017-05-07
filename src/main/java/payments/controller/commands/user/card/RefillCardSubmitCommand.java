@@ -82,6 +82,7 @@ public class RefillCardSubmitCommand extends CommandExecutor {
         request.setAttribute(Attributes.PREVIOUS_CVV, request.getParameter("card_cvv"));
         request.setAttribute(Attributes.PREVIOUS_EXPIRE_DATE, request.getParameter("card_expire"));
         request.setAttribute(Attributes.PREVIOUS_SUM, request.getParameter("sum"));
+        request.setAttribute(Attributes.CARD, request.getParameter("id"));
     }
 
     private void clearRefillDataFromRequest(HttpServletRequest request){
@@ -90,6 +91,7 @@ public class RefillCardSubmitCommand extends CommandExecutor {
         request.removeAttribute(Attributes.PREVIOUS_CVV);
         request.removeAttribute(Attributes.PREVIOUS_EXPIRE_DATE);
         request.removeAttribute(Attributes.PREVIOUS_SUM);
+        request.removeAttribute(Attributes.CARD);
     }
 
     private void processErrors(HttpServletRequest request, Errors errors){

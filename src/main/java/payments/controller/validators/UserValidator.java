@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 public class UserValidator implements Validator<RegisterData> {
     private static final String REGEX_NAME="[A-Z]{1}[a-z]{1,}";
-    private static  final String REGEX_MAIL="^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    private static  final String REGEX_PHONE="^(\\\\+380|0)([0-9]{9})$";
     private static final String REGEX_PASSWORD = "[A-Za-z0-9]{4,200}";
     private static final String REGEX_DATE = "^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$";
 
@@ -21,8 +21,8 @@ public class UserValidator implements Validator<RegisterData> {
         if(!Pattern.matches(REGEX_NAME, data.getSurname())){
             results.addError(Attributes.USER_SURNAME, ErrorMessages.WRONG_USER_SURNAME);
         }
-        if(!Pattern.matches(REGEX_MAIL, data.getEmail())){
-            results.addError(Attributes.USER_EMAIL, ErrorMessages.WRONG_USER_EMAIL);
+        if(!Pattern.matches(REGEX_PHONE, data.getCellphone())){
+            results.addError(Attributes.USER_CELLPHONE, ErrorMessages.WRONG_USER_CELLPHONE);
         }
         if(!Pattern.matches(REGEX_PASSWORD, data.getPassword())){
             results.addError(Attributes.USER_PASSWORD, ErrorMessages.WRONG_USER_PASSWORD);

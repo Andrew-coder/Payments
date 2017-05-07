@@ -14,7 +14,7 @@ public final class Attributes {
     public static final String RECIPIENT_CARD = "recipientCard";
     public static final String PAYMENTS = "payments";
 
-    public static final String USER_EMAIL = "userEmail";
+    public static final String USER_CELLPHONE = "userCellphone";
     public static final String USER_PASSWORD = "userPassword";
     public static final String USER_NAME = "userName";
     public static final String USER_SURNAME = "userSurname";
@@ -22,10 +22,10 @@ public final class Attributes {
 
     public static final String CONFIRM_MESSAGE = "confirmMessage";
 
-    public static final String PREVIOUS_LOGIN_EMAIL = "previousLoginEmail";
+    public static final String PREVIOUS_LOGIN_CELLPHONE = "previousLoginCellphone";
     public static final String PREVIOUS_LOGIN_PASSWORD = "previousLoginPassword";
 
-    public static final String PREVIOUS_USER_EMAIL = "previousUserEmail";
+    public static final String PREVIOUS_USER_CELLPHONE = "previousUserCellphone";
     public static final String PREVIOUS_USER_PASSWORD = "previousUserPassword";
     public static final String PREVIOUS_USER_NAME = "previousUserName";
     public static final String PREVIOUS_USER_SURNAME = "previousUserSurname";

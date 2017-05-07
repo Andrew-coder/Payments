@@ -14,6 +14,7 @@ import payments.service.exception.ServiceException;
 import payments.utils.constants.ErrorMessages;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -84,7 +85,7 @@ public class CardServiceImpl implements CardService{
     public void unblockCard(long id) {
         try(ConnectionWrapper wrapper = daoFactory.getConnection()){
             CardDao cardDao = daoFactory.getCardDao(wrapper);
-            if(!isCardBlocked(id)){
+            if(isCardBlocked(id)){
                 cardDao.unblockCard(id);
             }
         }
@@ -99,10 +100,12 @@ public class CardServiceImpl implements CardService{
             Card card = findCardByIdOrThrowException(data.getIdRefilledCard(), cardDao);
             Optional<Card> sourceCard = cardDao.findCardByNumber(data.getCardNumber());
             if(sourceCard.isPresent()){
+                Card senderCard = sourceCard.get();
                 checkCardInfo(sourceCard, data);
-                checkCardIsNotBlocked(sourceCard.get().getId(), cardDao);
+                checkCardValidityDate(senderCard);
+                checkCardIsNotBlocked(senderCard.getId(), cardDao);
                 BankAccount recipientAccount = card.getAccount();
-                BankAccount senderAccount  = sourceCard.get().getAccount();
+                BankAccount senderAccount = senderCard.getAccount();
                 BigDecimal senderBalance = calculateBalanceByTariff(senderAccount, data.getSum(),
                         tariffDao, PaymentType.REFILL);
                 senderAccount.setBalance(senderBalance);
@@ -128,6 +131,7 @@ public class CardServiceImpl implements CardService{
                     findCardByNumberOrThrowException(data.getSenderCard(), cardDao);
             Card recipientCard =
                     findCardByNumberOrThrowException(data.getRecipientCard(), cardDao);
+            checkCardValidityDate(senderCard);
             checkCardIsNotBlocked(senderCard.getId(), cardDao);
             BankAccount senderAccount = senderCard.getAccount();
             BankAccount recipientAccount  = recipientCard.getAccount();
@@ -146,6 +150,7 @@ public class CardServiceImpl implements CardService{
             BankAccountDao accountDao = daoFactory.getBankAccountDao(wrapper);
             PaymentTariffDao tariffDao = daoFactory.getPaymentTariffDao(wrapper);
             Card senderCard = findCardByNumberOrThrowException(data.getSenderCard(), cardDao);
+            checkCardValidityDate(senderCard);
             checkCardIsNotBlocked(senderCard.getId(), cardDao);
             BankAccount senderAccount = senderCard.getAccount();
             BankAccount recipientAccount =
@@ -238,6 +243,18 @@ public class CardServiceImpl implements CardService{
                 .filter(c -> c.getCvv().equals(data.getCvv()))
                 .filter(c -> compareDates(c.getExpireDate().toString(), data.getExpireDate()))
                 .orElseThrow(() -> new ServiceException(ErrorMessages.WRONG_CARD_DATA));
+    }
+
+    private void checkCardValidityDate(Card card){
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date today = new Date();
+        try{
+            Date todayWithZeroTime = formatter.parse(formatter.format(today));
+            if(todayWithZeroTime.after(card.getExpireDate())){
+                throw new ServiceException(ErrorMessages.CARD_VALIDITY_EXPIRED);
+            }
+        }
+        catch (ParseException ex){}
     }
 
     private void checkIsNotTheSameAccount(BankAccount sender, BankAccount recipient){

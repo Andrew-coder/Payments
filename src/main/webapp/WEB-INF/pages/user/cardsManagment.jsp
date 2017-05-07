@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>cards managment</title>
+    <title>cards management</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/main.css">
     <script src="/js/jquery-3.2.1.min.js"></script>

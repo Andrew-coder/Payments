@@ -8,6 +8,7 @@
     <script src="/js/jquery-3.2.1.min.js"></script>
 </head>
 <body>
+    <jsp:include page="header.jsp"></jsp:include>
     <div class="container">
         <div>
             <c:if test="${requestScope.errors!=null and requestScope.errors.hasErrors()}">
@@ -21,31 +22,31 @@
             <div class="form-group row">
                 <label class="col-2 col-form-label">Card number</label>
                 <div class="col-10">
-                    <input type="text" name="card_number" id="card_number" class="form-control" placeholder="card number" value="${requestScope.previousCardNumber}">
+                    <input type="text" name="card_number" id="card_number" class="form-control" placeholder="card number" value="${requestScope.previousCardNumber}" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-2 col-form-label">pin</label>
                 <div class="col-10">
-                    <input type="text" name="card_pin" id="card_pin" class="form-control" placeholder="pin" value="${requestScope.previousPin}">
+                    <input type="text" name="card_pin" id="card_pin" class="form-control" placeholder="pin" value="${requestScope.previousPin}" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-2 col-form-label">cvv</label>
                 <div class="col-10">
-                    <input type="text" name="card_cvv" id="card_cvv" class="form-control" placeholder="cvv" value="${requestScope.previousCvv}">
+                    <input type="text" name="card_cvv" id="card_cvv" class="form-control" placeholder="cvv" value="${requestScope.previousCvv}" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-2 col-form-label">expire date</label>
                 <div class="col-10">
-                    <input type="date" name="card_expire" id="card_expire" class="form-control" placeholder="expire date" value="${requestScope.previousExpireDate}">
+                    <input type="date" name="card_expire" id="card_expire" class="form-control" placeholder="expire date" value="${requestScope.previousExpireDate}" required>
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-2 col-form-label">sum</label>
                 <div class="col-10">
-                    <input type="text" name="sum" id="sum" class="form-control" placeholder="sum" value="${requestScope.previousSum}">
+                    <input type="text" name="sum" id="sum" class="form-control" placeholder="sum" value="${requestScope.previousSum}" required>
                 </div>
             </div>
 
@@ -58,5 +59,6 @@
             </div>
         </form>
     </div>
+    <jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>
