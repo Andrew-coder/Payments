@@ -100,6 +100,7 @@ public class CardServiceImpl implements CardService{
             Optional<Card> sourceCard = cardDao.findCardByNumber(data.getCardNumber());
             if(sourceCard.isPresent()){
                 checkCardInfo(sourceCard, data);
+                checkCardIsNotBlocked(sourceCard.get().getId(), cardDao);
                 BankAccount recipientAccount = card.getAccount();
                 BankAccount senderAccount  = sourceCard.get().getAccount();
                 BigDecimal senderBalance = calculateBalanceByTariff(senderAccount, data.getSum(),
@@ -127,6 +128,7 @@ public class CardServiceImpl implements CardService{
                     findCardByNumberOrThrowException(data.getSenderCard(), cardDao);
             Card recipientCard =
                     findCardByNumberOrThrowException(data.getRecipientCard(), cardDao);
+            checkCardIsNotBlocked(senderCard.getId(), cardDao);
             BankAccount senderAccount = senderCard.getAccount();
             BankAccount recipientAccount  = recipientCard.getAccount();
             BigDecimal senderBalance = calculateBalanceByTariff(senderAccount, data.getSum(),
@@ -144,6 +146,7 @@ public class CardServiceImpl implements CardService{
             BankAccountDao accountDao = daoFactory.getBankAccountDao(wrapper);
             PaymentTariffDao tariffDao = daoFactory.getPaymentTariffDao(wrapper);
             Card senderCard = findCardByNumberOrThrowException(data.getSenderCard(), cardDao);
+            checkCardIsNotBlocked(senderCard.getId(), cardDao);
             BankAccount senderAccount = senderCard.getAccount();
             BankAccount recipientAccount =
                     findAccountByNumberOrThrowException(data.getAccountNumber(), accountDao);
@@ -167,8 +170,18 @@ public class CardServiceImpl implements CardService{
         }
     }
 
+    private void checkCardIsNotBlocked(long id, CardDao cardDao){
+        cardDao.findAllBlockedCards()
+                .stream()
+                .mapToLong(Card::getId)
+                .filter(cardId -> cardId==id)
+                .findFirst()
+                .ifPresent((a)->{throw new ServiceException(ErrorMessages.CARD_IS_BLOCKED);});
+    }
+
     private void performTransaction(BankAccount sender, BankAccount recipient,
                                     ConnectionWrapper wrapper, BankAccountDao accountDao){
+        checkIsNotTheSameAccount(sender, recipient);
         wrapper.beginTransaction();
         accountDao.update(sender);
         accountDao.update(recipient);
@@ -225,6 +238,12 @@ public class CardServiceImpl implements CardService{
                 .filter(c -> c.getCvv().equals(data.getCvv()))
                 .filter(c -> compareDates(c.getExpireDate().toString(), data.getExpireDate()))
                 .orElseThrow(() -> new ServiceException(ErrorMessages.WRONG_CARD_DATA));
+    }
+
+    private void checkIsNotTheSameAccount(BankAccount sender, BankAccount recipient){
+        if(sender.getAccountNumber().equals(recipient.getAccountNumber())){
+            throw new ServiceException(ErrorMessages.TRANSFER_TO_THE_SAME_ACCOUNT);
+        }
     }
 
     private boolean compareDates(String str1, String str2){

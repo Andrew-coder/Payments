@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,6 +34,15 @@ public class RequestParamExtractor {
         }
     }
 
+    public Integer extractPaginParam(HttpServletRequest request, String param) {
+        try{
+            return Integer.parseInt(request.getParameter(param));
+        }
+        catch (NumberFormatException e){
+        }
+        return null;
+    }
+
     public long extractSingleLongPathParam(HttpServletRequest request){
         String uri = request.getRequestURI();
         Matcher matcher = numberPattern.matcher(uri);
@@ -54,7 +64,7 @@ public class RequestParamExtractor {
     }
 
     public Date extractDate(String date){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.mm.yyyy");
         Date convertedDate = null;
         try {
             convertedDate = sdf.parse(date);

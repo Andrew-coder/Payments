@@ -12,6 +12,7 @@ public final class Attributes {
     public static final String CARD_ID = "cardID";
     public static final String SENDER_CARD = "senderCard";
     public static final String RECIPIENT_CARD = "recipientCard";
+    public static final String PAYMENTS = "payments";
 
     public static final String USER_EMAIL = "userEmail";
     public static final String USER_PASSWORD = "userPassword";
@@ -46,4 +47,8 @@ public final class Attributes {
     public static final String MFO = "mfo";
     public static final String SUM = "sum";
     public static final String ACCOUNT_NUMBER = "accountNumber";
+
+    public static final String LIMIT = "limit";
+    public static final String OFFSET = "page";
+    public static final String TOTAL_PAGES = "pages";
 }

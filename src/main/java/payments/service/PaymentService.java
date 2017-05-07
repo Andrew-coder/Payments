@@ -11,6 +11,8 @@ import java.util.Optional;
 public interface PaymentService {
     Optional<Payment> findById(long id);
     List<Payment> findAll();
+    List<Payment> findAll(int startFrom, int quantity);
+    int getTotalCount();
     void saveRefillPayment(Payment payment, RefillData data);
     void saveCardTransfer(Payment payment, CardTransferData data);
     void saveAccountTransfer(Payment payment, AccountTransferData data);

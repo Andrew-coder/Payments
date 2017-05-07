@@ -6,8 +6,6 @@ import payments.controller.validators.AccountTransferValidator;
 import payments.controller.validators.Errors;
 import payments.model.dto.payment.AccountTransferData;
 import payments.model.entity.payment.Payment;
-import payments.model.entity.payment.PaymentTariff;
-import payments.model.entity.payment.PaymentType;
 import payments.service.CardService;
 import payments.service.PaymentService;
 import payments.service.impl.CardServiceImpl;
@@ -85,6 +83,7 @@ public class AccountPaymentsCommand extends CommandExecutor {
         request.setAttribute(Attributes.PREVIOUS_CARD_NUMBER, request.getParameter("cards"));
         request.setAttribute(Attributes.PREVIOUS_PURPOSE, request.getParameter("purpose"));
         request.setAttribute(Attributes.PREVIOUS_SUM, request.getParameter("sum"));
+        request.setAttribute(Attributes.TAB, Attributes.ACCOUNT_TAB);
     }
 
     private void clearAccountTransferDataFromRequest(HttpServletRequest request){
@@ -94,11 +93,11 @@ public class AccountPaymentsCommand extends CommandExecutor {
         request.removeAttribute(Attributes.PREVIOUS_CARD_NUMBER);
         request.removeAttribute(Attributes.PREVIOUS_PURPOSE);
         request.removeAttribute(Attributes.PREVIOUS_SUM);
+        request.removeAttribute(Attributes.TAB);
     }
 
     private void processErrors(HttpServletRequest request, Errors errors){
         logger.error("Wrong input data in account payment info");
         request.setAttribute(Attributes.ERRORS, errors);
-        request.setAttribute(Attributes.TAB, Attributes.ACCOUNT_TAB);
     }
 }

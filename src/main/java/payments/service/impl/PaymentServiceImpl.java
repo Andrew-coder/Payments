@@ -51,6 +51,22 @@ public class PaymentServiceImpl implements PaymentService{
     }
 
     @Override
+    public List<Payment> findAll(int startFrom, int quantity) {
+        try(ConnectionWrapper wrapper = daoFactory.getConnection()){
+            PaymentDao paymentDao = daoFactory.getPaymentDao(wrapper);
+            return paymentDao.findAll(startFrom, quantity);
+        }
+    }
+
+    @Override
+    public int getTotalCount() {
+        try(ConnectionWrapper wrapper = daoFactory.getConnection()) {
+            PaymentDao paymentDao = daoFactory.getPaymentDao(wrapper);
+            return paymentDao.getTotalCount();
+        }
+    }
+
+    @Override
     public void saveRefillPayment(Payment payment, RefillData data) {
         try(ConnectionWrapper wrapper = daoFactory.getConnection()){
             CardDao cardDao = daoFactory.getCardDao(wrapper);

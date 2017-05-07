@@ -18,9 +18,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class RegisterSubmitCommand extends CommandExecutor {
     private static final Logger logger = Logger.getLogger(RegisterSubmitCommand.class);
@@ -67,7 +64,6 @@ public class RegisterSubmitCommand extends CommandExecutor {
 
     private void processErrors(HttpServletRequest request, Errors errors){
         logger.error("Wrong input data in registration");
-        request.setAttribute(Attributes.TAB, Attributes.REGISTER_TAB);
         request.setAttribute(Attributes.ERRORS, errors);
     }
 
@@ -77,6 +73,7 @@ public class RegisterSubmitCommand extends CommandExecutor {
         request.setAttribute(Attributes.PREVIOUS_USER_EMAIL, request.getParameter("email"));
         request.setAttribute(Attributes.PREVIOUS_USER_DATE, request.getParameter("birthDate"));
         request.setAttribute(Attributes.PREVIOUS_USER_PASSWORD, request.getParameter("password"));
+        request.setAttribute(Attributes.TAB, Attributes.REGISTER_TAB);
     }
 
     private void clearRegisterDataFromRequest(HttpServletRequest request){
@@ -85,6 +82,7 @@ public class RegisterSubmitCommand extends CommandExecutor {
         request.removeAttribute(Attributes.PREVIOUS_USER_EMAIL);
         request.removeAttribute(Attributes.PREVIOUS_USER_DATE);
         request.removeAttribute(Attributes.PREVIOUS_USER_PASSWORD);
+        request.removeAttribute(Attributes.TAB);
     }
 
     private User extractUserFromRegisterData(RegisterData registerData){

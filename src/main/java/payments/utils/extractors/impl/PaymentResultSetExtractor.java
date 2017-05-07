@@ -11,19 +11,19 @@ public class PaymentResultSetExtractor implements ResultSetExtactor<Payment> {
     @Override
     public Payment extract(ResultSet set) throws SQLException {
         BankAccountResultSetExtractor accountExtractor = new BankAccountResultSetExtractor();
-        PaymentTariffResultSetExtractor tarrifExtractor = new PaymentTariffResultSetExtractor();
+        PaymentTariffResultSetExtractor tariffExtractor = new PaymentTariffResultSetExtractor();
         Payment.Builder builder = new Payment.Builder()
                 .setId(set.getLong("payment_id"))
-                .setDate(set.getDate("payment_time"))
+                .setDate(set.getTimestamp("payment_time"))
                 .setMfo(set.getString("mfo"))
                 .setPaymentPurpose(set.getString("payment_purpose"))
                 .setSender(accountExtractor.extract(set))
                 .setSum(set.getBigDecimal("sum"))
-                .setTariff(tarrifExtractor.extract(set))
+                .setTariff(tariffExtractor.extract(set))
                 .setUsreou(set.getString("usreou"));
         BankAccount bankAccount = new BankAccount.Builder()
-                .setId(set.getLong("sender_id"))
-                .setAccountNumber("sender_number")
+                .setId(set.getLong("recipient_id"))
+                .setAccountNumber("recipient_number")
                 .build();
         builder.setRecipient(bankAccount);
         return builder.build();

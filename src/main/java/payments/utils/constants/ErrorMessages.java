@@ -26,4 +26,6 @@ public final class ErrorMessages {
     public static final String WRONG_CARD_DATA = "Wrong card data!";
 
     public static final String NOT_ENOUGH_MONEY = "Not enough money for payment!";
+    public static final String CARD_IS_BLOCKED = "This card is currently blocked. To unblock it connect with admin";
+    public static final String TRANSFER_TO_THE_SAME_ACCOUNT = "It is not possible to transfer money to the same account";
 }
