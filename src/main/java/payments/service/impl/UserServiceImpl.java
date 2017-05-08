@@ -70,8 +70,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void delete(int id) {
-
+    public void updateUserCards(long id) {
+        try(ConnectionWrapper wrapper = daoFactory.getConnection()){
+            UserDao userDao = daoFactory.getUserDao(wrapper);
+            userDao.updateUserCards(id);
+        }
     }
 
     private void checkIsUserRegistered(String cellphone, UserDao userDao){

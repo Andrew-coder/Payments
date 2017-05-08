@@ -22,6 +22,10 @@ public class UserDaoImpl implements UserDao {
     private static final String DELETE_USER = "delete from Users ";
     private static final String CREATE_USER = "insert into Users (`name`, `surname`, `cellphone`, `password`, `birthDate`, `role`) VALUES (?,?,?,?,?,?);";
     private static final String UPDATE_USER = "update `Payment`.`Users` set `name`=?, `surname`=?, `cellphone`=?, `password`=?, `birthDate`=?, `role`=? ";
+    private static final String UPDATE_USER_CARDS = "insert into User_has_cards (user_id, card_id) " +
+            "select u.user_id, Cards.card_id from Cards " +
+            "join Users u using(cellphone) " +
+            "left join User_has_cards uhc using(card_id) where uhc.user_id is null and u.user_id=?";
 
     private Connection connection;
     private UserResultSetExtractor extractor;
@@ -114,6 +118,17 @@ public class UserDaoImpl implements UserDao {
         }
         catch (SQLException ex){
             throw new DaoException("Error occurred when updating user!", ex);
+        }
+    }
+
+    @Override
+    public void updateUserCards(long id) {
+        try(PreparedStatement statement = connection.prepareStatement(UPDATE_USER_CARDS)){
+            statement.setLong(1, id);
+            statement.executeUpdate();
+        }
+        catch (SQLException ex){
+            throw new DaoException("Error occurred when updating user's cards");
         }
     }
 

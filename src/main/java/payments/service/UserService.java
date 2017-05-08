@@ -11,5 +11,5 @@ public interface UserService {
     Optional<User> login (String email , String password);
     List<User> findAll();
     void create(User user);
-    void delete(int id);
+    void updateUserCards(long id);
 }
