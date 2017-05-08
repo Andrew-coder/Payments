@@ -1,7 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page trimDirectiveWhitespaces="true" %>
+
 <html>
 <head>
+    <fmt:setLocale value="${sessionScope['locale']}"/>
+    <fmt:requestEncoding value="UTF-8" />
+    <fmt:setBundle basename="${bundleFile}" var="msg"/>
     <title>Title</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 
@@ -27,10 +33,10 @@
                 </div>
 
                 <div class="radio">
-                    <a href="#" class="active" id="card-transfer"><label><input id="card" type="radio" class="radio" name="optradio" checked="checked">Card transfer</label></a>
+                    <a href="#" class="active" id="card-transfer"><label><input id="card" type="radio" class="radio" name="optradio" checked="checked"><fmt:message key="payments.transfer.card" bundle="${msg}"/></label></a>
                 </div>
                 <div class="radio">
-                    <a href="#" id="account-transfer"><label><input id="account" type="radio" class="radio" name="optradio">Account transfer</label></a>
+                    <a href="#" id="account-transfer"><label><input id="account" type="radio" class="radio" name="optradio"><fmt:message key="payments.transfer.account" bundle="${msg}"/></label></a>
                 </div>
 
                 <input id="tab" type="hidden" value="${requestScope.tab}">
@@ -40,7 +46,7 @@
 
                             <form id="card-pay-form" action="/payments/card" method="post" role="form" >
                                 <div class="form-group row">
-                                    <label class="col-2 col-form-label">From card</label>
+                                    <label class="col-2 col-form-label"><fmt:message key="payments.from.card" bundle="${msg}"/></label>
                                     <div class="col-10">
                                         <select name="cards" class="form-control">
                                             <c:if test="${cards==null || cards.isEmpty()}">
@@ -48,7 +54,7 @@
                                                     <option>${requestScope.previousCardNumber}</option>
                                                 </c:if>
                                                 <c:if test="${requestScope.errors==null}">
-                                                    <option>You have no any cards</option>
+                                                    <option><fmt:message key="payments.no.cards" bundle="${msg}"/></option>
                                                 </c:if>
                                             </c:if>
                                             <c:forEach items="${cards}" var="card">
@@ -58,19 +64,19 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-2 col-form-label">On the card</label>
+                                    <label class="col-2 col-form-label"><fmt:message key="payments.to.card" bundle="${msg}"/></label>
                                     <div class="col-10">
-                                        <input type="text" name="target_card" id="target_card" class="form-control" placeholder="recipient's card" value="${requestScope.previousTargetCard}">
+                                        <input type="text" name="target_card" id="target_card" class="form-control" placeholder="<fmt:message key="payments.cards.recipient" bundle="${msg}"/> " value="${requestScope.previousTargetCard}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-2 col-form-label">Sum</label>
+                                    <label class="col-2 col-form-label"><fmt:message key="payments.placeholder.sum" bundle="${msg}"/></label>
                                     <div class="col-10">
                                         <input type="text" name="sum" class="form-control" value="${requestScope.previousSum}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-2 col-form-label">Purpose of payment</label>
+                                    <label class="col-2 col-form-label"><fmt:message key="payments.placeholder.purpose" bundle="${msg}"/></label>
                                     <div class="col-10">
                                         <input type="text" name="purpose" class="form-control" value="${requestScope.previousPurpose}">
                                     </div>
@@ -88,7 +94,7 @@
 
                             <form id="account-form-pay" action="/payments/account" method="post" role="form" style="display: none;">
                                 <div class="form-group row">
-                                    <label class="col-2 col-form-label">From card</label>
+                                    <label class="col-2 col-form-label"><fmt:message key="payments.from.card" bundle="${msg}"/></label>
                                     <div class="col-10">
                                         <select name="cards" class="form-control">
                                             <c:if test="${cards==null || cards.isEmpty()}">
@@ -96,7 +102,7 @@
                                                     <option>${requestScope.previousCardNumber}</option>
                                                 </c:if>
                                                 <c:if test="${requestScope.errors==null}">
-                                                    <option>You have no any cards</option>
+                                                    <option><fmt:message key="payments.no.cards" bundle="${msg}"/></option>
                                                 </c:if>
                                             </c:if>
                                             <c:forEach items="${cards}" var="card">
@@ -106,31 +112,31 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-2 col-form-label">mfo</label>
+                                    <label class="col-2 col-form-label"><fmt:message key="payments.placeholder.mfo" bundle="${msg}"/></label>
                                     <div class="col-10">
                                         <input type="text" name="mfo" class="form-control" value="${requestScope.previousMfo}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-2 col-form-label">usreou</label>
+                                    <label class="col-2 col-form-label"><fmt:message key="payments.placeholder.usreou" bundle="${msg}"/></label>
                                     <div class="col-10">
                                         <input type="text" name="usreou" class="form-control" value="${requestScope.previousUsreou}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-2 col-form-label">account number</label>
+                                    <label class="col-2 col-form-label"><fmt:message key="payments.placeholder.account" bundle="${msg}"/></label>
                                     <div class="col-10">
                                         <input type="text" name="account_number" class="form-control" value="${requestScope.previousAccount}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-2 col-form-label">Sum</label>
+                                    <label class="col-2 col-form-label"><fmt:message key="payments.placeholder.sum" bundle="${msg}"/></label>
                                     <div class="col-10">
                                         <input type="text" name="sum" class="form-control" value="${requestScope.previousSum}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-2 col-form-label">Purpose of payment</label>
+                                    <label class="col-2 col-form-label"><fmt:message key="payments.placeholder.purpose" bundle="${msg}"/></label>
                                     <div class="col-10">
                                         <input type="text" name="purpose" class="form-control" value="${requestScope.previousPurpose}">
                                     </div>
@@ -138,7 +144,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-6 col-sm-offset-3">
-                                            <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn" value="Pay">
+                                            <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn" value="<fmt:message key="payments.pay" bundle="${msg}"/> ">
                                         </div>
                                     </div>
                                 </div>
@@ -156,6 +162,5 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/main-menu.js"></script>
 <script src="js/template.js"></script>
-
 </body>
 </html>

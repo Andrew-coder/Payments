@@ -51,4 +51,12 @@ public final class Attributes {
     public static final String LIMIT = "limit";
     public static final String OFFSET = "page";
     public static final String TOTAL_PAGES = "pages";
+
+    public static final String EN = "en";
+    public static final String UA = "ua";
+    public static final String RU = "ru";
+    public static final String UTF_8 = "UTF-8";
+    public static final String LANG = "lang";
+    public static final String LOCALE = "locale";
+    public static final String BUNDLE_FILE = "bundleFile";
 }
