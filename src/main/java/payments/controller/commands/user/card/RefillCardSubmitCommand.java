@@ -5,16 +5,13 @@ import payments.controller.commands.CommandExecutor;
 import payments.controller.validators.Errors;
 import payments.controller.validators.RefillValidator;
 import payments.model.dto.payment.RefillData;
-import payments.model.entity.BankAccount;
 import payments.model.entity.payment.Payment;
-import payments.model.entity.payment.PaymentTariff;
-import payments.model.entity.payment.PaymentType;
 import payments.service.CardService;
 import payments.service.PaymentService;
 import payments.service.impl.CardServiceImpl;
 import payments.service.impl.PaymentServiceImpl;
 import payments.utils.constants.Attributes;
-import payments.utils.constants.LoggerMessages;
+import payments.utils.constants.MessageKeys;
 import payments.utils.constants.PagesPath;
 import payments.utils.extractors.RequestParamExtractor;
 
@@ -53,7 +50,7 @@ public class RefillCardSubmitCommand extends CommandExecutor {
         paymentService.saveRefillPayment(payment, refillData);
         logger.info(String.format("Card %s was successfully refilled",refillData.getCardNumber()));
         clearRefillDataFromRequest(request);
-        request.setAttribute(Attributes.CONFIRM_MESSAGE, LoggerMessages.SUCCESSFULL_REFILLING);
+        request.setAttribute(Attributes.CONFIRM_MESSAGE, MessageKeys.SUCCESSFUL_PAYMENT);
         request.getRequestDispatcher(PagesPath.CONFIRMATION_PAGE).forward(request, response);
         return PagesPath.FORWARD;
     }
@@ -71,7 +68,7 @@ public class RefillCardSubmitCommand extends CommandExecutor {
 
     private Payment extractPaymentFromRefillData(RefillData data){
         return new Payment.Builder()
-                .setSum(new BigDecimal(data.getSum()))
+                .setSum(BigDecimal.valueOf(data.getSum()))
                 .setCurrentDate()
                 .build();
     }

@@ -2,7 +2,7 @@ package payments.controller.validators;
 
 import payments.model.dto.payment.AccountTransferData;
 import payments.utils.constants.Attributes;
-import payments.utils.constants.ErrorMessages;
+import payments.utils.constants.MessageKeys;
 import java.util.regex.Pattern;
 
 public class AccountTransferValidator implements Validator<AccountTransferData> {
@@ -18,10 +18,10 @@ public class AccountTransferValidator implements Validator<AccountTransferData> 
         errors.addErrors(usreouValidator.validate(data.getUsreou()).getErrors());
         errors.addErrors(mfoValidator.validate(data.getMfo()).getErrors());
         if(!Pattern.matches(REGEX_CARD_NUMBER, data.getSenderCard())){
-            errors.addError(Attributes.SENDER_CARD, ErrorMessages.WRONG_SENDER_CARD);
+            errors.addError(Attributes.SENDER_CARD, MessageKeys.WRONG_SENDER_CARD);
         }
         if(!Pattern.matches(REGEX_ACCOUNT_NUMBER, data.getAccountNumber())){
-            errors.addError(Attributes.ACCOUNT_NUMBER, ErrorMessages.WRONG_ACCOUNT_NUMBER);
+            errors.addError(Attributes.ACCOUNT_NUMBER, MessageKeys.WRONG_ACCOUNT_NUMBER);
         }
         return errors;
     }

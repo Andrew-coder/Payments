@@ -1,14 +1,13 @@
 package payments.controller.exception;
 
-public class ControllerException extends RuntimeException{
-    public ControllerException() {
+import payments.exception.ApplicationException;
+
+public class ControllerException extends ApplicationException {
+    public ControllerException(String messageKey) {
+        super(messageKey);
     }
 
-    public ControllerException(String message) {
-        super(message);
-    }
-
-    public ControllerException(String message, Throwable cause) {
-        super(message, cause);
+    public ControllerException(Throwable cause, String messageKey) {
+        super(cause, messageKey);
     }
 }

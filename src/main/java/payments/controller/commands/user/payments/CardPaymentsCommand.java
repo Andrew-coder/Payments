@@ -6,14 +6,13 @@ import payments.controller.validators.CardTransferValidator;
 import payments.controller.validators.Errors;
 import payments.model.dto.payment.CardTransferData;
 import payments.model.entity.payment.Payment;
-import payments.model.entity.payment.PaymentTariff;
-import payments.model.entity.payment.PaymentType;
 import payments.service.CardService;
 import payments.service.PaymentService;
 import payments.service.impl.CardServiceImpl;
 import payments.service.impl.PaymentServiceImpl;
 import payments.utils.constants.Attributes;
 import payments.utils.constants.LoggerMessages;
+import payments.utils.constants.MessageKeys;
 import payments.utils.constants.PagesPath;
 import payments.utils.extractors.RequestParamExtractor;
 
@@ -52,7 +51,7 @@ public class CardPaymentsCommand extends CommandExecutor {
         paymentService.saveCardTransfer(payment, cardData);
         logger.info(String.format(LoggerMessages.SUCCESSFULL_CARD_TRANSFER));
         clearCardTransferDataFromRequest(request);
-        request.setAttribute(Attributes.CONFIRM_MESSAGE, LoggerMessages.SUCCESSFULL_CARD_TRANSFER);
+        request.setAttribute(Attributes.CONFIRM_MESSAGE, MessageKeys.SUCCESSFUL_PAYMENT);
         request.getRequestDispatcher(PagesPath.CONFIRMATION_PAGE).forward(request, response);
         return PagesPath.FORWARD;
     }
@@ -68,7 +67,7 @@ public class CardPaymentsCommand extends CommandExecutor {
 
     private Payment extractPaymentFromCardTransferData(CardTransferData data){
         return new Payment.Builder()
-                .setSum(new BigDecimal(data.getSum()))
+                .setSum(BigDecimal.valueOf(data.getSum()))
                 .setCurrentDate()
                 .setPaymentPurpose(data.getPaymentPurpose())
                 .build();

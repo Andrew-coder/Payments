@@ -11,7 +11,7 @@ import payments.model.entity.payment.PaymentTariff;
 import payments.model.entity.payment.PaymentType;
 import payments.service.CardService;
 import payments.service.exception.ServiceException;
-import payments.utils.constants.ErrorMessages;
+import payments.utils.constants.MessageKeys;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -167,11 +167,10 @@ public class CardServiceImpl implements CardService{
     public boolean isCardBlocked(long id) {
         try(ConnectionWrapper wrapper= daoFactory.getConnection()){
             CardDao cardDao = daoFactory.getCardDao(wrapper);
-            boolean result = cardDao.findAllBlockedCards()
+            return cardDao.findAllBlockedCards()
                     .stream()
                     .mapToLong(Card::getId)
                     .anyMatch(cardId -> cardId==id);
-            return result;
         }
     }
 
@@ -181,7 +180,7 @@ public class CardServiceImpl implements CardService{
                 .mapToLong(Card::getId)
                 .filter(cardId -> cardId==id)
                 .findFirst()
-                .ifPresent((a)->{throw new ServiceException(ErrorMessages.CARD_IS_BLOCKED);});
+                .ifPresent(a->{throw new ServiceException(MessageKeys.CARD_IS_BLOCKED);});
     }
 
     private void performTransaction(BankAccount sender, BankAccount recipient,
@@ -196,17 +195,18 @@ public class CardServiceImpl implements CardService{
     private BigDecimal calculateBalanceByTariff(BankAccount account, double sum,
                                              PaymentTariffDao tariffDao, PaymentType type){
         PaymentTariff tariff = tariffDao.findByPaymentType(type)
-                .orElseThrow(ServiceException::new);
+                .orElseThrow(()->new ServiceException(MessageKeys.PAYMENT_TARIFF_NOT_FOUND));
         BigDecimal fixedRate = tariff.getFixedRate();
         BigDecimal currentBalance = account.getBalance();
-        BigDecimal paymentRateValue = new BigDecimal(tariff.getPaymentRate())
-                .multiply(new BigDecimal(sum));
+        BigDecimal paymentRateValue = BigDecimal.valueOf(tariff.getPaymentRate())
+                .multiply(BigDecimal.valueOf(sum));
         BigDecimal remainder = currentBalance
                 .subtract(fixedRate)
                 .subtract(paymentRateValue)
-                .subtract(new BigDecimal(sum));
+                .subtract(BigDecimal.valueOf(sum));
         if(remainder.doubleValue()<ZERO){
-            throw new ServiceException(ErrorMessages.NOT_ENOUGH_MONEY);
+            logger.error(MessageKeys.NOT_ENOUGH_MONEY);
+            throw new ServiceException(MessageKeys.NOT_ENOUGH_MONEY);
         }
         return remainder;
     }
@@ -214,8 +214,8 @@ public class CardServiceImpl implements CardService{
     private Card findCardByIdOrThrowException(long id, CardDao cardDao){
         Optional<Card> card = cardDao.findById(id);
         if(!card.isPresent()){
-            logger.error(ErrorMessages.CARD_NOT_EXIST);
-            throw new ServiceException(ErrorMessages.CARD_NOT_EXIST);
+            logger.error(MessageKeys.CARD_NOT_EXIST);
+            throw new ServiceException(MessageKeys.CARD_NOT_EXIST);
         }
         return card.get();
     }
@@ -223,8 +223,8 @@ public class CardServiceImpl implements CardService{
     private Card findCardByNumberOrThrowException(String number, CardDao cardDao){
         Optional<Card> card = cardDao.findCardByNumber(number);
         if(!card.isPresent()){
-            logger.error(ErrorMessages.CARD_NOT_EXIST);
-            throw new ServiceException(ErrorMessages.CARD_NOT_EXIST);
+            logger.error(MessageKeys.CARD_NOT_EXIST);
+            throw new ServiceException(MessageKeys.CARD_NOT_EXIST);
         }
         return card.get();
     }
@@ -232,8 +232,8 @@ public class CardServiceImpl implements CardService{
     private BankAccount findAccountByNumberOrThrowException(String number, BankAccountDao accountDao){
         Optional<BankAccount> account = accountDao.findBankAccountByNumber(number);
         if(!account.isPresent()){
-            logger.error(ErrorMessages.ACCOUNT_NOT_EXIST);
-            throw new ServiceException(ErrorMessages.ACCOUNT_NOT_EXIST);
+            logger.error(MessageKeys.ACCOUNT_NOT_EXIST);
+            throw new ServiceException(MessageKeys.ACCOUNT_NOT_EXIST);
         }
         return account.get();
     }
@@ -242,7 +242,7 @@ public class CardServiceImpl implements CardService{
         card.filter(c -> c.getPin().equals(data.getPin()))
                 .filter(c -> c.getCvv().equals(data.getCvv()))
                 .filter(c -> compareDates(c.getExpireDate().toString(), data.getExpireDate()))
-                .orElseThrow(() -> new ServiceException(ErrorMessages.WRONG_CARD_DATA));
+                .orElseThrow(() -> new ServiceException(MessageKeys.WRONG_CARD_DATA));
     }
 
     private void checkCardValidityDate(Card card){
@@ -251,7 +251,8 @@ public class CardServiceImpl implements CardService{
         try{
             Date todayWithZeroTime = formatter.parse(formatter.format(today));
             if(todayWithZeroTime.after(card.getExpireDate())){
-                throw new ServiceException(ErrorMessages.CARD_VALIDITY_EXPIRED);
+                logger.error(MessageKeys.CARD_VALIDITY_EXPIRED);
+                throw new ServiceException(MessageKeys.CARD_VALIDITY_EXPIRED);
             }
         }
         catch (ParseException ex){}
@@ -259,7 +260,8 @@ public class CardServiceImpl implements CardService{
 
     private void checkIsNotTheSameAccount(BankAccount sender, BankAccount recipient){
         if(sender.getAccountNumber().equals(recipient.getAccountNumber())){
-            throw new ServiceException(ErrorMessages.TRANSFER_TO_THE_SAME_ACCOUNT);
+            logger.error(MessageKeys.TRANSFER_TO_THE_SAME_ACCOUNT);
+            throw new ServiceException(MessageKeys.TRANSFER_TO_THE_SAME_ACCOUNT);
         }
     }
 
@@ -279,6 +281,6 @@ public class CardServiceImpl implements CardService{
     }
 
     private BigDecimal increaseAccountBalance(BankAccount account, double sum){
-        return account.getBalance().add(new BigDecimal(sum));
+        return account.getBalance().add(BigDecimal.valueOf(sum));
     }
 }

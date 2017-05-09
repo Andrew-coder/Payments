@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import payments.dao.BankAccountDao;
 import payments.dao.exception.DaoException;
 import payments.model.entity.BankAccount;
+import payments.utils.constants.LoggerMessages;
 import payments.utils.extractors.impl.BankAccountResultSetExtractor;
 
 import java.sql.*;
@@ -17,7 +18,6 @@ public class BankAccountDaoImpl implements BankAccountDao{
     private static final String GET_ALL_ACCOUNTS = "select account_id, account_number, balance from BankAccounts ";
     private static final String FILTER_BY_ID = "where account_id=?;";
     public static final String CREATE_ACCOUNT = "insert into `Payment`.`BankAccounts` (`account_number`, `balance`) VALUES (?, ?);";
-    public static final String UPDATE_ACCOUNT = "update `Payment`.`BankAccounts` set `account_number`=?, `balance`=? ";
     public static final String UPDATE_ACCOUNT_BALANCE = "update `Payment`.`BankAccounts` set `balance`=? ";
     public static final String FILTER_BY_CARD = "join Cards using(account_id) where Cards.card_id=?";
     public static final String FILTER_BY_NUMBER = "where account_number=?; ";
@@ -43,7 +43,8 @@ public class BankAccountDaoImpl implements BankAccountDao{
             return result;
         }
         catch(SQLException ex){
-            throw new DaoException("dao exception occurred when retrieving bank account by id", ex);
+            logger.error(LoggerMessages.ERROR_FIND_ACCOUNT_BY_ID + id);
+            throw new DaoException(ex);
         }
     }
 
@@ -60,12 +61,13 @@ public class BankAccountDaoImpl implements BankAccountDao{
             return result;
         }
         catch(SQLException ex){
-            throw new DaoException("dao exception occurred when retrieving bank account by account number", ex);
+            logger.error(LoggerMessages.ERROR_FIND_ACCOUNT_BY_NUMBER + number);
+            throw new DaoException(ex);
         }
     }
 
     @Override
-    public Optional<BankAccount> findBankAccountByCard(int id) {
+    public Optional<BankAccount> findBankAccountByCard(long id) {
         Optional<BankAccount> result = Optional.empty();
         try(PreparedStatement statement = connection.prepareStatement(GET_ALL_ACCOUNTS+ FILTER_BY_CARD)){
             statement.setLong(1,id);
@@ -77,7 +79,8 @@ public class BankAccountDaoImpl implements BankAccountDao{
             return result;
         }
         catch(SQLException ex){
-            throw new DaoException("dao exception occurred when retrieving bank account by card", ex);
+            logger.error(LoggerMessages.ERROR_FIND_ACCOUNT_BY_CARD + id);
+            throw new DaoException(ex);
         }
     }
 
@@ -92,7 +95,8 @@ public class BankAccountDaoImpl implements BankAccountDao{
             return accounts;
         }
         catch(SQLException ex){
-            throw new DaoException("dao exception occurred when retrieving all bank accounts", ex);
+            logger.error(LoggerMessages.ERROR_FIND_ALL_ACCOUNT);
+            throw new DaoException(ex);
         }
     }
 
@@ -105,7 +109,8 @@ public class BankAccountDaoImpl implements BankAccountDao{
             statement.executeUpdate();
         }
         catch (SQLException ex){
-            throw new DaoException("Error occurred when creating new bank account!", ex);
+            logger.error(LoggerMessages.ERROR_CREATE_ACCOUNT + bankAccount.toString());
+            throw new DaoException(ex);
         }
     }
 
@@ -119,7 +124,8 @@ public class BankAccountDaoImpl implements BankAccountDao{
             statement.executeUpdate();
         }
         catch (SQLException ex){
-            throw new DaoException("Error occurred when updating bank account!", ex);
+            logger.error(LoggerMessages.ERROR_UPDATE_ACCOUNT + bankAccount.toString());
+            throw new DaoException(ex);
         }
     }
 

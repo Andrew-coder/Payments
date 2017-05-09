@@ -3,6 +3,7 @@ package payments.dao.jdbc;
 import org.apache.log4j.Logger;
 import payments.dao.ConnectionWrapper;
 import payments.dao.exception.DaoException;
+import payments.utils.constants.LoggerMessages;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -23,7 +24,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper{
             connection.setAutoCommit(false);
             inTransaction=true;
         }catch (Exception ex) {
-            logger.error(ex);
+            logger.error(LoggerMessages.CAN_NOT_BEGIN_TRANSACTION);
             throw new DaoException(ex);
         }
     }
@@ -36,7 +37,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper{
             inTransaction=false;
         }
         catch (SQLException ex){
-            logger.error(ex);
+            logger.error(LoggerMessages.CAN_NOT_COMMIT_TRANSACTION);
             throw new DaoException(ex);
         }
     }
@@ -49,7 +50,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper{
             inTransaction=false;
         }
         catch (SQLException ex){
-            logger.error(ex);
+            logger.error(LoggerMessages.CAN_NOT_ROLLBACK_TRANSACTION);
             throw new DaoException(ex);
         }
     }
@@ -62,7 +63,7 @@ public class ConnectionWrapperImpl implements ConnectionWrapper{
         try {
             connection.close();
         } catch (SQLException ex) {
-            logger.error(ex);
+            logger.error(LoggerMessages.CAN_NOT_CLOSE_CONNECTION);
             throw new DaoException(ex);
         }
     }

@@ -1,12 +1,12 @@
 package payments.controller.commands;
 
 import org.apache.log4j.Logger;
-import payments.controller.exception.ControllerException;
 import payments.controller.validators.Errors;
-import payments.dao.exception.DaoException;
+import payments.exception.ApplicationException;
 import payments.service.exception.ServiceException;
 import payments.utils.constants.Attributes;
-import payments.utils.constants.ErrorMessages;
+import payments.utils.constants.LoggerMessages;
+import payments.utils.constants.MessageKeys;
 import payments.utils.constants.PagesPath;
 import payments.utils.extractors.RequestParamExtractor;
 
@@ -34,24 +34,30 @@ public abstract class CommandExecutor implements Command {
 
         }
         catch (ServiceException exception){
-            logger.error(exception.getMessage());
-            putErrorMessageInRequest(request, exception.getMessage());
+            logger.error(LoggerMessages.SERVICE_EXCEPTION_OCCURRED, exception);
+            putErrorMessageInRequest(request, exception.getMessageKey());
             request.getRequestDispatcher(nextPage).forward(request, response);
         }
-        catch (Exception exception){
-            logger.error(exception.getMessage());
-            putErrorMessageInRequest(request, exception.getMessage());
+        catch (ApplicationException exception){
+            logger.error(LoggerMessages.APPLICATION_EXCEPTION_OCCURRED, exception);
+            putErrorMessageInRequest(request, exception.getMessageKey());
             request.getRequestDispatcher(PagesPath.ERROR_PAGE).forward(request,response);
+        }
+        catch (Exception exception){
+            logger.error(LoggerMessages.UNKNOWN_ERROR_OCCURED, exception);
+            putErrorMessageInRequest(request, MessageKeys.UNKNOWN_ERROR_OCCURED);
+            request.getRequestDispatcher(PagesPath.ERROR_PAGE).forward(request,response);
+
         }
         return PagesPath.FORWARD;
     }
 
-    public void putErrorMessageInRequest(HttpServletRequest request, String message){
+    public void putErrorMessageInRequest(HttpServletRequest request, String messageKey){
         Errors errors = (Errors) request.getAttribute(Attributes.ERRORS);
         if(errors==null){
             errors = new Errors();
         }
-        errors.addError(Attributes.ERROR, message);
+        errors.addError(Attributes.ERROR, messageKey);
         request.setAttribute(Attributes.ERRORS, errors);
     }
 

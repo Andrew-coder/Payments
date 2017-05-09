@@ -1,7 +1,8 @@
 package payments.utils.extractors;
 
+import org.apache.log4j.Logger;
 import payments.controller.exception.ControllerException;
-import payments.utils.constants.ErrorMessages;
+import payments.utils.constants.MessageKeys;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
@@ -9,11 +10,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RequestParamExtractor {
+    private static final Logger logger = Logger.getLogger(RequestParamExtractor.class);
     public static final String NUMBER_BETWEEN_SLASHES_PATTERN = "\\d+(?=/|$)";
     private Pattern numberPattern = Pattern.compile(NUMBER_BETWEEN_SLASHES_PATTERN);
 
@@ -21,7 +22,8 @@ public class RequestParamExtractor {
         try {
             return Long.parseLong(request.getParameter(param));
         } catch (NumberFormatException e) {
-            throw new ControllerException(ErrorMessages.WRONG_QUERY_PARAMETER);
+            logger.error(MessageKeys.WRONG_QUERY_PARAMETER);
+            throw new ControllerException(MessageKeys.WRONG_QUERY_PARAMETER);
         }
     }
 
@@ -30,7 +32,8 @@ public class RequestParamExtractor {
             return Double.parseDouble(request.getParameter(param));
         }
         catch (NumberFormatException e){
-            throw new ControllerException(ErrorMessages.WRONG_QUERY_PARAMETER);
+            logger.error(MessageKeys.WRONG_QUERY_PARAMETER);
+            throw new ControllerException(MessageKeys.WRONG_QUERY_PARAMETER);
         }
     }
 

@@ -1,18 +1,13 @@
 package payments.service.exception;
 
-public class ServiceException extends RuntimeException {
-    public ServiceException() {
+import payments.exception.ApplicationException;
+
+public class ServiceException extends ApplicationException {
+    public ServiceException(String messageKey) {
+        super(messageKey);
     }
 
-    public ServiceException(String message) {
-        super(message);
-    }
-
-    public ServiceException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
-    public ServiceException(Throwable cause) {
-        super(cause);
+    public ServiceException(Throwable cause, String messageKey) {
+        super(cause, messageKey);
     }
 }

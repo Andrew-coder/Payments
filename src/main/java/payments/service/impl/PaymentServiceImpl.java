@@ -12,7 +12,7 @@ import payments.model.entity.payment.PaymentTariff;
 import payments.model.entity.payment.PaymentType;
 import payments.service.PaymentService;
 import payments.service.exception.ServiceException;
-import payments.utils.constants.ErrorMessages;
+import payments.utils.constants.MessageKeys;
 
 import java.util.List;
 import java.util.Optional;
@@ -76,7 +76,7 @@ public class PaymentServiceImpl implements PaymentService{
             payment.setRecipient(refilledCard.getAccount());
             PaymentTariff tariff =
                     tariffDao.findByPaymentType(PaymentType.REFILL)
-                    .orElseThrow(ServiceException::new);
+                    .orElseThrow(()->new ServiceException(MessageKeys.PAYMENT_TARIFF_NOT_FOUND));
             payment.setTariff(tariff);
             paymentDao.create(payment);
         }
@@ -94,7 +94,7 @@ public class PaymentServiceImpl implements PaymentService{
             payment.setSender(senderCard.getAccount());
             PaymentTariff tariff =
                     tariffDao.findByPaymentType(PaymentType.TRANSFER_WITHIN_THIS_BANK)
-                            .orElseThrow(ServiceException::new);
+                            .orElseThrow(()->new ServiceException(MessageKeys.PAYMENT_TARIFF_NOT_FOUND));
             payment.setTariff(tariff);
             paymentDao.create(payment);
         }
@@ -113,7 +113,7 @@ public class PaymentServiceImpl implements PaymentService{
             payment.setRecipient(recipientAccount);
             PaymentTariff tariff =
                     tariffDao.findByPaymentType(PaymentType.TRANSFER_WITHIN_THIS_BANK)
-                            .orElseThrow(ServiceException::new);
+                            .orElseThrow(()->new ServiceException(MessageKeys.PAYMENT_TARIFF_NOT_FOUND));
             payment.setTariff(tariff);
             paymentDao.create(payment);
         }
@@ -122,8 +122,8 @@ public class PaymentServiceImpl implements PaymentService{
     private Card findCardByIdOrThrowException(long id, CardDao cardDao){
         Optional<Card> card = cardDao.findById(id);
         if(!card.isPresent()){
-            logger.error(ErrorMessages.CARD_NOT_EXIST);
-            throw new ServiceException(ErrorMessages.CARD_NOT_EXIST);
+            logger.error(MessageKeys.CARD_NOT_EXIST);
+            throw new ServiceException(MessageKeys.CARD_NOT_EXIST);
         }
         return card.get();
     }
@@ -131,8 +131,8 @@ public class PaymentServiceImpl implements PaymentService{
     private Card findCardByNumberOrThrowException(String number, CardDao cardDao){
         Optional<Card> card = cardDao.findCardByNumber(number);
         if(!card.isPresent()){
-            logger.error(ErrorMessages.CARD_NOT_EXIST);
-            throw new ServiceException(ErrorMessages.CARD_NOT_EXIST);
+            logger.error(MessageKeys.CARD_NOT_EXIST);
+            throw new ServiceException(MessageKeys.CARD_NOT_EXIST);
         }
         return card.get();
     }
@@ -140,8 +140,8 @@ public class PaymentServiceImpl implements PaymentService{
     private BankAccount findAccountByNumberOrThrowException(String number, BankAccountDao accountDao){
         Optional<BankAccount> account = accountDao.findBankAccountByNumber(number);
         if(!account.isPresent()){
-            logger.error(ErrorMessages.ACCOUNT_NOT_EXIST);
-            throw new ServiceException(ErrorMessages.ACCOUNT_NOT_EXIST);
+            logger.error(MessageKeys.ACCOUNT_NOT_EXIST);
+            throw new ServiceException(MessageKeys.ACCOUNT_NOT_EXIST);
         }
         return account.get();
     }

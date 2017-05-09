@@ -5,6 +5,7 @@ import payments.dao.PaymentDao;
 import payments.dao.exception.DaoException;
 import payments.model.entity.BankAccount;
 import payments.model.entity.payment.Payment;
+import payments.utils.constants.LoggerMessages;
 import payments.utils.extractors.impl.PaymentResultSetExtractor;
 
 import java.sql.*;
@@ -48,7 +49,8 @@ public class PaymentDaoImpl implements PaymentDao {
             return result;
         }
         catch(SQLException ex){
-            throw new DaoException("dao exception occured when retrieving payment by id", ex);
+            logger.error(LoggerMessages.ERROR_FIND_PAYMENT_BY_ID + id);
+            throw new DaoException(ex);
         }
     }
 
@@ -63,7 +65,8 @@ public class PaymentDaoImpl implements PaymentDao {
             return payments;
         }
         catch(SQLException ex){
-            throw new DaoException("dao exception occurred when retrieving all payments", ex);
+            logger.error(LoggerMessages.ERROR_FIND_ALL_PAYMENTS);
+            throw new DaoException(ex);
         }
     }
 
@@ -80,7 +83,8 @@ public class PaymentDaoImpl implements PaymentDao {
             return payments;
         }
         catch(SQLException ex){
-            throw new DaoException("dao exception occurred when retrieving all payments by offset and quantity", ex);
+            logger.error(LoggerMessages.ERROR_FIND_ALL_PAYMENTS_BY_OFFSET + startFrom + quantity);
+            throw new DaoException(ex);
         }
     }
 
@@ -92,7 +96,8 @@ public class PaymentDaoImpl implements PaymentDao {
             return set.getInt("count");
         }
         catch (SQLException ex){
-            throw new DaoException("dao exception occurred when retrieving total payments count", ex);
+            logger.error(LoggerMessages.ERROR_RETRIEVE_PAYMENTS_COUNT);
+            throw new DaoException(ex);
         }
     }
 
@@ -111,7 +116,8 @@ public class PaymentDaoImpl implements PaymentDao {
             statement.executeUpdate();
         }
         catch (SQLException ex){
-            throw new DaoException("Error occurred when creating new payment!", ex);
+            logger.error(LoggerMessages.ERROR_CREATE_NEW_PAYMENT);
+            throw new DaoException(ex);
         }
     }
 

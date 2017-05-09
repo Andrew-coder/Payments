@@ -47,6 +47,9 @@ public final class Attributes {
     public static final String MFO = "mfo";
     public static final String SUM = "sum";
     public static final String ACCOUNT_NUMBER = "accountNumber";
+    public static final String PIN = "pin";
+    public static final String CVV = "cvv";
+    public static final String EXPIRE_DATE = "expireDate";
 
     public static final String LIMIT = "limit";
     public static final String OFFSET = "page";

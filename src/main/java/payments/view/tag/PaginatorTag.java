@@ -10,7 +10,7 @@ import java.util.Enumeration;
 import java.util.Optional;
 
 public class PaginatorTag extends SimpleTagSupport {
-    private final int FIRST_PAGE_NUMBER=1;
+    private final static int FIRST_PAGE_NUMBER=1;
 
     private String paginParamName;
     private String uri;

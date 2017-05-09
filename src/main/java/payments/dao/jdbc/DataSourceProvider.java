@@ -27,7 +27,6 @@ public class DataSourceProvider {
         properties.setUrl(dbProperties.getString(JDBC_URL));
         properties.setUsername(dbProperties.getString(USER));
         properties.setPassword(dbProperties.getString(PASSWORD));
-        DataSource dataSource = new org.apache.tomcat.jdbc.pool.DataSource(properties);
-        return dataSource;
+        return new org.apache.tomcat.jdbc.pool.DataSource(properties);
     }
 }

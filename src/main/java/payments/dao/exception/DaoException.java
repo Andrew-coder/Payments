@@ -1,15 +1,17 @@
 package payments.dao.exception;
 
-public class DaoException extends RuntimeException{
-    public DaoException(String message) {
-        super(message);
+import payments.exception.ApplicationException;
+
+public class DaoException extends ApplicationException{
+    public DaoException(String messageKey) {
+        super(messageKey);
     }
 
     public DaoException(Throwable cause) {
         super(cause);
     }
 
-    public DaoException(String message, Throwable cause) {
-        super(message, cause);
+    public DaoException(Throwable cause, String messageKey) {
+        super(cause, messageKey);
     }
 }

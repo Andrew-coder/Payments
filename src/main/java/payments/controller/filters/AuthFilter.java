@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,13 +19,15 @@ public class AuthFilter implements Filter{
     private static final Logger logger = Logger.getLogger(AuthFilter.class);
     private static final String USER_NOT_AUTHORIZED = "User isn't authorized";
 
-    private Map<RoleType, Authorizer> authorizeByRole = new HashMap<RoleType, Authorizer>() {{
-        put(RoleType.USER, new UserAuthorizer());
-        put(RoleType.ADMIN, new AdminAuthorizer());
-    }};
+    private static EnumMap<RoleType, Authorizer> authorizeByRole = new EnumMap<>(RoleType.class);
+
+    static {
+        authorizeByRole.put(RoleType.USER, new UserAuthorizer());
+        authorizeByRole.put(RoleType.ADMIN, new AdminAuthorizer());
+    }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException{
         HttpServletRequest req = ((HttpServletRequest) request);
         HttpSession session = req.getSession();
         String uri = req.getRequestURI();
@@ -51,14 +54,14 @@ public class AuthFilter implements Filter{
         boolean check(String uri, User user);
     }
 
-    private class UserAuthorizer implements Authorizer {
+    private static class UserAuthorizer implements Authorizer {
         public boolean check(String uri, User user) {
             return user!=null && !uri.startsWith(PagesPath.ADMIN);
 
         }
     }
 
-    private class AdminAuthorizer implements Authorizer {
+    private static class AdminAuthorizer implements Authorizer {
         public boolean check(String uri, User user) {
             return  user!=null && (uri.startsWith(PagesPath.ADMIN)||
                     uri.startsWith(PagesPath.LOGIN)||
@@ -84,5 +87,4 @@ public class AuthFilter implements Filter{
     public void destroy() {
 
     }
-
 }

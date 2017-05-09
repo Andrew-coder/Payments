@@ -1,12 +1,16 @@
 package payments.dao.jdbc;
 
+import org.apache.log4j.Logger;
 import payments.dao.*;
+import payments.dao.exception.DaoException;
+import payments.utils.constants.LoggerMessages;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class JdbcDaoFactory extends DaoFactory {
+    private static final Logger logger = Logger.getLogger(JdbcDaoFactory.class);
     private DataSource dataSource = DataSourceProvider.getInstance();
     @Override
     public ConnectionWrapper getConnection() {
@@ -15,7 +19,8 @@ public class JdbcDaoFactory extends DaoFactory {
             connection = dataSource.getConnection();
         }
         catch (SQLException exception) {
-            exception.printStackTrace();
+            logger.error(LoggerMessages.ERROR_CONNECT_TO_DATABASE);
+            throw new DaoException(exception);
         }
         return new ConnectionWrapperImpl(connection);
     }

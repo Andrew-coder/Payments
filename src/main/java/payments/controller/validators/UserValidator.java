@@ -2,7 +2,7 @@ package payments.controller.validators;
 
 import payments.model.dto.RegisterData;
 import payments.utils.constants.Attributes;
-import payments.utils.constants.ErrorMessages;
+import payments.utils.constants.MessageKeys;
 
 import java.util.regex.Pattern;
 
@@ -16,19 +16,19 @@ public class UserValidator implements Validator<RegisterData> {
     public Errors validate(RegisterData data) {
         Errors results = new Errors();
         if(!Pattern.matches(REGEX_NAME, data.getName())){
-            results.addError(Attributes.USER_NAME, ErrorMessages.WRONG_USER_NAME);
+            results.addError(Attributes.USER_NAME, MessageKeys.WRONG_USER_NAME);
         }
         if(!Pattern.matches(REGEX_NAME, data.getSurname())){
-            results.addError(Attributes.USER_SURNAME, ErrorMessages.WRONG_USER_SURNAME);
+            results.addError(Attributes.USER_SURNAME, MessageKeys.WRONG_USER_SURNAME);
         }
         if(!Pattern.matches(REGEX_PHONE, data.getCellphone())){
-            results.addError(Attributes.USER_CELLPHONE, ErrorMessages.WRONG_USER_CELLPHONE);
+            results.addError(Attributes.USER_CELLPHONE, MessageKeys.WRONG_USER_CELLPHONE);
         }
         if(!Pattern.matches(REGEX_PASSWORD, data.getPassword())){
-            results.addError(Attributes.USER_PASSWORD, ErrorMessages.WRONG_USER_PASSWORD);
+            results.addError(Attributes.USER_PASSWORD, MessageKeys.WRONG_USER_PASSWORD);
         }
         if(!Pattern.matches(REGEX_DATE, data.getBirthDate())){
-            results.addError(Attributes.USER_DATE, ErrorMessages.WRONG_USER_DATE);
+            results.addError(Attributes.USER_DATE, MessageKeys.WRONG_USER_DATE);
         }
         return results;
     }

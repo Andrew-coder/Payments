@@ -11,8 +11,8 @@ public class Errors {
         errors = new HashMap<>();
     }
 
-    public void addError(String attribute, String message){
-        errors.put(attribute, message);
+    public void addError(String attribute, String messageKey){
+        errors.put(attribute, messageKey);
     }
 
     public void addErrors(Map<String, String> errors){

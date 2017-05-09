@@ -1,7 +1,7 @@
 package payments.controller.validators;
 
 import payments.utils.constants.Attributes;
-import payments.utils.constants.ErrorMessages;
+import payments.utils.constants.MessageKeys;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,8 +15,8 @@ public class UsreouValidator implements Validator<String>{
     private int MAX_RANGE_VALUE = 60000000;
     private int DIVIDER = 11;
 
-    private final Map<Integer, Integer> firstRangeWeightFactors = new HashMap<Integer, Integer>();
-    private final Map<Integer, Integer> secondRangeWeightFactors = new HashMap<Integer, Integer>();
+    private final Map<Integer, Integer> firstRangeWeightFactors = new HashMap<>();
+    private final Map<Integer, Integer> secondRangeWeightFactors = new HashMap<>();
     {
         firstRangeWeightFactors.put(1,1);
         firstRangeWeightFactors.put(2,2);
@@ -39,7 +39,7 @@ public class UsreouValidator implements Validator<String>{
     public Errors validate(String s) {
         Errors errors = new Errors();
         if(!validateUsreouCodeByRegex(s)){
-            errors.addError(Attributes.USREOU, ErrorMessages.WRONG_USREOU);
+            errors.addError(Attributes.USREOU, MessageKeys.WRONG_USREOU);
             return errors;
         }
         long usreou = extractNumberFromString(s);
@@ -54,7 +54,7 @@ public class UsreouValidator implements Validator<String>{
         }
         int lastDigit = digits[digits.length-1];
         if(remainder!=lastDigit){
-            errors.addError(Attributes.USREOU, ErrorMessages.WRONG_USREOU);
+            errors.addError(Attributes.USREOU, MessageKeys.WRONG_USREOU);
         }
         return errors;
     }

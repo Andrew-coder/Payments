@@ -25,7 +25,7 @@ public class CardsAdministrationCommand extends CommandExecutor{
         List<Card> cards = cardService.findAll();
         request.setAttribute(Attributes.CARDS, cards);
         cards.stream().
-                mapToLong(card -> card.getId()).
+                mapToLong(Card::getId).
                 forEach(id -> request.setAttribute(String.valueOf(id),
                         cardService.isCardBlocked(id)));
         return PagesPath.CARDS_ADMINISTRATION_PAGE;

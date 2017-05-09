@@ -18,7 +18,53 @@
     <script src="/js/payments-form-initializer.js"></script>
 </head>
 <body>
-<jsp:include page="header.jsp"/>
+
+<div class="mainmenu-wrapper">
+    <div class="container">
+        <div class="menuextras">
+            <div class="extras">
+                <ul>
+                    <li>
+
+                        <div class="dropdown choose-country">
+                            <c:forEach items="${SUPPORTED_LOCALES}" var="value">
+                                <c:if test="${value eq sessionScope['locale']}">
+                                    <a class="#" data-toggle="dropdown" href="#"><img src="images/${value.language}.png" alt="${value.language}">  ${value.language}</a>
+                                </c:if>
+                            </c:forEach>
+                            <ul class="dropdown-menu" role="menu">
+                                <c:forEach items="${SUPPORTED_LOCALES}" var="value">
+                                    <li role="menuitem"><a href="payments?lang=${value.language}"><img src="images/${value.language}.png" alt="${value.language}"> ${value.language}</a></li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+
+                    </li>
+                    <c:if test="${sessionScope.user==null}">
+                        <li><a href="/login"><fmt:message key="payments.login" bundle="${msg}"/></a></li>
+                    </c:if>
+                    <c:if test="${sessionScope.user!=null}">
+                        <li>${user.name} ${' '} ${user.surname}</li>
+                        <li><a href="/logout"><fmt:message key="payments.logout" bundle="${msg}"/></a></li>
+                    </c:if>
+                </ul>
+            </div>
+        </div>
+        <nav id="mainmenu" class="mainmenu">
+            <ul>
+                <li>
+                    <a href="/home"><fmt:message key="payments.menu.home" bundle="${msg}"/></a>
+                </li>
+                <li>
+                    <a href="/cards"><fmt:message key="payments.menu.cards" bundle="${msg}"/></a>
+                </li>
+                <li>
+                    <a href="/payments"><fmt:message key="payments" bundle="${msg}"/></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
 
 <div class="container">
     <div class="row">
@@ -27,7 +73,7 @@
                 <div>
                     <c:if test="${requestScope.errors!=null and requestScope.errors.hasErrors()}">
                         <c:forEach items="${requestScope.errors.getErrorsAttributes()}" var="value">
-                            <p1 class="has-error">${requestScope.errors.getErrors().get(value)}</p1><br>
+                            <p1 class="has-error"><fmt:message key="${requestScope.errors.getErrors().get(value)}" bundle="${msg}"/> </p1><br>
                         </c:forEach>
                     </c:if>
                 </div>
@@ -84,7 +130,7 @@
                                 <div class="form-group row">
                                     <div class="row">
                                         <div class="col-sm-6 col-sm-offset-3">
-                                            <input type="submit" name="pay-submit" id="pay-submit" tabindex="4" class="form-control btn" value="Pay">
+                                            <input type="submit" name="pay-submit" id="pay-submit" tabindex="4" class="form-control btn" value="<fmt:message key="payments.pay" bundle="${msg}"/>">
                                         </div>
                                     </div>
                                 </div>

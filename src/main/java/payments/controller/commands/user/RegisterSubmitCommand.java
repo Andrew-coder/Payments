@@ -11,6 +11,7 @@ import payments.service.UserService;
 import payments.service.impl.UserServiceImpl;
 import payments.utils.constants.Attributes;
 import payments.utils.constants.LoggerMessages;
+import payments.utils.constants.MessageKeys;
 import payments.utils.constants.PagesPath;
 import payments.utils.extractors.RequestParamExtractor;
 
@@ -47,18 +48,18 @@ public class RegisterSubmitCommand extends CommandExecutor {
         userService.create(user);
         logger.info(String.format("User %s %s was successfully registered",registerData.getName(), registerData.getSurname()));
         clearRegisterDataFromRequest(request);
-        request.setAttribute(Attributes.CONFIRM_MESSAGE, LoggerMessages.SUCCESSFUL_REGISTER);
+        request.setAttribute(Attributes.CONFIRM_MESSAGE, MessageKeys.SUCCESSFUL_REGISTER);
         request.getRequestDispatcher(PagesPath.CONFIRMATION_PAGE).forward(request, response);
         return PagesPath.FORWARD;
     }
 
     private RegisterData extractRegisterData(HttpServletRequest request){
         RegisterData.Builder builder = new RegisterData.Builder()
-                .setName(request.getParameter("name").toString())
-                .setSurname(request.getParameter("surname").toString())
-                .setCellphone(request.getParameter("cellphone").toString())
-                .setPassword(request.getParameter("password").toString())
-                .setBirthDate(request.getParameter("birthDate").toString());
+                .setName(request.getParameter("name"))
+                .setSurname(request.getParameter("surname"))
+                .setCellphone(request.getParameter("cellphone"))
+                .setPassword(request.getParameter("password"))
+                .setBirthDate(request.getParameter("birthDate"));
         return builder.build();
     }
 

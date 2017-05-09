@@ -20,17 +20,31 @@
     <script src="/js/bootstrap.min.js"></script>
 </head>
 <body>
-<jsp:include page="localeSelector.jsp"></jsp:include>
+
+<div class="dropdown choose-country top-right">
+    <c:forEach items="${SUPPORTED_LOCALES}" var="value">
+        <c:if test="${value eq sessionScope['locale']}">
+            <a class="#" data-toggle="dropdown" href="#"><img src="images/${value.language}.png" alt="${value.language}">  ${value.language}</a>
+        </c:if>
+    </c:forEach>
+    <ul class="dropdown-menu" role="menu">
+        <c:forEach items="${SUPPORTED_LOCALES}" var="value">
+            <li role="menuitem"><a href="login?lang=${value.language}"><img src="images/${value.language}.png" alt="${value.language}"> ${value.language}</a></li>
+        </c:forEach>
+    </ul>
+</div>
+
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <div>
                 <c:if test="${requestScope.errors!=null and requestScope.errors.hasErrors()}">
                     <c:forEach items="${requestScope.errors.getErrorsAttributes()}" var="value">
-                        <p1 class="has-error">${requestScope.errors.getErrors().get(value)}</p1><br>
+                        <p1 class="has-error"><fmt:message key="${errors.errors.get(value)}" bundle="${msg}"/> </p1><br>
                     </c:forEach>
                 </c:if>
             </div>
+
             <div class="panel panel-login">
                 <div class="panel-heading">
                     <input id="tab" type="hidden" value="${requestScope.tab}">

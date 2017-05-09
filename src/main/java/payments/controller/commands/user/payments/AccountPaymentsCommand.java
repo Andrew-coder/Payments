@@ -12,6 +12,7 @@ import payments.service.impl.CardServiceImpl;
 import payments.service.impl.PaymentServiceImpl;
 import payments.utils.constants.Attributes;
 import payments.utils.constants.LoggerMessages;
+import payments.utils.constants.MessageKeys;
 import payments.utils.constants.PagesPath;
 import payments.utils.extractors.RequestParamExtractor;
 
@@ -50,7 +51,7 @@ public class AccountPaymentsCommand extends CommandExecutor {
         paymentService.saveAccountTransfer(payment, transferData);
         logger.info(String.format(LoggerMessages.SUCCESSFULL_ACCOUNT_TRANSFER));
         clearAccountTransferDataFromRequest(request);
-        request.setAttribute(Attributes.CONFIRM_MESSAGE, LoggerMessages.SUCCESSFULL_ACCOUNT_TRANSFER);
+        request.setAttribute(Attributes.CONFIRM_MESSAGE, MessageKeys.SUCCESSFUL_PAYMENT);
         request.getRequestDispatcher(PagesPath.CONFIRMATION_PAGE).forward(request, response);
         return PagesPath.FORWARD;
     }
@@ -68,7 +69,7 @@ public class AccountPaymentsCommand extends CommandExecutor {
 
     private Payment extractPaymentFromAccountTransferData(AccountTransferData data){
         return new Payment.Builder()
-                .setSum(new BigDecimal(data.getSum()))
+                .setSum(BigDecimal.valueOf(data.getSum()))
                 .setCurrentDate()
                 .setMfo(data.getMfo())
                 .setUsreou(data.getUsreou())

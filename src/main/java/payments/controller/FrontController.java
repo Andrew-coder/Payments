@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class FrontController extends HttpServlet{
     private static final Logger logger = Logger.getLogger(FrontController.class);
-    private CommandHolder commandHolder;
+    private transient  final CommandHolder commandHolder = new CommandHolder();
 
 
     @Override
@@ -37,12 +37,8 @@ public class FrontController extends HttpServlet{
         String method = request.getMethod().toUpperCase();
         String path = request.getRequestURI();
         String key = method+":"+path;
+        logger.debug(method + " Uri: "+ path);
         Command command = commandHolder.findCommand(key);
         return command.execute(request, response);
-    }
-
-    @Override
-    public void init() throws ServletException {
-        commandHolder = new CommandHolder();
     }
 }

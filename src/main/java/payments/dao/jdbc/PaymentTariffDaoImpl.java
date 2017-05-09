@@ -5,6 +5,7 @@ import payments.dao.PaymentTariffDao;
 import payments.dao.exception.DaoException;
 import payments.model.entity.payment.PaymentTariff;
 import payments.model.entity.payment.PaymentType;
+import payments.utils.constants.LoggerMessages;
 import payments.utils.extractors.impl.PaymentTariffResultSetExtractor;
 
 import java.sql.*;
@@ -40,7 +41,8 @@ public class PaymentTariffDaoImpl implements PaymentTariffDao{
             return result;
         }
         catch(SQLException ex){
-            throw new DaoException("dao exception occurred when retrieving payment tariff by id", ex);
+            logger.error(LoggerMessages.ERROR_FIND_TARIFF_BY_ID + id);
+            throw new DaoException(ex);
         }
     }
 
@@ -57,7 +59,8 @@ public class PaymentTariffDaoImpl implements PaymentTariffDao{
             return result;
         }
         catch (SQLException ex){
-            throw new DaoException("dao exception occurred when retrieving payment tariff by payment type", ex);
+            logger.error(LoggerMessages.ERROR_FIND_TARIFF_BY_TYPE + type.name());
+            throw new DaoException(ex);
         }
     }
 
@@ -72,7 +75,8 @@ public class PaymentTariffDaoImpl implements PaymentTariffDao{
             return tariffs;
         }
         catch(SQLException ex){
-            throw new DaoException("dao exception occurred when retrieving all payment tariffs", ex);
+            logger.error(LoggerMessages.ERROR_FIND_ALL_TARIFFS);
+            throw new DaoException(ex);
         }
     }
 
@@ -90,7 +94,8 @@ public class PaymentTariffDaoImpl implements PaymentTariffDao{
             statement.executeUpdate();
         }
         catch (SQLException ex){
-            throw new DaoException("Error occured when updating card!", ex);
+            logger.error(LoggerMessages.ERROR_UPDATE_TARIFF + tariff.toString());
+            throw new DaoException(ex);
         }
     }
 

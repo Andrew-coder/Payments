@@ -1,7 +1,7 @@
 package payments.controller.validators;
 
 import payments.utils.constants.Attributes;
-import payments.utils.constants.ErrorMessages;
+import payments.utils.constants.MessageKeys;
 
 import java.util.regex.Pattern;
 
@@ -12,13 +12,13 @@ public class MfoValidator implements Validator<String> {
     public Errors validate(String s) {
         Errors errors = new Errors();
         if(!validateMfoCodeByRegex(s)){
-            errors.addError(Attributes.MFO, ErrorMessages.WRONG_MFO);
+            errors.addError(Attributes.MFO, MessageKeys.WRONG_MFO);
             return errors;
         }
         int[] digits = convertStringToArray(s);
         int lastDigit = digits[digits.length-1];
         if(lastDigit!= calculateСontrolCategory(digits)){
-            errors.addError(Attributes.MFO, ErrorMessages.WRONG_MFO);
+            errors.addError(Attributes.MFO, MessageKeys.WRONG_MFO);
         }
         return errors;
     }

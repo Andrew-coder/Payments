@@ -20,7 +20,7 @@
         <div>
             <c:if test="${requestScope.errors!=null and requestScope.errors.hasErrors()}">
                 <c:forEach items="${requestScope.errors.getErrorsAttributes()}" var="value">
-                    <p1 class="has-error">${requestScope.errors.getErrors().get(value)}</p1><br>
+                    <p1 class="has-error"><fmt:message key="${requestScope.errors.getErrors().get(value)}" bundle="${msg}"/> </p1><br>
                 </c:forEach>
             </c:if>
         </div>

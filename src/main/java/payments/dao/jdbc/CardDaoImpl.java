@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import payments.dao.CardDao;
 import payments.dao.exception.DaoException;
 import payments.model.entity.Card;
+import payments.utils.constants.LoggerMessages;
 import payments.utils.extractors.impl.CardResultSetExtractor;
 
 import java.sql.*;
@@ -26,7 +27,6 @@ public class CardDaoImpl implements CardDao {
     private static final String FILTER_BY_ID = " where card_id = ?;";
     public static final String FILTER_BY_USER = " where user_id = ?;";
     public static final String FILTER_BY_CARD_NUMBER = " where card_number=?";
-    private static final String DELETE_CARD = "delete from Cards ";
     private static final String CREATE_CARD = "insert into `Payment`.`Cards` (`card_number`, " +
             "`pin`, `cvv`, `expire_date`, `cellphone`, `account_id`, `user_id`) VALUES (?, ?, ?, ?, ?, ?, ?);";
     private static final String UPDATE_CARD = "UPDATE `Payment`.`Cards` SET `card_number`=?, " +
@@ -56,7 +56,8 @@ public class CardDaoImpl implements CardDao {
             return result;
         }
         catch(SQLException ex){
-            throw new DaoException("dao exception occurred when retrieving card by id", ex);
+            logger.error(LoggerMessages.ERROR_FIND_CARD_BY_ID + id);
+            throw new DaoException(ex);
         }
     }
 
@@ -73,7 +74,8 @@ public class CardDaoImpl implements CardDao {
             return result;
         }
         catch(SQLException ex){
-            throw new DaoException("dao exception occurred when retrieving card by number", ex);
+            logger.error(LoggerMessages.ERROR_FIND_CARD_BY_NUMBER + number);
+            throw new DaoException(ex);
         }
     }
 
@@ -89,7 +91,8 @@ public class CardDaoImpl implements CardDao {
             return cards;
         }
         catch (SQLException ex){
-            throw new DaoException("dao exception occurred when retrieving card by user", ex);
+            logger.error(LoggerMessages.ERROR_FIND_CARDS_BY_USER + id);
+            throw new DaoException(ex);
         }
     }
 
@@ -104,7 +107,8 @@ public class CardDaoImpl implements CardDao {
             return cards;
         }
         catch(SQLException ex){
-            throw new DaoException("dao exception occurred when retrieving all cards", ex);
+            logger.error(LoggerMessages.ERROR_FIND_ALL_CARDS);
+            throw new DaoException(ex);
         }
     }
 
@@ -122,7 +126,8 @@ public class CardDaoImpl implements CardDao {
             statement.executeUpdate();
         }
         catch (SQLException ex){
-            throw new DaoException("Error occurred when creating new card!", ex);
+            logger.error(LoggerMessages.ERROR_CREATE_NEW_CARD + card.toString());
+            throw new DaoException(ex);
         }
     }
 
@@ -138,7 +143,8 @@ public class CardDaoImpl implements CardDao {
             statement.executeUpdate();
         }
         catch (SQLException ex){
-            throw new DaoException("Error occurred when updating card!", ex);
+            logger.error(LoggerMessages.ERROR_UPDATE_CARD + card.toString());
+            throw new DaoException(ex);
         }
     }
 
@@ -149,7 +155,8 @@ public class CardDaoImpl implements CardDao {
             statement.executeUpdate();
         }
         catch (SQLException ex){
-            throw new DaoException("Error occurred when blocking card!", ex);
+            logger.error(LoggerMessages.ERROR_BLOCK_CARD + id);
+            throw new DaoException(ex);
         }
     }
 
@@ -160,7 +167,8 @@ public class CardDaoImpl implements CardDao {
             statement.executeUpdate();
         }
         catch (SQLException ex){
-            throw new DaoException("Error occurred when unblocking card!", ex);
+            logger.error(LoggerMessages.ERROR_UNBLOCK_CARD + id);
+            throw new DaoException(ex);
         }
     }
 
@@ -175,7 +183,8 @@ public class CardDaoImpl implements CardDao {
             return cards;
         }
         catch(SQLException ex){
-            throw new DaoException("dao exception occurred when retrieving all blocked cards", ex);
+            logger.error(LoggerMessages.ERROR_FIND_ALL_BLOCK_CARDS);
+            throw new DaoException(ex);
         }
     }
 
