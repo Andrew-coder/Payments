@@ -36,7 +36,8 @@ public class LoginSubmitCommand extends CommandExecutor {
                 userService.updateUserCards(person.getId());
             }
             pageToGo = getResultPageByUserRole(person);
-            request.getSession().setAttribute(Attributes.USER, person);
+            request.getSession().setAttribute(Attributes.USER_ID, person.getId());
+            request.getSession().setAttribute(Attributes.USER_ROLE, person.getRole());
         }
         clearLoginDataFromRequest(request);
         return pageToGo;

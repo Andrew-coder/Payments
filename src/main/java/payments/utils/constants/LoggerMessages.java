@@ -54,4 +54,6 @@ public class LoggerMessages {
     public static final String UNKNOWN_ERROR_OCCURED = "Unknown error occurred";
     public static final String SERVICE_EXCEPTION_OCCURRED = "exception in business logic";
     public static final String APPLICATION_EXCEPTION_OCCURRED = "application exception occurred";
+
+    public static final String ERROR_USER_ALREADY_EXISTS = "User with such login already exists!";
 }

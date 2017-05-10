@@ -15,11 +15,10 @@
                     <li>
                         <jsp:include page="../localeSelector.jsp"/>
                     </li>
-                    <c:if test="${sessionScope.user==null}">
+                    <c:if test="${sessionScope.userId==null}">
                         <li><a href="/login"><fmt:message key="payments.login" bundle="${msg}"/></a></li>
                     </c:if>
-                    <c:if test="${sessionScope.user!=null}">
-                        <li>${user.name} ${' '} ${user.surname}</li>
+                    <c:if test="${sessionScope.userId!=null}">
                         <li><a href="/logout"><fmt:message key="payments.logout" bundle="${msg}"/></a></li>
                     </c:if>
                 </ul>

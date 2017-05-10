@@ -7,6 +7,7 @@ import payments.dao.UserDao;
 import payments.model.entity.user.User;
 import payments.service.UserService;
 import payments.service.exception.ServiceException;
+import payments.utils.constants.LoggerMessages;
 import payments.utils.constants.MessageKeys;
 
 import java.util.List;
@@ -21,6 +22,9 @@ public class UserServiceImpl implements UserService{
         this.daoFactory = daoFactory;
     }
 
+    public UserServiceImpl() {
+    }
+
     private static class InstanceHolder {
         private static final UserService instance = new UserServiceImpl(DaoFactory.getInstance());
     }
@@ -30,7 +34,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Optional<User> findById(int id) {
+    public Optional<User> findById(long id) {
         try(ConnectionWrapper wrapper = daoFactory.getConnection()){
             UserDao userDao = daoFactory.getUserDao(wrapper);
             return userDao.findById(id);
@@ -75,8 +79,12 @@ public class UserServiceImpl implements UserService{
 
     private void checkIsUserRegistered(String cellphone, UserDao userDao){
         if(userDao.findUserByCellphone(cellphone).isPresent()){
-            logger.error(MessageKeys.USER_ALREADY_EXISTS);
+            logger.error(LoggerMessages.ERROR_USER_ALREADY_EXISTS);
             throw new ServiceException(MessageKeys.USER_ALREADY_EXISTS);
         }
+    }
+
+    public void setDaoFactory(DaoFactory daoFactory) {
+        this.daoFactory = daoFactory;
     }
 }

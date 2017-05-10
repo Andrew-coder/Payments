@@ -19,6 +19,8 @@ public final class Attributes {
     public static final String USER_NAME = "userName";
     public static final String USER_SURNAME = "userSurname";
     public static final String USER_DATE = "userDate";
+    public static final String USER_ID = "userId";
+    public static final String USER_ROLE = "userRole";
 
     public static final String CONFIRM_MESSAGE = "confirmMessage";
 

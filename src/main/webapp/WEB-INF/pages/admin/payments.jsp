@@ -33,7 +33,7 @@
                 <td>${payment.sum.toString()}</td>
                 <td>${payment.date.toString()}</td>
                 <td>${payment.tariff.type.typeName}</td>
-                <td><a href="payments/${payment.id}"><button class="btn-primary"><fmt:message key="payments.view.payment" bundle="msg"/></button></a></td>
+                <td><a href="payments/${payment.id}"><button class="btn-primary"><fmt:message key="payments.view.payment" bundle="${msg}"/></button></a></td>
             </tr>
         </c:forEach>
     </table>

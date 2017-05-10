@@ -1,9 +1,7 @@
 package payments.controller.commands.user.payments;
 
-import payments.controller.commands.Command;
 import payments.controller.commands.CommandExecutor;
 import payments.model.entity.Card;
-import payments.model.entity.user.User;
 import payments.service.CardService;
 import payments.service.impl.CardServiceImpl;
 import payments.utils.constants.Attributes;
@@ -32,7 +30,6 @@ public class PaymentsCommand extends CommandExecutor {
     }
 
     private long extractUserIdFromSession(HttpSession session){
-        User user = (User)session.getAttribute(Attributes.USER);
-        return user.getId();
+        return (long)session.getAttribute(Attributes.USER_ID);
     }
 }

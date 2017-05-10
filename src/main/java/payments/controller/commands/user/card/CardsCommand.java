@@ -34,7 +34,6 @@ public class CardsCommand extends CommandExecutor {
     }
 
     private long extractUserIdFromSession(HttpSession session){
-        User user = (User)session.getAttribute(Attributes.USER);
-        return user.getId();
+        return (long)session.getAttribute(Attributes.USER_ID);
     }
 }

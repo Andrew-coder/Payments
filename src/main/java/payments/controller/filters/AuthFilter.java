@@ -31,8 +31,9 @@ public class AuthFilter implements Filter{
         HttpServletRequest req = ((HttpServletRequest) request);
         HttpSession session = req.getSession();
         String uri = req.getRequestURI();
-        User user = (User)session.getAttribute(Attributes.USER);
-        if(!checkUserPermissions(uri, user)){
+        Object userId = session.getAttribute(Attributes.USER_ID);
+        RoleType roleType = (RoleType)session.getAttribute(Attributes.USER_ROLE);
+        if(!checkUserPermissions(uri, userId, roleType)){
             req.getRequestDispatcher(PagesPath.LOGIN).forward(request, response);
             logger.info(String.format(USER_NOT_AUTHORIZED));
             return;
@@ -41,38 +42,35 @@ public class AuthFilter implements Filter{
         chain.doFilter(request, response);
     }
 
-    private boolean checkUserPermissions(String uri, User user){
-        RoleType roleType=null;
-        if(user!=null){
-            roleType = user.getRole();
+    private boolean checkUserPermissions(String uri, Object userId, RoleType roleType){
+        if(uri.endsWith(".css")||uri.endsWith(".js")||uri.endsWith(".png")) {
+            return true;
         }
         Authorizer authorizer = authorizeByRole.getOrDefault(roleType, new AnonymAuthorizer());
-        return authorizer.check(uri, user);
+        return authorizer.check(uri, userId);
     }
 
     private interface Authorizer {
-        boolean check(String uri, User user);
+        boolean check(String uri, Object userId);
     }
 
     private static class UserAuthorizer implements Authorizer {
-        public boolean check(String uri, User user) {
-            return user!=null && !uri.startsWith(PagesPath.ADMIN);
+        public boolean check(String uri, Object userId) {
+            return userId!=null && !uri.startsWith(PagesPath.ADMIN);
 
         }
     }
 
     private static class AdminAuthorizer implements Authorizer {
-        public boolean check(String uri, User user) {
-            return  user!=null && (uri.startsWith(PagesPath.ADMIN)||
+        public boolean check(String uri, Object userId) {
+            return  userId!=null && (uri.startsWith(PagesPath.ADMIN)||
                     uri.startsWith(PagesPath.LOGIN)||
                     uri.startsWith(PagesPath.REGISTER));
         }
     }
 
     private class AnonymAuthorizer implements Authorizer {
-        public boolean check(String uri, User user){
-            if(uri.endsWith(".css")||uri.endsWith(".js")||uri.endsWith(".png"))
-                return true;
+        public boolean check(String uri, Object userId){
             return  uri.startsWith(PagesPath.LOGIN)||
                     uri.startsWith(PagesPath.REGISTER);
         }
