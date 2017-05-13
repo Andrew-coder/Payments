@@ -2,7 +2,6 @@ package payments.controller.filters;
 
 import org.apache.log4j.Logger;
 import payments.model.entity.user.RoleType;
-import payments.model.entity.user.User;
 import payments.utils.constants.Attributes;
 import payments.utils.constants.PagesPath;
 
@@ -12,8 +11,6 @@ import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.Map;
 
 public class AuthFilter implements Filter{
     private static final Logger logger = Logger.getLogger(AuthFilter.class);

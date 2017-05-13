@@ -11,7 +11,7 @@ public class PaymentTariffResultSetExtractor implements ResultSetExtactor<Paymen
     @Override
     public PaymentTariff extract(ResultSet set) throws SQLException {
         PaymentTariff.Builder builder = new PaymentTariff.Builder()
-                .setId(set.getLong("id"))
+                .setId(set.getLong("type_id"))
                 .setPaymentRate(set.getDouble("payment_rate"))
                 .setFixedRate(set.getBigDecimal("fixed_rate"))
                 .setType(PaymentType.getType(set.getString("payment_name")));

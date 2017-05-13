@@ -21,7 +21,7 @@ public class UserDaoImpl implements UserDao {
     private static final String FILTER_BY_CELLPHONE = " where cellphone=?;";
     private static final String DELETE_USER = "delete from Users ";
     private static final String CREATE_USER = "insert into Users (`name`, `surname`, `cellphone`, `password`, `birthDate`, `role`) VALUES (?,?,?,?,?,?);";
-    private static final String UPDATE_USER = "update `Payment`.`Users` set `name`=?, `surname`=?, `cellphone`=?, `password`=?, `birthDate`=?, `role`=? ";
+    private static final String UPDATE_USER = "update Users set name=?, surname=?, cellphone=?, password=?, birthDate=?, role=? ";
     private static final String UPDATE_USER_CARDS = "insert into User_has_cards (user_id, card_id) " +
             "select u.user_id, Cards.card_id from Cards " +
             "join Users u using(cellphone) " +
@@ -95,8 +95,7 @@ public class UserDaoImpl implements UserDao {
             statement.setString(2, user.getSurname());
             statement.setString(3, user.getCellphone());
             statement.setString(4, user.getPassword());
-            statement.setDate(5, java.sql.Date.valueOf(user.getBirthDate().
-                    toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+            statement.setDate(5, new Date(user.getBirthDate().getTime()));
             statement.setString(6, user.getRole().getRoleName());
             statement.executeUpdate();
         }
@@ -114,8 +113,7 @@ public class UserDaoImpl implements UserDao {
             statement.setString(2, user.getSurname());
             statement.setString(3, user.getCellphone());
             statement.setString(4, user.getPassword());
-            statement.setDate(5, java.sql.Date.valueOf(user.getBirthDate().
-                    toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+            statement.setDate(5, new Date(user.getBirthDate().getTime()));
             statement.setString(6, user.getRole().getRoleName());
             statement.setLong(7, user.getId());
             statement.executeUpdate();

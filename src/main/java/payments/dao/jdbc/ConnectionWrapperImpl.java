@@ -10,6 +10,8 @@ import java.sql.SQLException;
 
 public class ConnectionWrapperImpl implements ConnectionWrapper{
     private static final Logger logger = Logger.getLogger(ConnectionWrapperImpl.class);
+    private static final int DEFAULT_TRANSACTION_ISOLATION_LEVEL = Connection.TRANSACTION_READ_COMMITTED;
+    private static final int SERIALIZABLE_TRANSACTION_ISOLATION_LEVEL = Connection.TRANSACTION_SERIALIZABLE;
     private Connection connection;
     private boolean inTransaction = false;
 
@@ -19,8 +21,17 @@ public class ConnectionWrapperImpl implements ConnectionWrapper{
 
     @Override
     public void beginTransaction() {
+        beginTransactionWithIsolationLevel(DEFAULT_TRANSACTION_ISOLATION_LEVEL);
+    }
+
+    @Override
+    public void beginSerializableTransaction() {
+        beginTransactionWithIsolationLevel(SERIALIZABLE_TRANSACTION_ISOLATION_LEVEL);
+    }
+
+    private void beginTransactionWithIsolationLevel(int isolationLevel){
         try{
-            connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+            connection.setTransactionIsolation(isolationLevel);
             connection.setAutoCommit(false);
             inTransaction=true;
         }catch (Exception ex) {

@@ -1,8 +1,8 @@
 package payments.controller.commands.user.card;
 
 import payments.controller.commands.CommandExecutor;
-import payments.service.CardService;
-import payments.service.impl.CardServiceImpl;
+import payments.service.PaymentService;
+import payments.service.impl.PaymentServiceImpl;
 import payments.utils.constants.Attributes;
 import payments.utils.constants.PagesPath;
 import payments.utils.extractors.RequestParamExtractor;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class BlockCardCommand extends CommandExecutor {
-    private CardService cardService = CardServiceImpl.getInstance();
+    private PaymentService paymentService = PaymentServiceImpl.getInstance();
     private RequestParamExtractor requestExtractor = new RequestParamExtractor();
 
     public BlockCardCommand() {
@@ -23,7 +23,7 @@ public class BlockCardCommand extends CommandExecutor {
     @Override
     public String performExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         long cardId = requestExtractor.extractLong(request, Attributes.CARD_ID);
-        cardService.blockCard(cardId);
+        paymentService.blockCard(cardId);
         return PagesPath.CARDS_MANAGE;
     }
 }

@@ -1,11 +1,9 @@
 package payments.controller.commands.user.card;
 
-import payments.controller.commands.Command;
 import payments.controller.commands.CommandExecutor;
 import payments.model.entity.Card;
-import payments.model.entity.user.User;
-import payments.service.CardService;
-import payments.service.impl.CardServiceImpl;
+import payments.service.PaymentService;
+import payments.service.impl.PaymentServiceImpl;
 import payments.utils.constants.Attributes;
 import payments.utils.constants.PagesPath;
 
@@ -17,7 +15,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class CardsCommand extends CommandExecutor {
-    private CardService cardService = CardServiceImpl.getInstance();
+    private PaymentService paymentService = PaymentServiceImpl.getInstance();
 
     public CardsCommand() {
         super(PagesPath.CARDS_PAGE);
@@ -28,7 +26,7 @@ public class CardsCommand extends CommandExecutor {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         long userId = extractUserIdFromSession(session);
-        List<Card> cards = cardService.findCardsByUser(userId);
+        List<Card> cards = paymentService.findCardsByUser(userId);
         request.setAttribute(Attributes.CARDS, cards);
         return PagesPath.CARDS_PAGE;
     }

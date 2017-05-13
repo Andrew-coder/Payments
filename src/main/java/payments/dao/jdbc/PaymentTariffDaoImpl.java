@@ -16,7 +16,7 @@ import java.util.Optional;
 
 public class PaymentTariffDaoImpl implements PaymentTariffDao{
     private static final Logger logger = Logger.getLogger(PaymentTariffDaoImpl.class);
-    private static final String GET_ALL_TARIFFS = "select id, payment_name, payment_rate, fixed_rate from PaymentsTypes";
+    private static final String GET_ALL_TARIFFS = "select type_id, payment_name, payment_rate, fixed_rate from PaymentsTypes";
     private static final String FILTER_BY_ID = " where id = ?;";
     private static final String FILTER_BY_PAYMENT_TYPE = " where payment_name = ?;";
     private static final String UPDATE_TARIFF = "update `Payment`.`PaymentsTypes` set `payment_rate`=?, `fixed_rate`=? ";

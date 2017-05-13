@@ -6,10 +6,10 @@ import payments.controller.validators.Errors;
 import payments.controller.validators.RefillValidator;
 import payments.model.dto.payment.RefillData;
 import payments.model.entity.payment.Payment;
-import payments.service.CardService;
 import payments.service.PaymentService;
-import payments.service.impl.CardServiceImpl;
+import payments.service.HistoryService;
 import payments.service.impl.PaymentServiceImpl;
+import payments.service.impl.HistoryServiceImpl;
 import payments.utils.constants.Attributes;
 import payments.utils.constants.MessageKeys;
 import payments.utils.constants.PagesPath;
@@ -23,8 +23,8 @@ import java.math.BigDecimal;
 
 public class RefillCardSubmitCommand extends CommandExecutor {
     private static final Logger logger = Logger.getLogger(RefillCardSubmitCommand.class);
-    private CardService cardService = CardServiceImpl.getInstance();
     private PaymentService paymentService = PaymentServiceImpl.getInstance();
+    private HistoryService historyService = HistoryServiceImpl.getInstance();
     private RefillValidator refillValidator;
     private RequestParamExtractor paramExtractor;
 
@@ -45,9 +45,9 @@ public class RefillCardSubmitCommand extends CommandExecutor {
             request.getRequestDispatcher(PagesPath.REFILL_CARD_PAGE).forward(request, response);
             return PagesPath.FORWARD;
         }
-        cardService.refillCard(refillData);
+        paymentService.refillCard(refillData);
         Payment payment = extractPaymentFromRefillData(refillData);
-        paymentService.saveRefillPayment(payment, refillData);
+        historyService.saveRefillPayment(payment, refillData);
         logger.info(String.format("Card %s was successfully refilled",refillData.getCardNumber()));
         clearRefillDataFromRequest(request);
         request.setAttribute(Attributes.CONFIRM_MESSAGE, MessageKeys.SUCCESSFUL_PAYMENT);

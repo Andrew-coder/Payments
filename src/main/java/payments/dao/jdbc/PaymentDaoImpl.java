@@ -15,15 +15,15 @@ import java.util.Date;
 public class PaymentDaoImpl implements PaymentDao {
     private static final Logger logger = Logger.getLogger(PaymentDaoImpl.class);
 
-    private static final String GET_ALL_PAYMENTS = "select p.payment_id, p.sum, p.payment_time, p.mfo, p.usreou, p.payment_purpose, " +
-            "sender.account_id as account_id, sender.account_number as account_number, sender.balance, " +
-            "recipient.account_id as recipient_id, recipient.account_number as recipient_number, " +
-            "pt.id, pt.payment_rate, pt.fixed_rate, pt.payment_name from " +
-            "Payments p  " +
-            "left join BankAccounts sender on sender.account_id = p.sender " +
-            "left join BankAccounts recipient on recipient.account_id=p.recipient " +
-            "join PaymentsTypes pt on pt.id=p.payment_type " +
-            "order by p.payment_id desc ";
+    private static final String GET_ALL_PAYMENTS = "select p.payment_id, p.sum, p.payment_time, p.mfo, p.usreou, p.payment_purpose," +
+            "            sender.account_id as account_id, sender.account_number as account_number, sender.balance, " +
+            "            recipient.account_id as recipient_id, recipient.account_number as recipient_number, " +
+            "            pt.type_id, pt.payment_rate, pt.fixed_rate, pt.payment_name from " +
+            "            Payments p  " +
+            "            left join BankAccounts sender on sender.account_id = p.sender " +
+            "            left join BankAccounts recipient on recipient.account_id=p.recipient " +
+            "            join PaymentsTypes pt on pt.type_id=p.payment_type " +
+            "            order by p.payment_id desc ";
     private static final String GET_TOTAL_COUNT = "select count(payment_id) as count from Payments;";
     private static final String FILTER_BY_ID = " where payment_id = ?;";
     private static final String CREATE_PAYMENT = "insert into `Payment`.`Payments` (`sender`, `recipient`, `sum`, `payment_time`, `payment_type`, `mfo`, `usreou`, `payment_purpose`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";

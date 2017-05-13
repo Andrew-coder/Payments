@@ -1,5 +1,6 @@
 package payments.service;
 
+import data.UsersData;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +10,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import payments.dao.ConnectionWrapper;
 import payments.dao.DaoFactory;
 import payments.dao.UserDao;
-import payments.model.entity.user.RoleType;
 import payments.model.entity.user.User;
 import payments.service.exception.ServiceException;
 import payments.service.impl.UserServiceImpl;
@@ -30,29 +30,13 @@ public class TestUserServiceImpl {
     @Mock
     private DaoFactory daoFactory;
     private UserService userService;
-    private static final String cellphone = "0950000000";
+    private static final String cellphone = "0958016294";
 
     @Before
     public void init(){
-        User existedUser = new User.Builder()
-                .setId(1)
-                .setBirthDate(new Date())
-                .setCellphone(cellphone)
-                .setName("Anna")
-                .setSurname("Smith")
-                .setPassword("anna")
-                .setRole(RoleType.USER)
-                .build();
+        User existedUser = UsersData.A.user;
 
-        User testUser = new User.Builder()
-                .setId(2)
-                .setBirthDate(new Date())
-                .setCellphone("0958016294")
-                .setName("John")
-                .setSurname("Doe")
-                .setPassword("john")
-                .setRole(RoleType.USER)
-                .build();
+        User testUser = UsersData.B.user;
         when(daoFactory.getConnection()).thenReturn(wrapper);
         when((daoFactory.getUserDao(wrapper))).thenReturn(userDao);
         userService = new UserServiceImpl();
@@ -74,14 +58,14 @@ public class TestUserServiceImpl {
 
     @Test(expected = ServiceException.class)
     public void testLoginWithWrongCredentials(){
-        String wrongPassword="anna1";
+        String wrongPassword="some wrong password";
         userService.login(cellphone, wrongPassword);
         verify(userDao, times(1)).findUserByCellphone(cellphone);
     }
 
     @Test
     public void testLoginWithCorrectCredentials(){
-        String password="anna";
+        String password="andriy";
         userService.login(cellphone, password);
         verify(userDao, times(1)).findUserByCellphone(cellphone);
     }

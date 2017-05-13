@@ -6,10 +6,10 @@ import payments.controller.validators.CardTransferValidator;
 import payments.controller.validators.Errors;
 import payments.model.dto.payment.CardTransferData;
 import payments.model.entity.payment.Payment;
-import payments.service.CardService;
 import payments.service.PaymentService;
-import payments.service.impl.CardServiceImpl;
+import payments.service.HistoryService;
 import payments.service.impl.PaymentServiceImpl;
+import payments.service.impl.HistoryServiceImpl;
 import payments.utils.constants.Attributes;
 import payments.utils.constants.LoggerMessages;
 import payments.utils.constants.MessageKeys;
@@ -24,8 +24,8 @@ import java.math.BigDecimal;
 
 public class CardPaymentsCommand extends CommandExecutor {
     private static final Logger logger = Logger.getLogger(CardPaymentsCommand.class);
-    private CardService cardService = CardServiceImpl.getInstance();
     private PaymentService paymentService = PaymentServiceImpl.getInstance();
+    private HistoryService historyService = HistoryServiceImpl.getInstance();
     private CardTransferValidator cardValidator;
     private RequestParamExtractor paramExtractor;
 
@@ -46,9 +46,9 @@ public class CardPaymentsCommand extends CommandExecutor {
             request.getRequestDispatcher(PagesPath.PAYMENTS_PAGE).forward(request, response);
             return PagesPath.FORWARD;
         }
-        cardService.transferBetweenCards(cardData);
+        paymentService.transferBetweenCards(cardData);
         Payment payment = extractPaymentFromCardTransferData(cardData);
-        paymentService.saveCardTransfer(payment, cardData);
+        historyService.saveCardTransfer(payment, cardData);
         logger.info(String.format(LoggerMessages.SUCCESSFULL_CARD_TRANSFER));
         clearCardTransferDataFromRequest(request);
         request.setAttribute(Attributes.CONFIRM_MESSAGE, MessageKeys.SUCCESSFUL_PAYMENT);

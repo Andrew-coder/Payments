@@ -6,10 +6,10 @@ import payments.controller.validators.AccountTransferValidator;
 import payments.controller.validators.Errors;
 import payments.model.dto.payment.AccountTransferData;
 import payments.model.entity.payment.Payment;
-import payments.service.CardService;
 import payments.service.PaymentService;
-import payments.service.impl.CardServiceImpl;
+import payments.service.HistoryService;
 import payments.service.impl.PaymentServiceImpl;
+import payments.service.impl.HistoryServiceImpl;
 import payments.utils.constants.Attributes;
 import payments.utils.constants.LoggerMessages;
 import payments.utils.constants.MessageKeys;
@@ -24,8 +24,8 @@ import java.math.BigDecimal;
 
 public class AccountPaymentsCommand extends CommandExecutor {
     private static final Logger logger = Logger.getLogger(AccountPaymentsCommand.class);
-    private CardService cardService = CardServiceImpl.getInstance();
     private PaymentService paymentService = PaymentServiceImpl.getInstance();
+    private HistoryService historyService = HistoryServiceImpl.getInstance();
     private AccountTransferValidator accountValidator;
     private RequestParamExtractor paramExtractor;
 
@@ -46,9 +46,9 @@ public class AccountPaymentsCommand extends CommandExecutor {
             request.getRequestDispatcher(PagesPath.PAYMENTS_PAGE).forward(request, response);
             return PagesPath.FORWARD;
         }
-        cardService.accountTransfer(transferData);
+        paymentService.accountTransfer(transferData);
         Payment payment = extractPaymentFromAccountTransferData(transferData);
-        paymentService.saveAccountTransfer(payment, transferData);
+        historyService.saveAccountTransfer(payment, transferData);
         logger.info(String.format(LoggerMessages.SUCCESSFULL_ACCOUNT_TRANSFER));
         clearAccountTransferDataFromRequest(request);
         request.setAttribute(Attributes.CONFIRM_MESSAGE, MessageKeys.SUCCESSFUL_PAYMENT);

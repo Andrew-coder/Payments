@@ -17,15 +17,15 @@ import java.util.Optional;
 public class CardDaoImpl implements CardDao {
     private static final Logger logger = Logger.getLogger(CardDaoImpl.class);
     private static final String GET_ALL_CARDS = "select c.card_id, c.card_number, c.pin, c.cvv, c.expire_date, c.cellphone," +
-            "user_id, name, surname, password, birthDate, role, " +
-            "account_id, account_number, balance from (" +
-            "Users join (" +
-            "User_has_cards join (" +
-            "Cards c join BankAccounts using(account_id)" +
-            ") using(card_id)" +
-            ") using(user_id)) ";
-    private static final String FILTER_BY_ID = " where card_id = ?;";
-    public static final String FILTER_BY_USER = " where user_id = ?;";
+            "            u.user_id, name, surname, password, birthDate, role, " +
+            "            ba.account_id, account_number, balance from (" +
+            "            Users u join (" +
+            "            User_has_cards uhc join (" +
+            "            Cards c join BankAccounts ba on c.account_id=ba.account_id" +
+            "            ) on uhc.card_id=c.card_id" +
+            "            ) on uhc.user_id = u.user_id) ";
+    private static final String FILTER_BY_ID = " where c.card_id = ?;";
+    public static final String FILTER_BY_USER = " where u.user_id = ?;";
     public static final String FILTER_BY_CARD_NUMBER = " where card_number=?";
     private static final String CREATE_CARD = "insert into `Payment`.`Cards` (`card_number`, " +
             "`pin`, `cvv`, `expire_date`, `cellphone`, `account_id`, `user_id`) VALUES (?, ?, ?, ?, ?, ?, ?);";
@@ -33,7 +33,7 @@ public class CardDaoImpl implements CardDao {
             "`pin`=?, `cvv`=?, `expire_date`=? WHERE `card_id`=?;";
     private static final String BLOCK_CARD = "INSERT INTO `Payment`.`BlockCards` (`card_id`) VALUES (?);";
     private static final String UNBLOCK_CARD = "delete from BlockCards where card_id=?";
-    public static final String GET_ALL_BLOCKED_CARDS = GET_ALL_CARDS + "join BlockCards using(card_id);";
+    public static final String GET_ALL_BLOCKED_CARDS = GET_ALL_CARDS + "join BlockCards bc on c.card_id=bc.card_id;";
 
     private Connection connection;
     private CardResultSetExtractor extractor;

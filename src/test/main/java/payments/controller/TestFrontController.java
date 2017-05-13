@@ -1,10 +1,11 @@
 package payments.controller;
 
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 import payments.controller.commands.Command;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import payments.controller.commands.PageNotFoundCommand;
 import payments.utils.constants.PagesPath;
 
@@ -19,6 +20,7 @@ import java.io.IOException;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class TestFrontController {
     @Mock
     private HttpServletRequest request;
@@ -37,7 +39,6 @@ public class TestFrontController {
 
     @Before
     public void init() {
-        MockitoAnnotations.initMocks(this);
         controller = new FrontController();
         controller.setCommandHolder(commandHolder);
     }
