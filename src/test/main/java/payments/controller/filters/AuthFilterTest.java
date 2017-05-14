@@ -16,7 +16,7 @@ import java.io.IOException;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TestAuthFilter {
+public class AuthFilterTest {
     @Mock
     HttpServletRequest request;
     @Mock

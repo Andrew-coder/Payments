@@ -2,6 +2,7 @@ package data;
 
 import payments.model.entity.user.RoleType;
 import payments.model.entity.user.User;
+import payments.utils.extractors.RequestParamExtractor;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -17,27 +18,16 @@ public enum UsersData {
     public User user;
 
     UsersData(long id, String name, String surname, String cellphone, String password, String date, RoleType type){
-        Date birthDate = extractDate(date);
+        RequestParamExtractor extractor = new RequestParamExtractor();
+        Date birthDate = extractor.extractDate(date);
         user = new User.Builder()
                     .setId(id)
                     .setName(name)
                     .setSurname(surname)
                     .setCellphone(cellphone)
                     .setPassword(password)
-                    .setBirthDate(birthDate)
+                    .setBirthDate(new java.sql.Date(birthDate.getTime()))
                     .setRole(type)
                     .build();
-    }
-
-    private Date extractDate(String date){
-        try{
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            Date convertedDate = dateFormat.parse(date);
-            java.sql.Date sqlDate = new java.sql.Date(convertedDate.getTime());
-
-            return sqlDate;
-        }
-        catch (ParseException ex){}
-        return null;
     }
 }

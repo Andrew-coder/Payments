@@ -67,7 +67,7 @@ public class RequestParamExtractor {
     }
 
     public Date extractDate(String date){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date convertedDate = null;
         try {
             convertedDate = sdf.parse(date);

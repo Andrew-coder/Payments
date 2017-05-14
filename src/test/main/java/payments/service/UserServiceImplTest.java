@@ -17,12 +17,11 @@ import payments.service.impl.UserServiceImpl;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TestUserServiceImpl {
+public class UserServiceImplTest {
     @Mock
     private UserDao userDao;
     @Mock

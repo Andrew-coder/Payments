@@ -21,7 +21,7 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TestFrontController {
+public class FrontControllerTest {
     @Mock
     private HttpServletRequest request;
     @Mock

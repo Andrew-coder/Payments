@@ -96,24 +96,23 @@ CREATE TABLE Payments (
   FOREIGN KEY (recipient) REFERENCES BankAccounts (account_id) ON DELETE NO ACTION ON UPDATE NO ACTION,
   FOREIGN KEY (payment_type) REFERENCES PaymentsTypes (type_id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table Payments
 --
 
-INSERT INTO Payments VALUES (18,2,1,1000.00,'2017-05-07 14:27:02',2,NULL,NULL,'purpose');
-INSERT INTO Payments VALUES (19,2,1,1500.00,'2017-05-07 15:38:25',2,NULL,NULL,'purpose');
-INSERT INTO Payments VALUES (20,2,1,2000.00,'2017-05-07 15:42:10',2,NULL,NULL,'purpose');
-INSERT INTO Payments VALUES (21,NULL,2,300.00,'2017-05-07 15:56:11',1,NULL,NULL,NULL);
-INSERT INTO Payments VALUES (22,NULL,2,2301.00,'2017-05-07 16:00:16',1,NULL,NULL,NULL);
-INSERT INTO Payments VALUES (23,NULL,1,430.00,'2017-05-07 16:23:54',1,NULL,NULL,NULL);
-INSERT INTO Payments VALUES (24,NULL,2,1000.00,'2017-05-07 16:25:20',1,NULL,NULL,NULL);
-INSERT INTO Payments VALUES (25,1,2,3000.00,'2017-05-07 16:28:12',2,820172,02070921,'payment for hostel');
-INSERT INTO Payments VALUES (26,1,2,720.00,'2017-05-07 16:28:56',2,NULL,NULL,'purpose');
-INSERT INTO Payments VALUES (27,2,1,1000.00,'2017-05-07 16:30:34',2,NULL,NULL,'purpose');
-INSERT INTO Payments VALUES (28,2,1,810.00,'2017-05-07 16:31:18',2,820172,02070921,'simple transfer');
-INSERT INTO Payments VALUES (29,3,2,300.00,'2017-05-09 15:18:44',2,NULL,NULL,'purpose');
+INSERT INTO Payments (payment_id, sender, recipient, sum, payment_time, payment_type, mfo, usreou, payment_purpose) VALUES (1,2,1,1000.00,'2017-05-07 14:27:02',2,NULL,NULL,'purpose');
+INSERT INTO Payments (payment_id, sender, recipient, sum, payment_time, payment_type, mfo, usreou, payment_purpose) VALUES (2,2,1,1500.00,'2017-05-07 15:38:25',2,NULL,NULL,'purpose');
+INSERT INTO Payments (payment_id, sender, recipient, sum, payment_time, payment_type, mfo, usreou, payment_purpose) VALUES (3,2,1,2000.00,'2017-05-07 15:42:10',2,NULL,NULL,'purpose');
+INSERT INTO Payments (payment_id, sender, recipient, sum, payment_time, payment_type, mfo, usreou, payment_purpose) VALUES (4,NULL,2,300.00,'2017-05-07 15:56:11',1,NULL,NULL,NULL);
+INSERT INTO Payments (payment_id, sender, recipient, sum, payment_time, payment_type, mfo, usreou, payment_purpose) VALUES (5,NULL,2,2301.00,'2017-05-07 16:00:16',1,NULL,NULL,NULL);
+INSERT INTO Payments (payment_id, sender, recipient, sum, payment_time, payment_type, mfo, usreou, payment_purpose) VALUES (6,NULL,1,430.00,'2017-05-07 16:23:54',1,NULL,NULL,NULL);
+INSERT INTO Payments (payment_id, sender, recipient, sum, payment_time, payment_type, mfo, usreou, payment_purpose) VALUES (7,NULL,2,1000.00,'2017-05-07 16:25:20',1,NULL,NULL,NULL);
+INSERT INTO Payments (payment_id, sender, recipient, sum, payment_time, payment_type, mfo, usreou, payment_purpose) VALUES (8,1,2,3000.00,'2017-05-07 16:28:12',2,'820172','02070921','payment for hostel');
+INSERT INTO Payments (payment_id, sender, recipient, sum, payment_time, payment_type, mfo, usreou, payment_purpose) VALUES (9,1,2,720.00,'2017-05-07 16:28:56',2,NULL,NULL,'purpose');
+INSERT INTO Payments (payment_id, sender, recipient, sum, payment_time, payment_type, mfo, usreou, payment_purpose) VALUES (10,2,1,1000.00,'2017-05-07 16:30:34',2,NULL,NULL,'purpose');
+INSERT INTO Payments (payment_id, sender, recipient, sum, payment_time, payment_type, mfo, usreou, payment_purpose) VALUES (11,2,1,810.00,'2017-05-07 16:31:18',2,'820172','02070921','simple transfer');
+INSERT INTO Payments (payment_id, sender, recipient, sum, payment_time, payment_type, mfo, usreou, payment_purpose) VALUES (12,3,2,300.00,'2017-05-09 15:18:44',2,NULL,NULL,'purpose');
 
 drop table if exists Payment.User_has_cards;
 CREATE TABLE User_has_cards (
@@ -126,6 +125,6 @@ CREATE TABLE User_has_cards (
 );
 
 
-INSERT INTO User_has_cards VALUES (11,4,3);
-INSERT INTO User_has_cards VALUES (12,3,2);
-INSERT INTO User_has_cards VALUES (13,2,1);
+INSERT INTO User_has_cards VALUES (1,4,3);
+INSERT INTO User_has_cards VALUES (2,3,2);
+INSERT INTO User_has_cards VALUES (3,2,1);

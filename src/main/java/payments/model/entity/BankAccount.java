@@ -22,6 +22,24 @@ public class BankAccount extends BaseEntity {
         this.balance = balance;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BankAccount)) return false;
+        if (!super.equals(o)) return false;
+
+        BankAccount that = (BankAccount) o;
+
+        return accountNumber != null ? accountNumber.equals(that.accountNumber) : that.accountNumber == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (accountNumber != null ? accountNumber.hashCode() : 0);
+        return result;
+    }
+
     public static class Builder{
         BankAccount instance = new BankAccount();
 

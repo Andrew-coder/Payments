@@ -80,6 +80,36 @@ public class Payment extends BaseEntity {
         this.paymentPurpose = paymentPurpose;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Payment payment = (Payment) o;
+
+        if (sender != null ? !sender.equals(payment.sender) : payment.sender != null) return false;
+        if (recipient != null ? !recipient.equals(payment.recipient) : payment.recipient != null) return false;
+        if (date != null ? !date.equals(payment.date) : payment.date != null) return false;
+        if (mfo != null ? !mfo.equals(payment.mfo) : payment.mfo != null) return false;
+        if (usreou != null ? !usreou.equals(payment.usreou) : payment.usreou != null) return false;
+        if (tariff != null ? !tariff.equals(payment.tariff) : payment.tariff != null) return false;
+        return paymentPurpose != null ? paymentPurpose.equals(payment.paymentPurpose) : payment.paymentPurpose == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (sender != null ? sender.hashCode() : 0);
+        result = 31 * result + (recipient != null ? recipient.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (mfo != null ? mfo.hashCode() : 0);
+        result = 31 * result + (usreou != null ? usreou.hashCode() : 0);
+        result = 31 * result + (tariff != null ? tariff.hashCode() : 0);
+        result = 31 * result + (paymentPurpose != null ? paymentPurpose.hashCode() : 0);
+        return result;
+    }
+
     public static class Builder{
         Payment instance = new Payment();
 

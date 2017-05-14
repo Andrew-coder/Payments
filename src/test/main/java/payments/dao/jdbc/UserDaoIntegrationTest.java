@@ -38,11 +38,6 @@ public class UserDaoIntegrationTest {
         wrapper.close();
     }
 
-    @BeforeClass
-    public static void initTestDB() throws Exception{
-        new TestDatabaseInitializer().initTestJdbcDB();
-    }
-
     @Test
     public void testFindAll(){
         List<User> users = userDao.findAll();
@@ -84,8 +79,8 @@ public class UserDaoIntegrationTest {
         updatedUser.setPassword("password");
         userDao.update(updatedUser);
         long id = updatedUser.getId();
-        User expectedUser = userDao.findById(id).get();
-        assertEquals(updatedUser, expectedUser);
+        User foundUser = userDao.findById(id).get();
+        assertEquals(updatedUser, foundUser);
     }
 
     @Test

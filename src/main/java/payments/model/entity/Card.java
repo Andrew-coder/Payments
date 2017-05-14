@@ -60,6 +60,30 @@ public class Card extends BaseEntity {
         this.cvv = cvv;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Card card = (Card) o;
+
+        if (cardNumber != null ? !cardNumber.equals(card.cardNumber) : card.cardNumber != null) return false;
+        if (expireDate != null ? !expireDate.equals(card.expireDate) : card.expireDate != null) return false;
+        if (pin != null ? !pin.equals(card.pin) : card.pin != null) return false;
+        return cvv != null ? cvv.equals(card.cvv) : card.cvv == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (cardNumber != null ? cardNumber.hashCode() : 0);
+        result = 31 * result + (expireDate != null ? expireDate.hashCode() : 0);
+        result = 31 * result + (pin != null ? pin.hashCode() : 0);
+        result = 31 * result + (cvv != null ? cvv.hashCode() : 0);
+        return result;
+    }
+
     public static class Builder{
         Card instance = new Card();
 

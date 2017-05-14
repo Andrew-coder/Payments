@@ -29,9 +29,8 @@ public class CardDaoImpl implements CardDao {
     public static final String FILTER_BY_CARD_NUMBER = " where card_number=?";
     private static final String CREATE_CARD = "insert into `Payment`.`Cards` (`card_number`, " +
             "`pin`, `cvv`, `expire_date`, `cellphone`, `account_id`, `user_id`) VALUES (?, ?, ?, ?, ?, ?, ?);";
-    private static final String UPDATE_CARD = "UPDATE `Payment`.`Cards` SET `card_number`=?, " +
-            "`pin`=?, `cvv`=?, `expire_date`=? WHERE `card_id`=?;";
-    private static final String BLOCK_CARD = "INSERT INTO `Payment`.`BlockCards` (`card_id`) VALUES (?);";
+    private static final String UPDATE_CARD = "UPDATE Cards SET pin=?, cvv=? WHERE card_id=?;";
+    private static final String BLOCK_CARD = "INSERT INTO BlockCards (card_id) VALUES (?);";
     private static final String UNBLOCK_CARD = "delete from BlockCards where card_id=?";
     public static final String GET_ALL_BLOCKED_CARDS = GET_ALL_CARDS + "join BlockCards bc on c.card_id=bc.card_id;";
 
@@ -114,32 +113,16 @@ public class CardDaoImpl implements CardDao {
 
     @Override
     public void create(Card card) {
-        Objects.requireNonNull(card, "Error! Wrong card object...");
-        try(PreparedStatement statement = connection.prepareStatement(CREATE_CARD)){
-            statement.setString(1, card.getCardNumber());
-            statement.setString(2, card.getPin());
-            statement.setString(3, card.getCvv());
-            statement.setDate(4, java.sql.Date.valueOf(card.getExpireDate().
-                    toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
-            statement.setLong(5, card.getAccount().getId());
-            statement.setLong(6, card.getUser().getId());
-            statement.executeUpdate();
-        }
-        catch (SQLException ex){
-            logger.error(LoggerMessages.ERROR_CREATE_NEW_CARD + card.toString());
-            throw new DaoException(ex);
-        }
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void update(Card card) {
         Objects.requireNonNull(card, "Error! Wrong card object...");
-        try(PreparedStatement statement = connection.prepareStatement(UPDATE_CARD + FILTER_BY_ID)){
-            statement.setString(1, card.getCardNumber());
-            statement.setString(2, card.getPin());
-            statement.setString(3, card.getCvv());
-            statement.setDate(4, java.sql.Date.valueOf(card.getExpireDate().
-                    toInstant().atZone(ZoneId.systemDefault()).toLocalDate()));
+        try(PreparedStatement statement = connection.prepareStatement(UPDATE_CARD)){
+            statement.setString(1, card.getPin());
+            statement.setString(2, card.getCvv());
+            statement.setLong(3, card.getId());
             statement.executeUpdate();
         }
         catch (SQLException ex){

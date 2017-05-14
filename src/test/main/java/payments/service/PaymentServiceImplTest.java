@@ -27,7 +27,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TestPaymentServiceImpl {
+public class PaymentServiceImplTest {
     @Mock
     private ConnectionWrapper wrapper;
     @Mock

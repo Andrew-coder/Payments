@@ -12,7 +12,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TestConnectionWrapper {
+public class ConnectionWrapperTest {
     @Mock
     private Connection connection;
 

@@ -22,8 +22,8 @@ public class PaymentDaoImpl implements PaymentDao {
             "            Payments p  " +
             "            left join BankAccounts sender on sender.account_id = p.sender " +
             "            left join BankAccounts recipient on recipient.account_id=p.recipient " +
-            "            join PaymentsTypes pt on pt.type_id=p.payment_type " +
-            "            order by p.payment_id desc ";
+            "            join PaymentsTypes pt on pt.type_id=p.payment_type ";
+    private static final String ORDER_BY_ID = "order by p.payment_id desc ";
     private static final String GET_TOTAL_COUNT = "select count(payment_id) as count from Payments;";
     private static final String FILTER_BY_ID = " where payment_id = ?;";
     private static final String CREATE_PAYMENT = "insert into `Payment`.`Payments` (`sender`, `recipient`, `sum`, `payment_time`, `payment_type`, `mfo`, `usreou`, `payment_purpose`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
@@ -57,7 +57,7 @@ public class PaymentDaoImpl implements PaymentDao {
     @Override
     public List<Payment> findAll() {
         try(Statement statement = connection.createStatement();
-            ResultSet set = statement.executeQuery(GET_ALL_PAYMENTS)){
+            ResultSet set = statement.executeQuery(GET_ALL_PAYMENTS + ORDER_BY_ID)){
             List<Payment> payments = new ArrayList<>();
             while(set.next()){
                 payments.add(extractor.extract(set));
@@ -72,7 +72,7 @@ public class PaymentDaoImpl implements PaymentDao {
 
     @Override
     public List<Payment> findAll(int startFrom, int quantity) {
-        try(PreparedStatement statement = connection.prepareStatement(GET_ALL_PAYMENTS + LIMIT)){
+        try(PreparedStatement statement = connection.prepareStatement(GET_ALL_PAYMENTS +ORDER_BY_ID+ LIMIT)){
             statement.setInt(1, startFrom);
             statement.setInt(2, quantity);
             ResultSet set = statement.executeQuery();

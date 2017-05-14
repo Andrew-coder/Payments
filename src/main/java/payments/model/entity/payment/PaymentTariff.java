@@ -33,6 +33,28 @@ public class PaymentTariff extends BaseEntity {
         this.fixedRate = fixedRate;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        PaymentTariff tariff = (PaymentTariff) o;
+
+        if (Double.compare(tariff.paymentRate, paymentRate) != 0) return false;
+        return type == tariff.type;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        long temp;
+        result = 31 * result + (type != null ? type.hashCode() : 0);
+        temp = Double.doubleToLongBits(paymentRate);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
+
     public static class Builder{
         PaymentTariff instance = new PaymentTariff();
 

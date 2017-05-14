@@ -26,7 +26,7 @@ import java.util.Date;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TestRegisterSubmitCommand {
+public class RegisterSubmitCommandTest {
     @Mock
     private HttpServletRequest request;
     @Mock

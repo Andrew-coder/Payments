@@ -23,7 +23,7 @@ public class PaymentResultSetExtractor implements ResultSetExtactor<Payment> {
                 .setUsreou(set.getString("usreou"));
         BankAccount bankAccount = new BankAccount.Builder()
                 .setId(set.getLong("recipient_id"))
-                .setAccountNumber("recipient_number")
+                .setAccountNumber(set.getString("recipient_number"))
                 .build();
         builder.setRecipient(bankAccount);
         return builder.build();
