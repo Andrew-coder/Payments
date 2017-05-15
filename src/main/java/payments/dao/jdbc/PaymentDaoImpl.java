@@ -6,6 +6,7 @@ import payments.dao.exception.DaoException;
 import payments.model.entity.BankAccount;
 import payments.model.entity.payment.Payment;
 import payments.utils.constants.LoggerMessages;
+import payments.utils.constants.MessageKeys;
 import payments.utils.extractors.impl.PaymentResultSetExtractor;
 
 import java.sql.*;
@@ -50,7 +51,7 @@ public class PaymentDaoImpl implements PaymentDao {
         }
         catch(SQLException ex){
             logger.error(LoggerMessages.ERROR_FIND_PAYMENT_BY_ID + id);
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -66,7 +67,7 @@ public class PaymentDaoImpl implements PaymentDao {
         }
         catch(SQLException ex){
             logger.error(LoggerMessages.ERROR_FIND_ALL_PAYMENTS);
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -84,7 +85,7 @@ public class PaymentDaoImpl implements PaymentDao {
         }
         catch(SQLException ex){
             logger.error(LoggerMessages.ERROR_FIND_ALL_PAYMENTS_BY_OFFSET + startFrom + quantity);
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -97,7 +98,7 @@ public class PaymentDaoImpl implements PaymentDao {
         }
         catch (SQLException ex){
             logger.error(LoggerMessages.ERROR_RETRIEVE_PAYMENTS_COUNT);
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -117,7 +118,7 @@ public class PaymentDaoImpl implements PaymentDao {
         }
         catch (SQLException ex){
             logger.error(LoggerMessages.ERROR_CREATE_NEW_PAYMENT);
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 

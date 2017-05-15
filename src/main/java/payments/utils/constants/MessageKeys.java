@@ -38,4 +38,5 @@ public final class MessageKeys {
 
     public static final String SUCCESSFUL_REGISTER = "payments.message.successful.register";
     public static final String SUCCESSFUL_PAYMENT = "payments.message.successful.payment";
+    public static final String ERROR_WITD_DB = "message.error.database";
 }

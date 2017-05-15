@@ -7,6 +7,10 @@ public class DaoException extends ApplicationException{
         super(messageKey);
     }
 
+    public DaoException(String message, String messageKey) {
+        super(message, messageKey);
+    }
+
     public DaoException(Throwable cause) {
         super(cause);
     }

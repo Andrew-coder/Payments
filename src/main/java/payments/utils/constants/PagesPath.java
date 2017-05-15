@@ -11,6 +11,7 @@ public final class PagesPath {
     public static final String LOGIN = "/login";
     public static final String REGISTER = "/register";
     public static final String CARDS_MANAGE = "/cards";
+    public static final String PAYMENTS_ADMINISTRATION = "/admin/payments";
 
     public static final String HOME_PAGE = VIEW_JSP_CLASSPATH + "user/index.jsp";
     public static final String ADMIN_HOME_PAGE = VIEW_JSP_CLASSPATH + "admin/dashboard.jsp";
@@ -24,4 +25,5 @@ public final class PagesPath {
 
     public static final String CARDS_ADMINISTRATION_PAGE = VIEW_JSP_CLASSPATH + "admin/cards.jsp";
     public static final String PAYMENTS_ADMINISTRATION_PAGE = VIEW_JSP_CLASSPATH + "admin/payments.jsp";
+    public static final String PAYMENT_DETAILS_PAGE = VIEW_JSP_CLASSPATH + "admin/paymentDetails.jsp";
 }

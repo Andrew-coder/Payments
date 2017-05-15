@@ -5,6 +5,7 @@ import payments.dao.CardDao;
 import payments.dao.exception.DaoException;
 import payments.model.entity.Card;
 import payments.utils.constants.LoggerMessages;
+import payments.utils.constants.MessageKeys;
 import payments.utils.extractors.impl.CardResultSetExtractor;
 
 import java.sql.*;
@@ -56,7 +57,7 @@ public class CardDaoImpl implements CardDao {
         }
         catch(SQLException ex){
             logger.error(LoggerMessages.ERROR_FIND_CARD_BY_ID + id);
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -74,7 +75,7 @@ public class CardDaoImpl implements CardDao {
         }
         catch(SQLException ex){
             logger.error(LoggerMessages.ERROR_FIND_CARD_BY_NUMBER + number);
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -91,7 +92,7 @@ public class CardDaoImpl implements CardDao {
         }
         catch (SQLException ex){
             logger.error(LoggerMessages.ERROR_FIND_CARDS_BY_USER + id);
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -107,7 +108,7 @@ public class CardDaoImpl implements CardDao {
         }
         catch(SQLException ex){
             logger.error(LoggerMessages.ERROR_FIND_ALL_CARDS);
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -127,7 +128,7 @@ public class CardDaoImpl implements CardDao {
         }
         catch (SQLException ex){
             logger.error(LoggerMessages.ERROR_UPDATE_CARD + card.toString());
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -139,7 +140,7 @@ public class CardDaoImpl implements CardDao {
         }
         catch (SQLException ex){
             logger.error(LoggerMessages.ERROR_BLOCK_CARD + id);
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -151,7 +152,7 @@ public class CardDaoImpl implements CardDao {
         }
         catch (SQLException ex){
             logger.error(LoggerMessages.ERROR_UNBLOCK_CARD + id);
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -167,7 +168,7 @@ public class CardDaoImpl implements CardDao {
         }
         catch(SQLException ex){
             logger.error(LoggerMessages.ERROR_FIND_ALL_BLOCK_CARDS);
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 

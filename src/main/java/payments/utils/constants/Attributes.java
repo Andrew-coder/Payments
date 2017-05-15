@@ -13,6 +13,7 @@ public final class Attributes {
     public static final String SENDER_CARD = "senderCard";
     public static final String RECIPIENT_CARD = "recipientCard";
     public static final String PAYMENTS = "payments";
+    public static final String PAYMENT = "payment";
 
     public static final String USER_CELLPHONE = "userCellphone";
     public static final String USER_PASSWORD = "userPassword";

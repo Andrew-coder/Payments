@@ -4,6 +4,7 @@ import payments.controller.commands.*;
 import payments.controller.commands.admin.AdminUnblockCardCommand;
 import payments.controller.commands.admin.CardsAdministrationCommand;
 import payments.controller.commands.admin.PaymentsAdministrationCommand;
+import payments.controller.commands.admin.ViewPaymentAdminCommand;
 import payments.controller.commands.login.LoginCommand;
 import payments.controller.commands.login.LoginSubmitCommand;
 import payments.controller.commands.user.*;
@@ -47,6 +48,7 @@ public class CommandHolder {
         commands.put("GET:/admin", new AdminHomeCommand());
         commands.put("GET:/admin/cards", new CardsAdministrationCommand());
         commands.put("GET:/admin/payments", new PaymentsAdministrationCommand());
+        commands.put("GET:/admin/payments/id", new ViewPaymentAdminCommand());
         commands.put("POST:/admin/cards/unblock", new AdminUnblockCardCommand());
     }
 

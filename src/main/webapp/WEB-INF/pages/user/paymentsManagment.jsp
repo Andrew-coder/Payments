@@ -29,12 +29,12 @@
                         <div class="dropdown choose-country">
                             <c:forEach items="${SUPPORTED_LOCALES}" var="value">
                                 <c:if test="${value eq sessionScope['locale']}">
-                                    <a class="#" data-toggle="dropdown" href="#"><img src="images/${value.language}.png" alt="${value.language}">  ${value.language}</a>
+                                    <a class="#" data-toggle="dropdown" href="#"><img src="/images/${value.language}.png" alt="${value.language}">  ${value.language}</a>
                                 </c:if>
                             </c:forEach>
                             <ul class="dropdown-menu" role="menu">
                                 <c:forEach items="${SUPPORTED_LOCALES}" var="value">
-                                    <li role="menuitem"><a href="payments?lang=${value.language}"><img src="images/${value.language}.png" alt="${value.language}"> ${value.language}</a></li>
+                                    <li role="menuitem"><a href="payments?lang=${value.language}"><img src="/images/${value.language}.png" alt="${value.language}"> ${value.language}</a></li>
                                 </c:forEach>
                             </ul>
                         </div>
@@ -144,14 +144,14 @@
                                         <select name="cards" class="form-control">
                                             <c:if test="${cards==null || cards.isEmpty()}">
                                                 <c:if test="${requestScope.errors!=null and requestScope.errors.hasErrors()}">
-                                                    <option value="${"**** **** **** "}${requestScope.previousCardNumber.substring(12,16)}">${"**** **** **** "}${requestScope.previousCardNumber.substring(12,16)}</option>
+                                                    <option value="${requestScope.previousCardNumber}">${requestScope.previousCardNumber}</option>
                                                 </c:if>
                                                 <c:if test="${requestScope.errors==null}">
                                                     <option><fmt:message key="payments.no.cards" bundle="${msg}"/></option>
                                                 </c:if>
                                             </c:if>
                                             <c:forEach items="${cards}" var="card">
-                                                <option value="${"**** **** **** "}${card.cardNumber.substring(12,16)}">${"**** **** **** "}${card.cardNumber.substring(12,16)}</option>
+                                                <option value="${card.cardNumber}">${card.cardNumber}</option>
                                             </c:forEach>
                                         </select>
                                     </div>

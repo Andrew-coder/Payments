@@ -18,26 +18,44 @@
 </head>
 <body>
     <jsp:include page="header.jsp"></jsp:include>
-
     <table class="table borderless">
         <tr>
             <td><fmt:message key="payments.payment.id" bundle="${msg}"/></td>
-            <td><fmt:message key="payments.payment.sum" bundle="${msg}"/></td>
-            <td><fmt:message key="payments.payment.time" bundle="${msg}"/></td>
-            <td><fmt:message key="payments.payment.type" bundle="${msg}"/></td>
-            <td><fmt:message key="payments.payment.details" bundle="${msg}"/></td>
+            <td>${payment.id}</td>
         </tr>
-        <c:forEach items="${payments}" var="payment">
-            <tr>
-                <td>${payment.id}</td>
-                <td>${payment.sum.toString()}</td>
-                <td>${payment.date.toString()}</td>
-                <td>${payment.tariff.type.typeName}</td>
-                <td><a href="payments/${payment.id}"><button class="btn-primary"><fmt:message key="payments.view.payment" bundle="${msg}"/></button></a></td>
-            </tr>
-        </c:forEach>
+        <tr>
+            <td><fmt:message key="payments.payment.sender" bundle="${msg}"/></td>
+            <td>${payment.sender.accountNumber}</td>
+        </tr>
+        <tr>
+            <td><fmt:message key="payments.payment.recipient" bundle="${msg}"/></td>
+            <td>${payment.recipient.accountNumber}</td>
+        </tr>
+        <tr>
+            <td><fmt:message key="payments.payment.sum" bundle="${msg}"/></td>
+            <td>${payment.sum.toString()}</td>
+        </tr>
+        <tr>
+            <td><fmt:message key="payments.payment.time" bundle="${msg}"/></td>
+            <td>${payment.date.toString()}</td>
+        </tr>
+        <tr>
+            <td><fmt:message key="payments.placeholder.mfo" bundle="${msg}"/></td>
+            <td>${payment.mfo}</td>
+        </tr>
+        <tr>
+            <td><fmt:message key="payments.placeholder.usreou" bundle="${msg}"/></td>
+            <td>${payment.usreou}</td>
+        </tr>
+        <tr>
+            <td><fmt:message key="payments.payment.type" bundle="${msg}"/></td>
+            <td>${payment.tariff.type.typeName}</td>
+        </tr>
+        <tr>
+            <td><fmt:message key="payments.payment.purpose" bundle="${msg}"/></td>
+            <td>${payment.paymentPurpose}</td>
+        </tr>
     </table>
-    <m:display paginParamName="page" totalPages="${pages}"/>
     <jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>

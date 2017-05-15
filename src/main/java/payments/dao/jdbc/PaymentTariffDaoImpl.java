@@ -6,6 +6,7 @@ import payments.dao.exception.DaoException;
 import payments.model.entity.payment.PaymentTariff;
 import payments.model.entity.payment.PaymentType;
 import payments.utils.constants.LoggerMessages;
+import payments.utils.constants.MessageKeys;
 import payments.utils.extractors.impl.PaymentTariffResultSetExtractor;
 
 import java.sql.*;
@@ -42,7 +43,7 @@ public class PaymentTariffDaoImpl implements PaymentTariffDao{
         }
         catch(SQLException ex){
             logger.error(LoggerMessages.ERROR_FIND_TARIFF_BY_ID + id);
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -60,7 +61,7 @@ public class PaymentTariffDaoImpl implements PaymentTariffDao{
         }
         catch (SQLException ex){
             logger.error(LoggerMessages.ERROR_FIND_TARIFF_BY_TYPE + type.name());
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -76,7 +77,7 @@ public class PaymentTariffDaoImpl implements PaymentTariffDao{
         }
         catch(SQLException ex){
             logger.error(LoggerMessages.ERROR_FIND_ALL_TARIFFS);
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -95,7 +96,7 @@ public class PaymentTariffDaoImpl implements PaymentTariffDao{
         }
         catch (SQLException ex){
             logger.error(LoggerMessages.ERROR_UPDATE_TARIFF + tariff.toString());
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 

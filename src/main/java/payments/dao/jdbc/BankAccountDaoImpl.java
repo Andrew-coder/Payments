@@ -5,6 +5,7 @@ import payments.dao.BankAccountDao;
 import payments.dao.exception.DaoException;
 import payments.model.entity.BankAccount;
 import payments.utils.constants.LoggerMessages;
+import payments.utils.constants.MessageKeys;
 import payments.utils.extractors.impl.BankAccountResultSetExtractor;
 
 import java.sql.*;
@@ -44,7 +45,7 @@ public class BankAccountDaoImpl implements BankAccountDao{
         }
         catch(SQLException ex){
             logger.error(LoggerMessages.ERROR_FIND_ACCOUNT_BY_ID + id);
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -62,7 +63,7 @@ public class BankAccountDaoImpl implements BankAccountDao{
         }
         catch(SQLException ex){
             logger.error(LoggerMessages.ERROR_FIND_ACCOUNT_BY_NUMBER + number);
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -80,7 +81,7 @@ public class BankAccountDaoImpl implements BankAccountDao{
         }
         catch(SQLException ex){
             logger.error(LoggerMessages.ERROR_FIND_ACCOUNT_BY_CARD + id);
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -96,7 +97,7 @@ public class BankAccountDaoImpl implements BankAccountDao{
         }
         catch(SQLException ex){
             logger.error(LoggerMessages.ERROR_FIND_ALL_ACCOUNT);
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -110,7 +111,7 @@ public class BankAccountDaoImpl implements BankAccountDao{
         }
         catch (SQLException ex){
             logger.error(LoggerMessages.ERROR_CREATE_ACCOUNT + bankAccount.toString());
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -125,7 +126,7 @@ public class BankAccountDaoImpl implements BankAccountDao{
         }
         catch (SQLException ex){
             logger.error(LoggerMessages.ERROR_UPDATE_ACCOUNT + bankAccount.toString());
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 

@@ -5,6 +5,7 @@ import payments.dao.exception.DaoException;
 import payments.dao.UserDao;
 import payments.model.entity.user.User;
 import payments.utils.constants.LoggerMessages;
+import payments.utils.constants.MessageKeys;
 import payments.utils.extractors.impl.UserResultSetExtractor;
 
 import java.sql.*;
@@ -49,7 +50,7 @@ public class UserDaoImpl implements UserDao {
             }
             catch(SQLException ex){
                 logger.error(LoggerMessages.ERROR_FIND_USER_BY_CELLPHONE + cellphone);
-                throw new DaoException(ex);
+                throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
             }
     }
 
@@ -67,7 +68,7 @@ public class UserDaoImpl implements UserDao {
         }
         catch(SQLException ex){
             logger.error(LoggerMessages.ERROR_FIND_USER_BY_ID + id);
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -83,7 +84,7 @@ public class UserDaoImpl implements UserDao {
         }
         catch(SQLException ex){
             logger.error(LoggerMessages.ERROR_FIND_ALL_USERS);
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -101,7 +102,7 @@ public class UserDaoImpl implements UserDao {
         }
         catch (SQLException ex){
             logger.error(LoggerMessages.ERROR_CREATE_NEW_USER + user.toString());
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -120,7 +121,7 @@ public class UserDaoImpl implements UserDao {
         }
         catch (SQLException ex){
             logger.error(LoggerMessages.ERROR_UPDATE_USER + user.toString());
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -132,7 +133,7 @@ public class UserDaoImpl implements UserDao {
         }
         catch (SQLException ex){
             logger.error(LoggerMessages.ERROR_UPDATE_USER_CARDS+id);
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 
@@ -144,7 +145,7 @@ public class UserDaoImpl implements UserDao {
         }
         catch (SQLException ex){
             logger.error(LoggerMessages.ERROR_DELETE_USER + id);
-            throw new DaoException(ex);
+            throw new DaoException(ex, MessageKeys.ERROR_WITD_DB);
         }
     }
 }

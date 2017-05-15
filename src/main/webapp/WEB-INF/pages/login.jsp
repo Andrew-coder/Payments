@@ -24,12 +24,12 @@
 <div class="dropdown choose-country top-right">
     <c:forEach items="${SUPPORTED_LOCALES}" var="value">
         <c:if test="${value eq sessionScope['locale']}">
-            <a class="#" data-toggle="dropdown" href="#"><img src="images/${value.language}.png" alt="${value.language}">  ${value.language}</a>
+            <a class="#" data-toggle="dropdown" href="#"><img src="/images/${value.language}.png" alt="${value.language}">  ${value.language}</a>
         </c:if>
     </c:forEach>
     <ul class="dropdown-menu" role="menu">
         <c:forEach items="${SUPPORTED_LOCALES}" var="value">
-            <li role="menuitem"><a href="login?lang=${value.language}"><img src="images/${value.language}.png" alt="${value.language}"> ${value.language}</a></li>
+            <li role="menuitem"><a href="login?lang=${value.language}"><img src="/images/${value.language}.png" alt="${value.language}"> ${value.language}</a></li>
         </c:forEach>
     </ul>
 </div>

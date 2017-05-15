@@ -16,6 +16,11 @@ public class ApplicationException extends RuntimeException{
         this.messageKey = messageKey;
     }
 
+    public ApplicationException(String message, String messageKey) {
+        super(message);
+        this.messageKey = messageKey;
+    }
+
     public String getMessageKey() {
         return messageKey;
     }
