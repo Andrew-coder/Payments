@@ -96,14 +96,14 @@
                                         <select name="cards" class="form-control">
                                             <c:if test="${cards==null || cards.isEmpty()}">
                                                 <c:if test="${requestScope.errors!=null and requestScope.errors.hasErrors()}">
-                                                    <option>${requestScope.previousCardNumber}</option>
+                                                    <option>${"**** **** **** "}${requestScope.previousCardNumber.substring(12,16)}</option>
                                                 </c:if>
                                                 <c:if test="${requestScope.errors==null}">
                                                     <option><fmt:message key="payments.no.cards" bundle="${msg}"/></option>
                                                 </c:if>
                                             </c:if>
                                             <c:forEach items="${cards}" var="card">
-                                                <option value="${card.cardNumber}">${card.cardNumber}</option>
+                                                <option value="${"**** **** **** "}${card.getCardNumber().substring(12,16)}">${"**** **** **** "}${card.getCardNumber().substring(12,16)}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -111,19 +111,19 @@
                                 <div class="form-group row">
                                     <label class="col-2 col-form-label"><fmt:message key="payments.to.card" bundle="${msg}"/></label>
                                     <div class="col-10">
-                                        <input type="text" name="target_card" id="target_card" class="form-control" placeholder="<fmt:message key="payments.cards.recipient" bundle="${msg}"/> " value="${requestScope.previousTargetCard}">
+                                        <input type="text" name="target_card" id="target_card" class="form-control" placeholder="<fmt:message key="payments.cards.recipient" bundle="${msg}"/> " value="${requestScope.previousTargetCard}" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-2 col-form-label"><fmt:message key="payments.placeholder.sum" bundle="${msg}"/></label>
                                     <div class="col-10">
-                                        <input type="text" name="sum" class="form-control" value="${requestScope.previousSum}">
+                                        <input type="text" name="sum" class="form-control" value="${requestScope.previousSum}" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-2 col-form-label"><fmt:message key="payments.placeholder.purpose" bundle="${msg}"/></label>
                                     <div class="col-10">
-                                        <input type="text" name="purpose" class="form-control" value="${requestScope.previousPurpose}">
+                                        <input type="text" name="purpose" class="form-control" value="${requestScope.previousPurpose}" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -144,14 +144,14 @@
                                         <select name="cards" class="form-control">
                                             <c:if test="${cards==null || cards.isEmpty()}">
                                                 <c:if test="${requestScope.errors!=null and requestScope.errors.hasErrors()}">
-                                                    <option>${requestScope.previousCardNumber}</option>
+                                                    <option value="${"**** **** **** "}${requestScope.previousCardNumber.substring(12,16)}">${"**** **** **** "}${requestScope.previousCardNumber.substring(12,16)}</option>
                                                 </c:if>
                                                 <c:if test="${requestScope.errors==null}">
                                                     <option><fmt:message key="payments.no.cards" bundle="${msg}"/></option>
                                                 </c:if>
                                             </c:if>
                                             <c:forEach items="${cards}" var="card">
-                                                <option value="${card.cardNumber}">${card.cardNumber}</option>
+                                                <option value="${"**** **** **** "}${card.cardNumber.substring(12,16)}">${"**** **** **** "}${card.cardNumber.substring(12,16)}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -159,31 +159,31 @@
                                 <div class="form-group row">
                                     <label class="col-2 col-form-label"><fmt:message key="payments.placeholder.mfo" bundle="${msg}"/></label>
                                     <div class="col-10">
-                                        <input type="text" name="mfo" class="form-control" value="${requestScope.previousMfo}">
+                                        <input type="text" name="mfo" class="form-control" value="${requestScope.previousMfo}" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-2 col-form-label"><fmt:message key="payments.placeholder.usreou" bundle="${msg}"/></label>
                                     <div class="col-10">
-                                        <input type="text" name="usreou" class="form-control" value="${requestScope.previousUsreou}">
+                                        <input type="text" name="usreou" class="form-control" value="${requestScope.previousUsreou}" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-2 col-form-label"><fmt:message key="payments.placeholder.account" bundle="${msg}"/></label>
                                     <div class="col-10">
-                                        <input type="text" name="account_number" class="form-control" value="${requestScope.previousAccount}">
+                                        <input type="text" name="account_number" class="form-control" value="${requestScope.previousAccount}" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-2 col-form-label"><fmt:message key="payments.placeholder.sum" bundle="${msg}"/></label>
                                     <div class="col-10">
-                                        <input type="text" name="sum" class="form-control" value="${requestScope.previousSum}">
+                                        <input type="text" name="sum" class="form-control" value="${requestScope.previousSum}" required>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-2 col-form-label"><fmt:message key="payments.placeholder.purpose" bundle="${msg}"/></label>
                                     <div class="col-10">
-                                        <input type="text" name="purpose" class="form-control" value="${requestScope.previousPurpose}">
+                                        <input type="text" name="purpose" class="form-control" value="${requestScope.previousPurpose}" required>
                                     </div>
                                 </div>
                                 <div class="form-group">

@@ -19,7 +19,7 @@
     <table class="table borderless">
         <c:forEach items="${cards}" var="card">
             <tr>
-                <td>${card.getCardNumber()}</td>
+                <td>${"**** **** **** "}${card.getCardNumber().substring(12,16)}</td>
                 <td><a href="/cards/refill/${card.getId()}"><button type="button" class="btn-primary" value="<fmt:message key="payments.cards.refill" bundle="${msg}"/>"><fmt:message key="payments.cards.refill" bundle="${msg}"/></button></a></td>
                 <td><button type="button" class="btn-danger" value="<fmt:message key="payments.cards.block" bundle="${msg}"/>" name="${card.getId()}_button" id="${card.getId()}_button"><fmt:message key="payments.cards.block" bundle="${msg}"/></button></td>
             </tr>
