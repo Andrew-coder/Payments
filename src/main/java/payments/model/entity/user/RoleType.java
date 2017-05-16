@@ -1,5 +1,8 @@
 package payments.model.entity.user;
 
+/**
+ * This class defines different roles of the user
+ */
 public enum RoleType {
     USER("user"),
     ADMIN("admin");

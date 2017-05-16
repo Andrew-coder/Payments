@@ -4,8 +4,7 @@ $(document ).ready(function(e) {
         $("#card-pay-form").fadeOut(100);
         $('#card-transfer').removeClass('active');
         $('#account-transfer').addClass('active');
-        $('#card').setAttribute('checked','false');
-        $('#account').setAttribute('checked', 'true');
+        $('input:radio[name=optradio]')[1].checked = true;
         e.preventDefault();
     }
 });

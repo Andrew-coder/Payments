@@ -1,14 +1,16 @@
 package payments.exception;
 
+/**
+ * this class represents custom application exception
+ */
 public class ApplicationException extends RuntimeException{
-    private String messageKey;
+    /**
+     * bundle key to error text message
+     */
+    private final String messageKey;
 
     public ApplicationException(String messageKey) {
         this.messageKey = messageKey;
-    }
-
-    public ApplicationException(Throwable cause) {
-        super(cause);
     }
 
     public ApplicationException(Throwable cause, String messageKey) {
@@ -23,9 +25,5 @@ public class ApplicationException extends RuntimeException{
 
     public String getMessageKey() {
         return messageKey;
-    }
-
-    public void setMessageKey(String messageKey) {
-        this.messageKey = messageKey;
     }
 }

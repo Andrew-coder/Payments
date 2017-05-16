@@ -17,6 +17,9 @@ import payments.utils.constants.MessageKeys;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementation for history service
+ */
 public class HistoryServiceImpl implements HistoryService {
     private static final Logger logger = Logger.getLogger(HistoryServiceImpl.class);
 

@@ -4,7 +4,7 @@ $(function() {
         $("#card-pay-form").delay(100).fadeIn(100);
         $("#account-form-pay").fadeOut(100);
         $('#account-transfer').removeClass('active');
-        $('#card').setAttribute('checked','true');
+        $('input:radio[name=optradio]')[0].checked = true;
         $(this).addClass('active');
         e.preventDefault();
     });
@@ -12,7 +12,7 @@ $(function() {
         $("#account-form-pay").delay(100).fadeIn(100);
         $("#card-pay-form").fadeOut(100);
         $('#card-transfer').removeClass('active');
-        $('#account').setAttribute('checked', 'true');
+        $('input:radio[name=optradio]')[1].checked = true;
         $(this).addClass('active');
         e.preventDefault();
     });

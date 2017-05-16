@@ -6,6 +6,9 @@ import payments.utils.extractors.ResultSetExtactor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Utility class to extract BankAccount entity
+ */
 public class BankAccountResultSetExtractor implements ResultSetExtactor<BankAccount>{
     @Override
     public BankAccount extract(ResultSet set) throws SQLException {

@@ -1,5 +1,8 @@
 package payments.model.dto.payment;
 
+/**
+ * This class represents DTO to transfer refill data from controller layer to UI
+ */
 public class RefillData {
     private long idRefilledCard;
     private String cardNumber;

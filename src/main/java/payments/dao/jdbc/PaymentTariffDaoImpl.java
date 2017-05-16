@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * Implementation of payment tariff dao, which works with MySql using jdbc
+ */
 public class PaymentTariffDaoImpl implements PaymentTariffDao{
     private static final Logger logger = Logger.getLogger(PaymentTariffDaoImpl.class);
     private static final String GET_ALL_TARIFFS = "select type_id, payment_name, payment_rate, fixed_rate from PaymentsTypes";

@@ -1,5 +1,8 @@
 package payments.model.entity;
 
+/**
+ * this class represents base entity abstraction with id attribute
+ */
 public abstract class BaseEntity {
     private long id;
 

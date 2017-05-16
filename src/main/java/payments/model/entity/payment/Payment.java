@@ -6,6 +6,9 @@ import payments.model.entity.BaseEntity;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * This class represents payment, which will be saved in payments history
+ */
 public class Payment extends BaseEntity {
     private BankAccount sender;
     private BankAccount recipient;
@@ -108,6 +111,20 @@ public class Payment extends BaseEntity {
         result = 31 * result + (tariff != null ? tariff.hashCode() : 0);
         result = 31 * result + (paymentPurpose != null ? paymentPurpose.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Payment{" +
+                "sender=" + sender +
+                ", recipient=" + recipient +
+                ", sum=" + sum +
+                ", date=" + date +
+                ", mfo='" + mfo + '\'' +
+                ", usreou='" + usreou + '\'' +
+                ", tariff=" + tariff +
+                ", paymentPurpose='" + paymentPurpose + '\'' +
+                '}';
     }
 
     public static class Builder{

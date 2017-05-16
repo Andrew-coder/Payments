@@ -7,6 +7,9 @@ import payments.utils.extractors.ResultSetExtactor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Utility class to extract User entity
+ */
 public class UserResultSetExtractor implements ResultSetExtactor<User>{
     @Override
     public User extract(ResultSet set) throws SQLException {

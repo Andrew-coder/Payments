@@ -16,6 +16,7 @@
     <script src="/js/jquery-3.2.1.min.js"></script>
     <script src="/js/form-slider.js"></script>
     <script src="/js/payments-form-initializer.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -34,7 +35,7 @@
                             </c:forEach>
                             <ul class="dropdown-menu" role="menu">
                                 <c:forEach items="${SUPPORTED_LOCALES}" var="value">
-                                    <li role="menuitem"><a href="payments?lang=${value.language}"><img src="/images/${value.language}.png" alt="${value.language}"> ${value.language}</a></li>
+                                    <li role="menuitem"><a href="/payments?lang=${value.language}"><img src="/images/${value.language}.png" alt="${value.language}"> ${value.language}</a></li>
                                 </c:forEach>
                             </ul>
                         </div>
@@ -77,14 +78,14 @@
                     </c:if>
                 </div>
 
+                <input id="tab" type="hidden" value="${requestScope.tab}">
+
                 <div class="radio">
                     <a href="#" class="active" id="card-transfer"><label><input id="card" type="radio" class="radio" name="optradio" checked="checked"><fmt:message key="payments.transfer.card" bundle="${msg}"/></label></a>
                 </div>
                 <div class="radio">
                     <a href="#" id="account-transfer"><label><input id="account" type="radio" class="radio" name="optradio"><fmt:message key="payments.transfer.account" bundle="${msg}"/></label></a>
                 </div>
-
-                <input id="tab" type="hidden" value="${requestScope.tab}">
 
                 <div class="panel panel-body">
                     <div class="row">
@@ -96,14 +97,14 @@
                                         <select name="cards" class="form-control">
                                             <c:if test="${cards==null || cards.isEmpty()}">
                                                 <c:if test="${requestScope.errors!=null and requestScope.errors.hasErrors()}">
-                                                    <option>${"**** **** **** "}${requestScope.previousCardNumber.substring(12,16)}</option>
+                                                    <option>${requestScope.previousCardNumber}</option>
                                                 </c:if>
                                                 <c:if test="${requestScope.errors==null}">
                                                     <option><fmt:message key="payments.no.cards" bundle="${msg}"/></option>
                                                 </c:if>
                                             </c:if>
                                             <c:forEach items="${cards}" var="card">
-                                                <option value="${"**** **** **** "}${card.getCardNumber().substring(12,16)}">${"**** **** **** "}${card.getCardNumber().substring(12,16)}</option>
+                                                <option value="${card.getCardNumber()}">${card.getCardNumber()}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -203,9 +204,5 @@
 </div>
 
 <jsp:include page="footer.jsp"/>
-
-<script src="js/bootstrap.min.js"></script>
-<script src="js/main-menu.js"></script>
-<script src="js/template.js"></script>
 </body>
 </html>

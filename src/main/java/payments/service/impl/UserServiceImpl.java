@@ -13,6 +13,9 @@ import payments.utils.constants.MessageKeys;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementation of user service
+ */
 public class UserServiceImpl implements UserService{
     private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
 

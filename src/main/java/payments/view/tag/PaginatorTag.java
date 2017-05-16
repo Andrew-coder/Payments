@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Optional;
 
+/**
+ * This class represent custom tag handler, which transforms tag to list page navigator
+ */
 public class PaginatorTag extends SimpleTagSupport {
     private final static int FIRST_PAGE_NUMBER=1;
 

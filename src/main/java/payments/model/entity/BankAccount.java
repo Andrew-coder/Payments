@@ -2,6 +2,9 @@ package payments.model.entity;
 
 import java.math.BigDecimal;
 
+/**
+ * this class represents bank account entity
+ */
 public class BankAccount extends BaseEntity {
     private String accountNumber;
     private BigDecimal balance;
@@ -20,6 +23,14 @@ public class BankAccount extends BaseEntity {
 
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
+    }
+
+    @Override
+    public String toString() {
+        return "BankAccount{" +
+                "accountNumber='" + accountNumber + '\'' +
+                ", balance=" + balance +
+                '}';
     }
 
     @Override

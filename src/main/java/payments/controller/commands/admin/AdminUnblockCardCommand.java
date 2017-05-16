@@ -25,6 +25,6 @@ public class AdminUnblockCardCommand extends CommandExecutor{
     public String performExecute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         long cardId = requestExtractor.extractLong(request, Attributes.CARD_ID);
         paymentService.unblockCard(cardId);
-        return PagesPath.CARDS_ADMINISTRATION_PAGE;
+        return PagesPath.CARDS_ADMINISTRATION;
     }
 }

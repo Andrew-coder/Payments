@@ -1,9 +1,9 @@
 package payments.dao.jdbc;
 
 import data.CardsData;
+import net.jcip.annotations.NotThreadSafe;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import payments.dao.CardDao;
 import payments.dao.ConnectionWrapper;
@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 
+@NotThreadSafe
 public class CardsDaoIntegrationTest {
     private DaoFactory daoFactory = TestDaoFactory.getInstance();
     private List<Card> testCards;

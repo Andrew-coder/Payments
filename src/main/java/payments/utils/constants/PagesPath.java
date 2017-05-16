@@ -1,5 +1,8 @@
 package payments.utils.constants;
 
+/**
+ * This class contains paths to jsp pages and URLs, which are supported
+ */
 public final class PagesPath {
     public static final String REDIRECT = "REDIRECT";
     public static final String FORWARD = "FORWARD";
@@ -11,6 +14,7 @@ public final class PagesPath {
     public static final String LOGIN = "/login";
     public static final String REGISTER = "/register";
     public static final String CARDS_MANAGE = "/cards";
+    public static final String CARDS_ADMINISTRATION = "/admin/cards";
     public static final String PAYMENTS_ADMINISTRATION = "/admin/payments";
 
     public static final String HOME_PAGE = VIEW_JSP_CLASSPATH + "user/index.jsp";

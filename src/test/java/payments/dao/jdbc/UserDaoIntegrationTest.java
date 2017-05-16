@@ -1,6 +1,7 @@
 package payments.dao.jdbc;
 
 import data.UsersData;
+import net.jcip.annotations.NotThreadSafe;
 import org.junit.*;
 import payments.dao.ConnectionWrapper;
 import payments.dao.DaoFactory;
@@ -12,6 +13,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
+@NotThreadSafe
 public class UserDaoIntegrationTest {
     private DaoFactory daoFactory = TestDaoFactory.getInstance();
     private UserDao userDao;

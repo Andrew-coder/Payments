@@ -1,5 +1,8 @@
 package payments.model.dto;
 
+/**
+ * This class represents DTO to transfer register data to UI
+ */
 public class RegisterData extends LoginData {
     private String name;
     private String surname;

@@ -1,5 +1,8 @@
 package payments.model.dto;
 
+/**
+ * This class represents DTO to transfer login data from controller layer to UI
+ */
 public class LoginData {
     protected String cellphone;
     protected String password;

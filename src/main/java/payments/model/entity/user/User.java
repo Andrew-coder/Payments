@@ -4,6 +4,10 @@ import payments.model.entity.BaseEntity;
 
 import java.util.Date;
 
+/**
+ * This class represents user in this system
+ * Depending on the role, user can have different privileges
+ */
 public class User extends BaseEntity {
     private String name;
     private String surname;
@@ -86,6 +90,18 @@ public class User extends BaseEntity {
         result = 31 * result + (birthDate != null ? birthDate.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", cellphone='" + cellphone + '\'' +
+                ", password='" + password + '\'' +
+                ", birthDate=" + birthDate +
+                ", role=" + role +
+                '}';
     }
 
     public static class Builder{

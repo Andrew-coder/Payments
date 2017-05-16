@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import payments.dao.*;
 import payments.dao.exception.DaoException;
 import payments.utils.constants.LoggerMessages;
+import payments.utils.constants.MessageKeys;
 
 import javax.sql.DataSource;
 import java.io.File;
@@ -27,7 +28,7 @@ public class TestDaoFactory extends DaoFactory {
         }
         catch (SQLException|IOException exception) {
             logger.error(LoggerMessages.ERROR_CONNECT_TO_DATABASE);
-            throw new DaoException(exception);
+            throw new DaoException(exception, MessageKeys.ERROR_WITD_DB);
         }
         return new ConnectionWrapperImpl(connection);
     }

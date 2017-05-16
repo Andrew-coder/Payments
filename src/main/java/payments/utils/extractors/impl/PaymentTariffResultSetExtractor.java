@@ -7,6 +7,9 @@ import payments.utils.extractors.ResultSetExtactor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Utility class to extract Payment tariff entity
+ */
 public class PaymentTariffResultSetExtractor implements ResultSetExtactor<PaymentTariff> {
     @Override
     public PaymentTariff extract(ResultSet set) throws SQLException {

@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * Implementation of bank account dao, which works with MySql using jdbc
+ */
 public class BankAccountDaoImpl implements BankAccountDao{
     private static final Logger logger = Logger.getLogger(BankAccountDaoImpl.class);
     private static final String GET_ALL_ACCOUNTS = "select account_id, account_number, balance from BankAccounts ";

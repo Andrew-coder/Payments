@@ -12,6 +12,11 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.EnumMap;
 
+/**
+ * This class is authorization filter.
+ * Filter checks every user request, to find out his permissions.
+ * If user don't have permissions, the filter forward user to login page.
+ */
 public class AuthFilter implements Filter{
     private static final Logger logger = Logger.getLogger(AuthFilter.class);
     private static final String USER_NOT_AUTHORIZED = "User isn't authorized";
@@ -39,6 +44,13 @@ public class AuthFilter implements Filter{
         chain.doFilter(request, response);
     }
 
+    /**
+     * this method check user permissions
+     * @param uri
+     * @param userId
+     * @param roleType
+     * @return
+     */
     private boolean checkUserPermissions(String uri, Object userId, RoleType roleType){
         if(uri.endsWith(".css")||uri.endsWith(".js")||uri.endsWith(".png")) {
             return true;
@@ -73,11 +85,19 @@ public class AuthFilter implements Filter{
         }
     }
 
+    /**
+     * method which perform filter initialization
+     * @param filterConfig
+     * @throws ServletException
+     */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
     }
 
+    /**
+     * method, which will be performed before filter destroy
+     */
     @Override
     public void destroy() {
 

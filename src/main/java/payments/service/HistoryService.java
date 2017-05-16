@@ -8,6 +8,9 @@ import payments.model.entity.payment.Payment;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * history service
+ */
 public interface HistoryService {
     Optional<Payment> findById(long id);
     List<Payment> findAll();

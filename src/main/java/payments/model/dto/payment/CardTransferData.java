@@ -1,5 +1,8 @@
 package payments.model.dto.payment;
 
+/**
+ * This class represents DTO to transfer card data from controller layer to UI
+ */
 public class CardTransferData {
     private String senderCard;
     private String recipientCard;

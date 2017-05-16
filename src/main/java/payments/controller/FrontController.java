@@ -13,9 +13,15 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * main servlet which intercept all user requests
+ */
 public class FrontController extends HttpServlet{
     private static final Logger logger = Logger.getLogger(FrontController.class);
-    private transient CommandHolder commandHolder = new CommandHolder();
+    /**
+     * class which contains all commands
+     */
+    private static transient CommandHolder commandHolder = new CommandHolder();
 
 
     @Override
@@ -26,6 +32,14 @@ public class FrontController extends HttpServlet{
         }
     }
 
+    /**
+     * after all post requests it is necessary to perform redirect
+     * accordingly with Post-Redirect-Get pattern
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = processRequest(request, response);
@@ -33,6 +47,14 @@ public class FrontController extends HttpServlet{
             response.sendRedirect(path);
     }
 
+    /**
+     * this method search necessary command and perform it
+     * @param request
+     * @param response
+     * @return page url
+     * @throws ServletException
+     * @throws IOException
+     */
     public String processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         String method = request.getMethod().toUpperCase();
         String path = request.getRequestURI();
@@ -42,7 +64,7 @@ public class FrontController extends HttpServlet{
         return command.execute(request, response);
     }
 
-    public void setCommandHolder(CommandHolder commandHolder) {
-        this.commandHolder=commandHolder;
+    public static void setCommandHolder(CommandHolder commandHolder) {
+        FrontController.commandHolder=commandHolder;
     }
 }

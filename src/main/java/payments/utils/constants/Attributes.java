@@ -1,5 +1,8 @@
 package payments.utils.constants;
 
+/**
+ * This classis container for attributes, which are passed to jsp view pages
+ */
 public final class Attributes {
     public static final String USER = "user";
     public static final String ERROR = "error";

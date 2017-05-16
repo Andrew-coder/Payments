@@ -8,6 +8,9 @@ import payments.model.entity.Card;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Payment service
+ */
 public interface PaymentService {
     Optional<Card> findById(long id);
     List<Card> findCardsByUser(long id);

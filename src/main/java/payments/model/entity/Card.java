@@ -4,6 +4,9 @@ import payments.model.entity.user.User;
 
 import java.util.Date;
 
+/**
+ * this class represents credit card entity
+ */
 public class Card extends BaseEntity {
     private String cardNumber;
     private Date expireDate;
@@ -82,6 +85,18 @@ public class Card extends BaseEntity {
         result = 31 * result + (pin != null ? pin.hashCode() : 0);
         result = 31 * result + (cvv != null ? cvv.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "cardNumber='" + cardNumber + '\'' +
+                ", expireDate=" + expireDate +
+                ", user=" + user +
+                ", pin='" + pin + '\'' +
+                ", cvv='" + cvv + '\'' +
+                ", account=" + account +
+                '}';
     }
 
     public static class Builder{

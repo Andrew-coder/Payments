@@ -16,6 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * wrapper class for specific commands which can throw exception
+ */
 public abstract class CommandExecutor implements Command {
     private static final Logger logger = Logger.getLogger(CommandExecutor.class);
     private final String nextPage;
@@ -27,6 +30,14 @@ public abstract class CommandExecutor implements Command {
         this.nextPage = nextPage;
     }
 
+    /**
+     * main method which wrap all actions, which could throw some exception
+     * @param request request from client
+     * @param response response to client
+     * @return
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {

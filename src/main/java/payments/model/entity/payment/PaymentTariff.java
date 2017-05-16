@@ -4,9 +4,20 @@ import payments.model.entity.BaseEntity;
 
 import java.math.BigDecimal;
 
+/**
+ * this class represents payment tariff, which depends on payment type
+ */
 public class PaymentTariff extends BaseEntity {
     private PaymentType type;
+
+    /**
+     * percentage of commission that will be taken from the user
+     */
     private double paymentRate;
+
+    /**
+     * the absolute value of the commission, which will be taken from the user
+     */
     private BigDecimal fixedRate;
 
     public PaymentType getType() {
@@ -53,6 +64,15 @@ public class PaymentTariff extends BaseEntity {
         temp = Double.doubleToLongBits(paymentRate);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "PaymentTariff{" +
+                "type=" + type +
+                ", paymentRate=" + paymentRate +
+                ", fixedRate=" + fixedRate +
+                '}';
     }
 
     public static class Builder{

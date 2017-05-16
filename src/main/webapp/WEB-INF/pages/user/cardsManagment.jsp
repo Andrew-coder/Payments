@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/main.css">
     <script src="/js/jquery-3.2.1.min.js"></script>
-    <script src="/js/ajax_block.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 </head>
 <body>
 <jsp:include page="header.jsp"/>
@@ -28,8 +28,27 @@
 </div>
 <jsp:include page="footer.jsp"/>
 
-<script src="js/bootstrap.min.js"></script>
-<script src="js/main-menu.js"></script>
+<script type="text/javascript">
+    $(document).on("click", ".btn-danger", function(){
+        var but=$(this).attr('id').split('_')[0];
+
+        $.ajax({
+            type: "POST",
+            url: "/cards/block",
+            data: {
+                cardID:but
+            },
+            success: function(){
+                var selector = "#"+but + "_button";
+                $(selector).attr("disabled",true);
+                alert('<fmt:message key="payments.successful.card.block" bundle="${msg}"/> ');
+            },
+            error:function () {
+                alert("<fmt:message key="payments.unsuccessful.card.block" bundle="${msg}"/>");
+            }
+        });
+    });
+</script>
 
 </body>
 </html>

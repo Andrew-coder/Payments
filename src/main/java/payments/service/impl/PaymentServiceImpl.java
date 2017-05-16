@@ -22,6 +22,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementation of payment service
+ */
 public class PaymentServiceImpl implements PaymentService {
     private static final Logger logger = Logger.getLogger(PaymentServiceImpl.class);
     private static final double ZERO = 0.0;

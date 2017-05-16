@@ -1,5 +1,8 @@
 package payments.model.entity.payment;
 
+/**
+ * This enum represents payment types, which are possible in this system
+ */
 public enum PaymentType {
     REFILL("refill"),
     TRANSFER_WITHIN_THIS_BANK("transfer within this bank"),

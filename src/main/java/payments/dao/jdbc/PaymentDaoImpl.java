@@ -13,6 +13,9 @@ import java.sql.*;
 import java.util.*;
 import java.util.Date;
 
+/**
+ * Implementation of payment dao, which works with MySql using jdbc
+ */
 public class PaymentDaoImpl implements PaymentDao {
     private static final Logger logger = Logger.getLogger(PaymentDaoImpl.class);
 

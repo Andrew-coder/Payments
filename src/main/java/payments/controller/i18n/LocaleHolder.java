@@ -4,6 +4,9 @@ import payments.utils.constants.Attributes;
 
 import java.util.Locale;
 
+/**
+ * Thi class contains all supported locales
+ */
 public class LocaleHolder {
     private Locale currentLocale;
 

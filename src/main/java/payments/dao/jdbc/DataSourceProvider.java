@@ -5,6 +5,9 @@ import org.apache.tomcat.jdbc.pool.PoolProperties;
 import javax.sql.DataSource;
 import java.util.ResourceBundle;
 
+/**
+ * this class give connection pool with apache tomcat implementation
+ */
 public class DataSourceProvider {
     private static final String DB_PROPERTIES = "db";
     private static final String JDBC_URL = "jdbc.url";

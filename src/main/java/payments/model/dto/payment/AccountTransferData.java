@@ -1,5 +1,8 @@
 package payments.model.dto.payment;
 
+/**
+ * This class represents dto to transfer account data from controller layer to UI
+ */
 public class AccountTransferData {
     private String accountNumber;
     private String senderCard;

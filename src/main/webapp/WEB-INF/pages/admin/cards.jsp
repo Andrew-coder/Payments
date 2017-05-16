@@ -23,7 +23,7 @@
             <tr>
                 <td>${card.getCardNumber()}</td>
                 <c:if test="${requestScope.get(card.id.toString())}">
-                    <td><button class="btn-primary" id="${card.id}_button" name="${card.id}_button">unblock</button></td>
+                    <td><button class="btn-primary" id="${card.id}_button" name="${card.id}_button"><fmt:message key="payments.cards.unblock" bundle="${msg}"/> </button></td>
                 </c:if>
             </tr>
         </c:forEach>
@@ -44,10 +44,10 @@
                 success: function(){
                     var selector = "#"+but + "_button";
                     $(selector).hide();
-                    alert('Card was successfully unblocked');
+                    alert('<fmt:message key="payments.successful.card.unblock" bundle="${msg}"/>');
                 },
                 error:function () {
-                    alert("Can't block card");
+                    alert("<fmt:message key="payments.successful.card.unblock" bundle="${msg}"/>");
                 }
             });
         });

@@ -6,6 +6,9 @@ import payments.utils.extractors.ResultSetExtactor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Utility class to extract Card entity
+ */
 public class CardResultSetExtractor implements ResultSetExtactor<Card>{
     @Override
     public Card extract(ResultSet set) throws SQLException {

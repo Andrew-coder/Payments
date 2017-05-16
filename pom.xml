@@ -86,12 +86,17 @@
         </dependency>
 
 
-
+        <dependency>
+            <groupId>com.github.stephenc.jcip</groupId>
+            <artifactId>jcip-annotations</artifactId>
+            <version>1.0-1</version>
+        </dependency>
     </dependencies>
 
 
     <build>
         <finalName>ROOT</finalName>
+        <testSourceDirectory>src/test/java</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>

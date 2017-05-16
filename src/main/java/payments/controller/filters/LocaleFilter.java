@@ -8,11 +8,16 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Locale;
 
+/**
+ * Filter which sets character encoding to utf-8
+ * This filter also sets and changes locales
+ */
 public class LocaleFilter implements Filter {
-    private static final Logger logger = Logger.getLogger(LocaleFilter.class);
+    /**
+     * contains all supported locales
+     */
     private LocaleHolder localeHolder = new LocaleHolder(LocaleHolder.DEFAULT_LOCALE);
     private static final String MESSAGE_PATH = "i18n.messages";
 

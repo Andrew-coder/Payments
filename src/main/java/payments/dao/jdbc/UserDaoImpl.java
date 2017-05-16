@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * Implementation of user dao, which works with MySql using jdbc
+ */
 public class UserDaoImpl implements UserDao {
     private static final Logger logger = Logger.getLogger(UserDaoImpl.class);
     private static final String GET_ALL_USERS = "select user_id, name, surname, cellphone, password, birthDate,  role from Users ";

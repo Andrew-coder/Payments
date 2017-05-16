@@ -1,5 +1,8 @@
 package payments.utils.constants;
 
+/**
+ * This class contains all keys to resource bundle messages to display on UI
+ */
 public final class MessageKeys {
     public static final String USER_ALREADY_EXISTS = "message.user.already.exist";
     public static final String UNKNOWN_ERROR_OCCURED = "message.unknown.error";
